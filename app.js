@@ -14,5 +14,5 @@ Db.sync()
 .then((console.log('Connect Database')))
 .catch(error => console.log(error));
 
-// Démarre l'application Express sur le port 3000 et affiche un message dans la console.
+// Démarre l'application Express sur le port 8000 et affiche un message dans la console.
 app.listen(8000, () => console.log('Listening on port 8000'));
