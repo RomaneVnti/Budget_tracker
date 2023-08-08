@@ -11,11 +11,6 @@ const Transaction = db.define('transaction', {
         allowNull: true
     },
 
-    user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-    },
-
     transaction_amount: {
         type: DataTypes.FLOAT,
         allowNull: false
@@ -33,12 +28,12 @@ const Transaction = db.define('transaction', {
 
     payment_method: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
     },
 
     category_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true
+        type: DataTypes.STRING,
+        allowNull: false
     }
 });
 
