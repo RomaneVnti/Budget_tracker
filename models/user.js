@@ -5,6 +5,7 @@ import Transaction from './transaction.js';
 const {DataTypes} = sequelize;
 
 const User = db.define('user', {
+
     user_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
