@@ -3,6 +3,30 @@ import db from '../db/db.js';
 
 const {DataTypes} = sequelize;
 
+const validCategories = [
+    'Logement',
+    'Transport',
+    'Aliments',
+    'Vêtements',
+    'Soins personnels',
+    'Loisirs',
+    'Économies',
+    'Dettes',
+    'Autres',
+    'Santé',
+    'Éducation',
+    'Assurances',
+    'Divertissement',
+    'Cadeaux et dons',
+    'Impôts',
+    'Voyages',
+    'Investissements',
+    'Remboursements',
+    'Revenus supplémentaires'
+];
+
+
+
 const Transaction = db.define('transaction', {
     id: {
         type: DataTypes.INTEGER,
@@ -38,8 +62,24 @@ const Transaction = db.define('transaction', {
 
     category_id: {
         type: DataTypes.STRING,
-        allowNull: false
-    }
-});
+        allowNull: false,
+        validate: {
+            isIn: {
+                args: [validCategories],
+                msg: "La catégorie n'est pas valide."
+            }
+        }
+    },
+
+    type_transaction: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            isIn: {
+                args: [['recette', 'dépense']],
+                msg: "Le type de transaction doit être 'recette' ou 'dépense'."
+            }
+        }
+}});
 
 export default Transaction;
