@@ -11,6 +11,11 @@ const Transaction = db.define('transaction', {
         allowNull: true
     },
 
+    user_id : {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+
     transaction_amount: {
         type: DataTypes.FLOAT,
         allowNull: false

@@ -2,6 +2,7 @@ import Joi from 'joi';
 
 const transactionValidation = (body) => {
     const TransactionSchema = Joi.object({
+        user_id: Joi.number().required(),
         transaction_amount: Joi.number().required(),
         description: Joi.string(),
         date: Joi.date(),
