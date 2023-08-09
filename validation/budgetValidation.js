@@ -5,14 +5,19 @@ import Joi from 'joi';
 const BudgetValidation = (body) => {
     //Création du schema de la transaction
     const BudgetSchema = Joi.object({
-        budget_amount: Joi.number().required(),
+        budget_amount: Joi.number().min(1).required(),
         budget_period_start: Joi.date(),
         budget_period_end: Joi.date(),
         category_id: Joi.number().required(),
         user_id: Joi.number().required()
     });
 
+    
+
     return BudgetSchema.validate(body);
 }
+
+
+
 
 export default BudgetValidation;
