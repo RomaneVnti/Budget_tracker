@@ -1,7 +1,7 @@
 import sequelize from 'sequelize';
 import db from '../db/db.js';
-import Transaction from './transaction.js';
-import bcrypt from 'bcrypt';
+import { hashPassword } from '../utils/passwordUtils.js';
+
 
 const {DataTypes} = sequelize;
 
@@ -62,18 +62,16 @@ const User = db.define('user', {
 
 // Avant de sauvegarder l'utilisateur, cryptez son mot de passe
 User.beforeCreate(async (user) => {
-    const hashedPassword = await bcrypt.hash(user.password, 10);
+    const hashedPassword = await hashPassword(user.password);
     user.password = hashedPassword;
 });
 
 
 //Avant de modifier l'utilisateur, cryptez son mot de passe
 User.beforeUpdate(async (user) => {
-    const hashedPassword = await bcrypt.hash(user.password, 10);
+    const hashedPassword = await hashPassword(user.password);
     user.password = hashedPassword;
 });
-
-
 
 
 
