@@ -89,7 +89,7 @@ const updateOneTransaction = (req, res) => {
 const deleteOneTransaction = (req, res) => {
     const {id} = req.params;
     
-        Transaction.destroy({where: {id: id}})
+        Transaction.destroy({where: {id_transaction: id}})
         .then(ressource => {
             if(ressource === 0) return res.status(404).json({message: 'Transaction not found'})
             res.status(200).json({message: 'Transaction deleted successfully'})

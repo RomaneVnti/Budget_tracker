@@ -54,14 +54,16 @@ const updateUser = async (req, res) => {
     .then(user => {
         if(!user) return res.status(404).json({message: "User not found"})
         user.username = body.username;
-        user.firstname = body.firstname;
-        user.lastname = body.lastname;
+        user.firstName = body.firstName;
+        user.lastName = body.lastName;
         user.email = body.email;
         user.password = body.password;
         user.save()
         .then(() => res.status(201).json({message: "User updated successfully"}))
         .catch((error) => res.status(500).json(error));
 })
+
+
     .catch((error) => res.status(500).json(error));
 
 };

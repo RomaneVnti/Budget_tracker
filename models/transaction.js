@@ -3,6 +3,9 @@ import db from '../db/db.js';
 
 const {DataTypes} = sequelize;
 
+
+//Les catégories doivent être mises dans une table à part
+
 const validCategories = [
     'Logement',
     'Transport',
@@ -28,7 +31,7 @@ const validCategories = [
 
 
 const Transaction = db.define('transaction', {
-    id: {
+    id_transaction: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
