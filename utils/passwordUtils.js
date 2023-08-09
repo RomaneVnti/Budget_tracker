@@ -1,7 +1,11 @@
 import bcrypt from 'bcrypt';
 
-const SALT_ROUNDS = 10;
-
+// Fonction de hachage du mot de passe
 export async function hashPassword(password) {
-    return await bcrypt.hash(password, SALT_ROUNDS);
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        return hashedPassword;
+    } catch (error) {
+        throw new Error('Erreur lors du hachage du mot de passe');
+    }
 }

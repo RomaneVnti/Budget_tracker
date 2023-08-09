@@ -6,14 +6,6 @@ import { hashPassword } from '../utils/passwordUtils.js';
 const {DataTypes} = sequelize;
 
 
-
-
-const errorMessages = {
-    invalidEmail: "L'adresse email n'est pas valide.",
-    passwordComplexity: "Le mot de passe doit contenir au moins 8 caractères, y compris des majuscules, des minuscules et des chiffres."
-};
-
-
 //Table User
 const User = db.define('user', {
 
@@ -30,17 +22,17 @@ const User = db.define('user', {
         allowNull: false,     
     }, 
 
-    email : {
+    email: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
         validate: {
             isEmail: {
                 args: true,
-                msg: errorMessages.invalidEmail
+                msg: "L'adresse e-mail n'est pas conforme."
             }
         }
-    },  
+    },
 
     password: {
         type: DataTypes.STRING,
@@ -62,17 +54,24 @@ const User = db.define('user', {
 
 // Avant de sauvegarder l'utilisateur, cryptez son mot de passe
 User.beforeCreate(async (user) => {
-    const hashedPassword = await hashPassword(user.password);
-    user.password = hashedPassword;
+    try {
+        const hashedPassword = await hashPassword(user.password);
+        user.password = hashedPassword;
+    } catch (error) {
+        throw error; 
+    }
 });
 
 
-//Avant de modifier l'utilisateur, cryptez son mot de passe
+// Avant de modifier l'utilisateur, cryptez son mot de passe
 User.beforeUpdate(async (user) => {
-    const hashedPassword = await hashPassword(user.password);
-    user.password = hashedPassword;
+    try {
+        const hashedPassword = await hashPassword(user.password);
+        user.password = hashedPassword;
+    } catch (error) {
+        throw error; 
+    }
 });
-
 
 
 export default User;
