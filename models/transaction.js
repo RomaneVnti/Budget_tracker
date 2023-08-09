@@ -2,6 +2,7 @@ import { DataTypes } from 'sequelize';
 import db from '../db/db.js';
 import User from '../models/user.js';
 import Category from '../models/category.js';
+import PaymentMethod from '../models/paymentMethod.js';
 
 
 //Messages d'erreur 
@@ -9,12 +10,6 @@ const errorMessages = {
     invalidCategory: "La catégorie n'est pas valide.",
     invalidTransactionType: "Le type de transaction doit être 'recette' ou 'dépense'."
 };
-
-
-
-
-
-
 
 //Table Transaction 
 
@@ -51,11 +46,15 @@ const Transaction = db.define('transaction', {
         defaultValue: new Date().toISOString() // Utilise la date et l'heure actuelles au format ISO 8601
     },
 
-    payment_method: {
-        type: DataTypes.STRING,
-        allowNull: false
+    paymentMethod_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: PaymentMethod, // Référence à la table PaymentMethod
+            key: 'paymentMethod_id', // Colonne à référencer dans la table PaymentMethod
+        },
     },
-
+    
     type_transaction: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -67,11 +66,19 @@ const Transaction = db.define('transaction', {
         }
     },
 
-    categoryName: {
-        type: DataTypes.STRING,
+    category_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: Category, // Référence à la table PaymentMethod
+            key: 'category_id', // Colonne à référencer dans la table PaymentMethod
+        },
     },
-});
+}
+);
+
+
+
 
 Transaction.belongsTo(Category, {
     foreignKey: 'categoryName', // Utilise categoryName pour la relation
@@ -84,6 +91,10 @@ Transaction.belongsTo(User, {
     as: 'user'
 });
 
+Transaction.belongsTo(PaymentMethod, {
+    foreignKey: 'paymentMethod_id',
+    as: 'paymentMethod',
+});
 
 
 export default Transaction;

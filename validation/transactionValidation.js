@@ -9,8 +9,8 @@ const transactionValidation = (body) => {
         transaction_amount: Joi.number().required().min(0),
         description: Joi.string(),
         date: Joi.date().required(),
-        payment_method: Joi.string().required().allow('carte de crédit').allow('monnaie').allow('virement').allow('chèque').allow('paypal'),
-        categoryName: Joi.string().required(),
+        paymentMethod_id: Joi.number().required(),
+        category_id: Joi.number().required(),
         type_transaction: Joi.string().required().allow('dépense').allow('recette'),
     });
 
