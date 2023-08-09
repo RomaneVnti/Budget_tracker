@@ -5,8 +5,16 @@ import bcrypt from 'bcrypt';
 
 const {DataTypes} = sequelize;
 
-//Table User
 
+
+
+const errorMessages = {
+    invalidEmail: "L'adresse email n'est pas valide.",
+    passwordComplexity: "Le mot de passe doit contenir au moins 8 caractères, y compris des majuscules, des minuscules et des chiffres."
+};
+
+
+//Table User
 const User = db.define('user', {
 
     user_id: {
@@ -25,8 +33,14 @@ const User = db.define('user', {
     email : {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
-    }, 
+        unique: true,
+        validate: {
+            isEmail: {
+                args: true,
+                msg: errorMessages.invalidEmail
+            }
+        }
+    },  
 
     password: {
         type: DataTypes.STRING,
@@ -45,11 +59,13 @@ const User = db.define('user', {
 
 });
 
+
 // Avant de sauvegarder l'utilisateur, cryptez son mot de passe
 User.beforeCreate(async (user) => {
     const hashedPassword = await bcrypt.hash(user.password, 10);
     user.password = hashedPassword;
 });
+
 
 //Avant de modifier l'utilisateur, cryptez son mot de passe
 User.beforeUpdate(async (user) => {
@@ -58,7 +74,7 @@ User.beforeUpdate(async (user) => {
 });
 
 
-//Relation entre User et Transaction
-User.hasMany(Transaction, { foreignKey: 'user_id' });
+
+
 
 export default User;

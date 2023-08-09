@@ -8,7 +8,7 @@ const getOneUser = async (req, res) => {
 
     User.findByPk(id)
     .then(user => {
-        if(!user) return res.status(404).json({message: 'User not found'});
+        if(!user) return res.status(404).json({message: 'User not found'}); 
         return res.status(200).json(user);
     })
     .catch(error => res.status(500).json(error));
@@ -75,13 +75,11 @@ const deleteUser = async (req, res) => {
     
         User.destroy({where: {user_id: id}})
         .then(ressource => {
+            
         if(ressource === 0) return res.status(404).json({message: 'User not found'})
         res.status(200).json({message: 'User deleted successfully'})
-        })
-        .catch((error) => res.status(500).json(error));
+    })
+    .catch((error) => res.status(500).json(error));
 };
-
-
-
 
 export { createUser, updateUser, deleteUser, getAllUsers, getOneUser };

@@ -1,8 +1,18 @@
 
-//importe le module Router depuis express
-import {getAllTransactions, getOneTransaction, createOneTransaction, updateOneTransaction, deleteOneTransaction} from '../controllers/transactionCtrl.js';
+import {
+    getAllTransactions, 
+    getOneTransaction, 
+    createOneTransaction, 
+    updateOneTransaction, 
+    deleteOneTransaction} from '../controllers/transactionCtrl.js';
+
 import {Router} from 'express';
-import {getAllUsers, getOneUser, createUser, updateUser, deleteUser} from '../controllers/userCtrl.js';
+
+import {getAllUsers,
+        getOneUser, 
+        createUser, 
+        updateUser, 
+        deleteUser} from '../controllers/userCtrl.js';
 
 //Créer une nouvelle instance de Router Express
 const router = Router();

@@ -1,18 +1,23 @@
-
-// Importe Express, routes
 import express from 'express';
 import routes from './routes/routes.js';
 import Db from './db/db.js';
 
-// Crée une nouvelle instance de l'application Express.
 const app = express();
 
 app.use(express.json());
 app.use(routes);
 
-Db.sync()
-.then((console.log('Connect Database')))
-.catch(error => console.log(error));
+// Synchronise la base de données et démarre le serveur
+async function startServer() {
+    try {
+        await Db.sync();
+        console.log('Database connected');
+        app.listen(8000, () => {
+            console.log('Server is listening on port 8000');
+        });
+    } catch (error) {
+        console.error('Error connecting to the database:', error);
+    }
+}
 
-// Démarre l'application Express sur le port 8000 et affiche un message dans la console.
-app.listen(8000, () => console.log('Listening on port 8000'));
+startServer();

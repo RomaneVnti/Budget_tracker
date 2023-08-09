@@ -1,7 +1,6 @@
-import sequelize from 'sequelize';
+import { DataTypes } from 'sequelize';
 import db from '../db/db.js';
-
-const {DataTypes} = sequelize;
+import User from '../models/user.js';
 
 
 //Messages d'erreur 
@@ -35,19 +34,24 @@ const validCategories = [
     'Revenus supplémentaires'
 ];
 
+
 //Table Transaction 
 
 const Transaction = db.define('transaction', {
+    
+
     id_transaction: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
-        allowNull: true
+        autoIncrement: true
     },
-
-    user_id : {
+    user_id: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: User,
+            key: 'user_id'
+        }
     },
 
     transaction_amount: {
@@ -62,7 +66,8 @@ const Transaction = db.define('transaction', {
 
     date: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
+        defaultValue: new Date().toISOString() // Utilise la date et l'heure actuelles au format ISO 8601
     },
 
     payment_method: {
@@ -90,6 +95,12 @@ const Transaction = db.define('transaction', {
                 msg: errorMessages.invalidTransactionType
             }
         }
-}});
+    }
+});
+
+Transaction.belongsTo(User, {
+    foreignKey: 'user_id',
+    as: 'user'
+});
 
 export default Transaction;
