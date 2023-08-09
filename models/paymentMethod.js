@@ -13,6 +13,8 @@ const PaymentMethod = db.define('payment_method', {
         allowNull: false,
         unique: true,
     },
+}, {
+    timestamps: false
 });
 
 export default PaymentMethod;

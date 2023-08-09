@@ -14,6 +14,7 @@ import {getAllUsers,
         updateUser, 
         deleteUser} from '../controllers/userCtrl.js';
 
+import {createOneBudget} from '../controllers/budgetCtrl.js';
 //------------------------------------------------------------------------------------------------//
 
 
@@ -57,6 +58,12 @@ router.put('/updateUser/:id', updateUser);
 
 //Route qui permet de supprimer un utilisateur.
 router.delete('/deleteUser/:id', deleteUser);
+
+
+//---------------ROUTES BUDGET--------------------------------------------------------//
+//Route pour créer un budget.
+router.post('/createOneBudget', createOneBudget);
+
 
 
 export default router;

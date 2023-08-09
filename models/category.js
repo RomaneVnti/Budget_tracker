@@ -15,6 +15,10 @@ const Category = db.define('category', {
         type: DataTypes.STRING,
         allowNull: true,
     },
+}, {
+    tableName: 'category', // Spécifiez le nom de table personnalisé ici
+    timestamps: false
 });
+
 
 export default Category;

@@ -77,9 +77,6 @@ const Transaction = db.define('transaction', {
 }
 );
 
-
-
-
 Transaction.belongsTo(Category, {
     foreignKey: 'categoryName', // Utilise categoryName pour la relation
     targetKey: 'categoryName', // Colonne à référencer dans la table Category
