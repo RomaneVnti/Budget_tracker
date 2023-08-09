@@ -4,6 +4,13 @@ import db from '../db/db.js';
 const {DataTypes} = sequelize;
 
 
+//Messages d'erreur 
+const errorMessages = {
+    invalidCategory: "La catégorie n'est pas valide.",
+    invalidTransactionType: "Le type de transaction doit être 'recette' ou 'dépense'."
+};
+
+
 //Les catégories doivent être mises dans une table à part
 
 const validCategories = [
@@ -28,7 +35,7 @@ const validCategories = [
     'Revenus supplémentaires'
 ];
 
-
+//Table Transaction 
 
 const Transaction = db.define('transaction', {
     id_transaction: {
@@ -69,7 +76,7 @@ const Transaction = db.define('transaction', {
         validate: {
             isIn: {
                 args: [validCategories],
-                msg: "La catégorie n'est pas valide."
+                msg: errorMessages.invalidCategory
             }
         }
     },
@@ -80,7 +87,7 @@ const Transaction = db.define('transaction', {
         validate: {
             isIn: {
                 args: [['recette', 'dépense']],
-                msg: "Le type de transaction doit être 'recette' ou 'dépense'."
+                msg: errorMessages.invalidTransactionType
             }
         }
 }});

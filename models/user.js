@@ -5,6 +5,8 @@ import bcrypt from 'bcrypt';
 
 const {DataTypes} = sequelize;
 
+//Table User
+
 const User = db.define('user', {
 
     user_id: {
@@ -49,6 +51,7 @@ User.beforeCreate(async (user) => {
     user.password = hashedPassword;
 });
 
+//Avant de modifier l'utilisateur, cryptez son mot de passe
 User.beforeUpdate(async (user) => {
     const hashedPassword = await bcrypt.hash(user.password, 10);
     user.password = hashedPassword;
