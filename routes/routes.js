@@ -1,4 +1,4 @@
-
+//------------IMPORT-----------------------------------------------------------------------//
 import {
     getAllTransactions, 
     getOneTransaction, 
@@ -14,8 +14,13 @@ import {getAllUsers,
         updateUser, 
         deleteUser} from '../controllers/userCtrl.js';
 
+//------------------------------------------------------------------------------------------------//
+
+
 //Créer une nouvelle instance de Router Express
 const router = Router();
+
+
 
 //-------------ROUTES TRANSACTIONS--------------------------------------------------------//
 

@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 import db from '../db/db.js';
 import User from '../models/user.js';
+import Category from '../models/category.js';
 
 
 //Messages d'erreur 
@@ -10,29 +11,9 @@ const errorMessages = {
 };
 
 
-//Les catégories doivent être mises dans une table à part
 
-const validCategories = [
-    'Logement',
-    'Transport',
-    'Aliments',
-    'Vêtements',
-    'Soins personnels',
-    'Loisirs',
-    'Économies',
-    'Dettes',
-    'Autres',
-    'Santé',
-    'Éducation',
-    'Assurances',
-    'Divertissement',
-    'Cadeaux et dons',
-    'Impôts',
-    'Voyages',
-    'Investissements',
-    'Remboursements',
-    'Revenus supplémentaires'
-];
+
+
 
 
 //Table Transaction 
@@ -75,17 +56,6 @@ const Transaction = db.define('transaction', {
         allowNull: false
     },
 
-    category_id: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            isIn: {
-                args: [validCategories],
-                msg: errorMessages.invalidCategory
-            }
-        }
-    },
-
     type_transaction: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -95,12 +65,25 @@ const Transaction = db.define('transaction', {
                 msg: errorMessages.invalidTransactionType
             }
         }
-    }
+    },
+
+    categoryName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+});
+
+Transaction.belongsTo(Category, {
+    foreignKey: 'categoryName', // Utilise categoryName pour la relation
+    targetKey: 'categoryName', // Colonne à référencer dans la table Category
+    as: 'category',
 });
 
 Transaction.belongsTo(User, {
     foreignKey: 'user_id',
     as: 'user'
 });
+
+
 
 export default Transaction;
