@@ -71,14 +71,37 @@ const updateOneBudget = (req, res) => {
         if (body.budget_period_start >= body.budget_period_end) {
             return res.status(400).json({ error: 'La date de début doit être antérieure à la date de fin' });
         }
-        
-        // Valider les données du budget, y compris le montant
+
+        // Tableau pour stocker les messages d'erreur
+        const missingFields = [];
+
+        // Vérifie que les champs requis sont présents
+        if (!body.category_id) {
+            missingFields.push('Catégorie');
+        }
+        if (typeof body.budget_amount === 'undefined' || body.budget_amount === null) {
+            missingFields.push('Montant du budget');
+        } else if (body.budget_amount <= 0) {
+            return res.status(400).json({ error: 'Le montant du budget ne peut pas être égal ou inférieur à zéro' });
+        }
+        if (!body.budget_period_start) {
+            missingFields.push('Date de début du budget');
+        }
+        if (!body.budget_period_end) {
+            missingFields.push('Date de fin du budget');
+        }
+        // Ajoutez ici d'autres champs requis
+
+        // Si des champs sont manquants, renvoyer un message d'erreur
+        if (missingFields.length > 0) {
+            const errorMessage = `Champs Manquants : ${missingFields.join(', ')}`;
+            return res.status(400).json({ error: errorMessage });
+        }
+
+        // Valider les données du budget à l'aide de la validation spécifique
         const { error } = BudgetValidation(body);
         if (error) {
             // Si des erreurs de validation sont présentes, renvoyer un message d'erreur
-            if (error.details[0].path.includes('budget_amount')) {
-                return res.status(400).json({ error: 'Le montant du budget ne peut pas être égal ou négatif' });
-            }
             return res.status(400).json({ error: error.details[0].message });
         }
 
@@ -88,13 +111,14 @@ const updateOneBudget = (req, res) => {
         budget.budget_period_end = body.budget_period_end;
         budget.category_id = body.category_id;
         budget.user_id = body.user_id;
-        
+
         // Enregistrer les modifications dans la base de données
         budget.save()
         .then(() => res.status(200).json({ message: 'Budget updated successfully' }))
         .catch(error => res.status(500).json(error))
     })
 };
+
 
 
 
