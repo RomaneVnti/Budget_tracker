@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import db from '../db/db.js';
 import Category from '../models/category.js';
 import User from '../models/user.js';
-import Joi from 'joi';
+
 
 
 const Budget = db.define('budget', {
