@@ -3,7 +3,8 @@ import UserValidation from '../validation/userValidation.js';
 
 
 
-//---METHODE GET ONE USERS------------//
+
+//---METHODE RECUPERER UN UTILISATEUR PAR SON ID------------//
 
 const getOneUser = async (req, res) => {
     const { id } = req.params;
@@ -21,7 +22,7 @@ const getOneUser = async (req, res) => {
 
 
 
-//---METHODE GET ALL USERS------------//
+//---METHODE GET RECUPERER TOUS LES UTILISATEURS------------//
 
 const getAllUsers = async (req, res) => {
     try {
@@ -37,7 +38,7 @@ const getAllUsers = async (req, res) => {
 
 
 
-//------------METHODE POST USERS------------//
+//------------METHODE POST CREE UN UTILISATEUR------------//
 
 const createUser = async (req, res) => {
     const { body } = req;
@@ -79,7 +80,7 @@ const createUser = async (req, res) => {
 
 
 
-//------------METHODE UPDATE USERS------------//
+//------------METHODE UPDATE MODIFIE UN UTILISATEUR------------//
 
 
 const updateUser = async (req, res) => {
@@ -133,7 +134,7 @@ function validateEmail(email) {
 }
 
 
-//------------METHODE DELETE USERS------------//
+//------------METHODE DELETE SUPPRIMER UN UTILISATEUR------------//
 
 const deleteUser = async (req, res) => {
     const { id } = req.params;
@@ -149,4 +150,5 @@ const deleteUser = async (req, res) => {
     }
 };
 
-export { createUser, updateUser, deleteUser, getAllUsers, getOneUser };
+
+export { createUser, updateUser, deleteUser, getAllUsers, getOneUser};

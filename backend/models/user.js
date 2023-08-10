@@ -3,6 +3,8 @@ import db from '../db/db.js';
 import { hashPassword } from '../utils/passwordUtils.js';
 
 
+
+
 const {DataTypes} = sequelize;
 
 

@@ -19,6 +19,8 @@ import {createOneBudget,
         updateOneBudget,
         deleteOneBudget,
         getAllBudgets} from '../controllers/budgetCtrl.js';
+
+import {login} from '../controllers/auth/authController.js';
 //------------------------------------------------------------------------------------------------//
 
 
@@ -80,5 +82,10 @@ router.delete('/deleteOneBudget/:id', deleteOneBudget);
 //Route qui permet de consulter tous les budgets.
 router.get('/getAllBudgets', getAllBudgets);
 
+
+
+//-------------ROUTES AUTH--------------------------------------------------------//
+//Route qui permet d'authentifier un utilisateur.
+router.post('/login', login);
 
 export default router;

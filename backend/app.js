@@ -1,11 +1,16 @@
 import express from 'express';
 import routes from './routes/routes.js';
 import Db from '../backend/db/db.js';
+import passport from 'passport';
 
 const app = express();
 
 app.use(express.json());
 app.use(routes);
+
+app.use(passport.initialize());
+
+
 
 // Synchronise la base de données et démarre le serveur
 async function startServer() {
