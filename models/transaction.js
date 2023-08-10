@@ -78,8 +78,8 @@ const Transaction = db.define('transaction', {
 );
 
 Transaction.belongsTo(Category, {
-    foreignKey: 'categoryName', // Utilise categoryName pour la relation
-    targetKey: 'categoryName', // Colonne à référencer dans la table Category
+    foreignKey: 'category_id', // Utilise category_id pour la relation
+    targetKey: 'category_id', // Colonne à référencer dans la table Category
     as: 'category',
 });
 

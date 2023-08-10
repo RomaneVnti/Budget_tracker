@@ -18,9 +18,6 @@ const getAllTransactions = (req, res) => {
 };
 
 
-
-
-
 //------------------METHODE GET ONE TRANSACTIONS-------------------------------------------------------------------------------------------------
 
 //Récupère une transaction par son id
@@ -34,8 +31,6 @@ const getOneTransaction = (req, res) => {
    })
    .catch(error => res.status(500).json(error));
 };
-
-
 
 
 //---------------------- METHODE POST----------------------------------------------------------------------------------------------------------
@@ -61,29 +56,38 @@ const createOneTransaction = (req, res) => {
 //------------------METHODE PUT ----------------------------------------------------------------------------------------------------------
 
 //Modifie une transaction par son id
+
 const updateOneTransaction = (req, res) => {
-    const {body} = req;
-    const {id} = req.params;
+    const { body } = req;
+    const { id } = req.params;
+
+    // Valider les données de la requête
+    const { error } = transactionValidation(body);
+    if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+    }
 
     Transaction.findByPk(id)
-    .then(transaction => {
+        .then(transaction => {
+            // Vérifier si la transaction existe
+            if (!transaction) return res.status(404).json({ message: 'Transaction not found' })
 
-         // Vérifier si la transaction existe
-        if(!transaction) return res.status(404).json({message: 'Transaction not found'})
+            // Mettre à jour les propriétés de la transaction avec les valeurs du corps de la requête
+            transaction.transaction_amount = body.transaction_amount;
+            transaction.date = body.date;
+            transaction.type_transaction = body.type_transaction;
+            transaction.description = body.description;
+            transaction.paymentMethod_id = body.paymentMethod_id;
+            transaction.category_id = body.category_id;
 
-        // Mettre à jour les propriétés de la transaction avec les valeurs du corps de la requête
-        transaction.transaction_amount = body.transaction_amount;
-        transaction.date = body.date;
-        transaction.transaction_type = body.transaction_type;
-        transaction.description = body.description;
-
-        // Enregistrer les modifications dans la base de données
-        transaction.save()
-        .then(() => res.status(200).json({message: 'Transaction updated successfully'}))
+            // Enregistrer les modifications dans la base de données
+            transaction.save()
+                .then(() => res.status(200).json({ message: 'Transaction updated successfully' }))
+                .catch(error => res.status(500).json(error));
+        })
         .catch(error => res.status(500).json(error));
-    })
-    .catch(error => res.status(500).json(error));
 };
+
 
 // ------------------METHODE DELETE TRANSACTION----------------------------------------------------------------------------------------------------------
 
