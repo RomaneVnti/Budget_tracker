@@ -1,6 +1,8 @@
 import User from '../models/user.js';
 import UserValidation from '../validation/userValidation.js';
 
+
+
 //---METHODE GET ONE USERS------------//
 
 const getOneUser = async (req, res) => {
@@ -17,6 +19,8 @@ const getOneUser = async (req, res) => {
     }
 };
 
+
+
 //---METHODE GET ALL USERS------------//
 
 const getAllUsers = async (req, res) => {
@@ -31,11 +35,14 @@ const getAllUsers = async (req, res) => {
     }
 };
 
+
+
 //------------METHODE POST USERS------------//
+
 const createUser = async (req, res) => {
     const { body } = req;
 
-    // Validation des champs utilisateur
+    // Valider les champs de l'utilisateur
     const { error } = UserValidation(body);
     if (error) {
         return res.status(400).json({ error: error.details[0].message });
@@ -49,6 +56,18 @@ const createUser = async (req, res) => {
         });
     }
 
+    // Vérifier si l'adresse e-mail est déjà utilisée par un autre compte
+    const existingUser = await User.findOne({ where: { email: body.email } });
+    if (existingUser) {
+        return res.status(400).json({ error: 'This email is already in use by another account' });
+    }
+
+    // Valider si l'adresse e-mail est valide
+    const isValidEmail = validateEmail(body.email);
+    if (!isValidEmail) {
+        return res.status(400).json({ error: 'Invalid email address' });
+    }
+
     // Création de l'utilisateur
     try {
         await User.create({ ...body });
@@ -58,7 +77,10 @@ const createUser = async (req, res) => {
     }
 };
 
+
+
 //------------METHODE UPDATE USERS------------//
+
 
 const updateUser = async (req, res) => {
     const { body } = req;
@@ -69,17 +91,47 @@ const updateUser = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
+
+        // Vérifier si l'adresse e-mail est déjà utilisée par un autre compte
+        if (body.email !== user.email) {
+            const existingUser = await User.findOne({ where: { email: body.email } });
+            if (existingUser) {
+                return res.status(400).json({ error: 'This email is already in use by another account' });
+            }
+        }
+
+        // Valider les champs de l'utilisateur
+        const { error } = UserValidation(body);
+        if (error) {
+            return res.status(400).json({ error: error.details[0].message });
+        }
+
+        // Valider si l'adresse e-mail est valide
+        const isValidEmail = validateEmail(body.email);
+        if (!isValidEmail) {
+            return res.status(400).json({ error: 'Invalid email address' });
+        }
+
         user.username = body.username;
         user.firstName = body.firstName;
         user.lastName = body.lastName;
         user.email = body.email;
-        user.password = body.password;
+
         await user.save();
         res.status(200).json({ message: 'User updated successfully' });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Server error' });
     }
 };
+
+
+// Fonction pour valider une adresse e-mail
+function validateEmail(email) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+}
+
 
 //------------METHODE DELETE USERS------------//
 
