@@ -1,7 +1,7 @@
 import User from '../models/user.js';
 import UserValidation from '../validation/userValidation.js';
 
-//---METHODE GET ONE USERS------------//
+//---METHODE GET ONEUSERS------------//
 
 const getOneUser = async (req, res) => {
     const {id} = req.params;
@@ -15,7 +15,7 @@ const getOneUser = async (req, res) => {
 
 };
 
-//---METHODE GET ALL USERS------------//
+//---METHODE GET ALLUSERS------------//
 
 const getAllUsers = async (req, res) => {
     User.findAll({
@@ -30,29 +30,18 @@ const getAllUsers = async (req, res) => {
 
 //------------METHODE POST USERS------------//
 const createUser = async (req, res) => {
-    const { body } = req;
+    const{body} = req;
 
-    // Validation des champs utilisateur
-    const { error } = UserValidation(body);
-    if (error) {
-        return res.status(400).json({ error: error.details[0].message });
-    }
-
-    // Vérification de la complexité du mot de passe
-    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    if (!passwordPattern.test(body.password)) {
-        return res.status(400).json({ error: 'Le mot de passe doit contenir au moins 8 caractères, y compris des majuscules, des minuscules et des chiffres.' });
-    }
-
-    // Création de l'utilisateur
-    try {
-        await User.create({ ...body });
-        res.status(201).json({ message: 'User created successfully' });
-    } catch (error) {
-        res.status(500).json(error);
-    }
+    
+    const {error} = UserValidation(body);
+    if(error)return res.status(400).json({error: error.details[0].message});
+    
+    User.create({...body})
+    .then(() => {
+        res.status(201).json({message: 'User created successfully'});
+    })
+    .catch(error => res.status(500).json(error));
 };
-
 
 
 //------------METHODE UPDATE USERS------------//
