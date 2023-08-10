@@ -69,7 +69,7 @@ router.delete('/deleteUser/:id', deleteUser);
 router.post('/createOneBudget', createOneBudget);
 
 //Route qui permet de consulter le budget d'un utilisateur.
-router.post('/getOneBudget/:id', getOneBudget);
+router.get('/getOneBudget/:id', getOneBudget);
 
 //Route qui permet de modifier le budget d'un utilisateur.
 router.put('/updateOneBudget/:id', updateOneBudget);

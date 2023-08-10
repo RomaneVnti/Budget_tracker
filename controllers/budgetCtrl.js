@@ -2,6 +2,7 @@ import Budget from '../models/budget.js';
 import BudgetValidation from '../validation/budgetValidation.js';
 
 
+
 //---------------Fonction utilitaire pour les champs manquants--------------------------------//
 
 

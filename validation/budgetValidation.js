@@ -8,19 +8,21 @@ const BudgetValidation = (body) => {
         budget_amount: Joi.number().min(1).required().messages({
             'any.required': 'Le champ montant du budget est manquant',
             'number.base': 'Le champ montant du budget ne peut pas être vide',
-            'number.min': 'Le montant ne peut pas être inférieur à zéro',
+            'number.min': 'Le champ montant du budget doit être inférieur à zéro',
         }),
 
 
         budget_period_start: Joi.date().messages({
             'any.required': 'Le champ date de début est manquant',
             'date.base': 'Le champ date de début ne peut pas être vide',
+            'date.format': 'Le format de date de début n\'est pas valide (DD/MM/YYYY)',
         }),
 
 
         budget_period_end: Joi.date().messages({
             'any.required': 'Le champ date de fin est manquant',
             'date.base': 'Le champ date de fin ne peut pas être vide',
+            'date.format': 'Le format de date de début n\'est pas valide (DD/MM/YYYY)',
         }),
 
 
