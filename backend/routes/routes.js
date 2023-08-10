@@ -33,54 +33,54 @@ const router = Router();
 
 
 // Permet de voir toutes les transactions
-router.get('/getAllTransactions', getAllTransactions);
+router.get('/transaction/getAll', getAllTransactions);
 
 // Cette route permet de consulter une transaction.
-router.get('/getOneTransaction/:id', getOneTransaction);
+router.get('/transaction/GetOne/:id', getOneTransaction);
 
 // Cette route permet de créer une nouvelle transaction.
-router.post('/createOneTransaction', createOneTransaction);
+router.post('/transaction/create', createOneTransaction);
 
 //Le paramètre :id est un paramètre dynamique qui correspond à l'ID de la transaction à mettre à jour.
-router.put('/updateOneTransaction/:id', updateOneTransaction);
+router.put('/transaction/update/:id', updateOneTransaction);
 
 //Le paramètre :id est un paramètre dynamique qui correspond à l'ID de la transaction à supprimer.
-router.delete('/deleteOneTransaction/:id', deleteOneTransaction);
+router.delete('/transaction/delete/:id', deleteOneTransaction);
 
 
 //-------------ROUTES USER--------------------------------------------------------//
 
 //Route qui permet de consulter toutes les utilisateurs.
-router.get('/getAllUsers', getAllUsers);
+router.get('/users/getAll', getAllUsers);
 
 //Route qui permet de consulter un utilisateur.
-router.get('/getOneUser/:id', getOneUser);
+router.get('/users/getOne/:id', getOneUser);
 
 //Roite qui permet de créer un utilisateur.
-router.post('/createUser', createUser);
+router.post('/users/create', createUser);
 
 //Route qui permet de mettre à jour un utilisateur.
-router.put('/updateUser/:id', updateUser);
+router.put('/users/update/:id', updateUser);
 
 //Route qui permet de supprimer un utilisateur.
-router.delete('/deleteUser/:id', deleteUser);
+router.delete('/user/delete/:id', deleteUser);
 
 
 //---------------ROUTES BUDGET--------------------------------------------------------//
 //Route pour créer un budget.
-router.post('/createOneBudget', createOneBudget);
+router.post('/budget/create', createOneBudget);
 
 //Route qui permet de consulter le budget d'un utilisateur.
-router.get('/getOneBudget/:id', getOneBudget);
+router.get('/budget/getOne/:id', getOneBudget);
 
 //Route qui permet de modifier le budget d'un utilisateur.
-router.put('/updateOneBudget/:id', updateOneBudget);
+router.put('/budget/update/:id', updateOneBudget);
 
 //Router qui permet de supprimer le budget d'un utilisateur.
-router.delete('/deleteOneBudget/:id', deleteOneBudget);
+router.delete('/budget/delete/:id', deleteOneBudget);
 
 //Route qui permet de consulter tous les budgets.
-router.get('/getAllBudgets', getAllBudgets);
+router.get('/budget/getAll', getAllBudgets);
 
 
 
