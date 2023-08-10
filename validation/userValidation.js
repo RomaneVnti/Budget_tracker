@@ -6,7 +6,10 @@ const userValidation = (body) => {
     //Création du schema de la transaction
     const UserSchema = Joi.object({
         username: Joi.string().required(),
-        email: Joi.string().email().required(),
+        email: Joi.string()
+        .email({ tlds: { allow: false } })
+        .message("L'adresse e-mail n'est pas conforme.")
+        .required(),
         password: Joi.string().required(),
         firstName: Joi.string().required(),
         lastName: Joi.string().required()

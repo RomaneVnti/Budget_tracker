@@ -79,4 +79,6 @@ router.delete('/deleteOneBudget/:id', deleteOneBudget);
 
 //Route qui permet de consulter tous les budgets.
 router.get('/getAllBudgets', getAllBudgets);
+
+
 export default router;
