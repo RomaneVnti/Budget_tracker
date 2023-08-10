@@ -3,10 +3,12 @@ import routes from './routes/routes.js';
 import Db from '../backend/db/db.js';
 import passport from 'passport';
 
+
 const app = express();
 
 app.use(express.json());
 app.use(routes);
+
 
 app.use(passport.initialize());
 
