@@ -12,14 +12,7 @@ const budgetService = {
         }
     },
 
-    getOneBudget: async (id) => {
-        try {
-            const budget = await Budget.findByPk(id);
-            return budget;
-        } catch (err) {
-            throw err;
-        }
-    },
+    getOneBudget: async (id) => await Budget.findByPk(id),
 
     createOneBudget: async (budgetData) => {
         try {
@@ -56,7 +49,7 @@ const budgetService = {
             if (rowsDeleted === 0) {
                 throw new Error('Budget not found');
             }
-            return true;
+            return;
         } catch (error) {
             throw error;
         }

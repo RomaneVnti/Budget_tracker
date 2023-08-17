@@ -37,9 +37,7 @@ const budgetCtrl = {
         const { id } = req.params;
 
         budgetService.deleteOneBudget(id)
-            .then(() => {
-                res.status(200).json({ message: 'Budget deleted successfully' });
-            })
+            .then(() => res.status(204))
             .catch(error => res.status(500).json({ error: error.message }));
     },
 
@@ -47,9 +45,7 @@ const budgetCtrl = {
         const { id } = req.params;
 
         budgetService.getOneBudget(id)
-            .then(budget => {
-                res.status(200).json(budget);
-            })
+            .then(budget => res.status(200).json(budget))
             .catch(error => res.status(500).json({ error: error.message }));
     },
 

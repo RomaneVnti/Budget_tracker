@@ -1,6 +1,6 @@
 import authService from '../services/authService.js';
 
-const authController = {
+const authCtrl = {
     login: (req, res) => {
         const { email, password } = req.body;
 
@@ -10,4 +10,4 @@ const authController = {
     }
 };
 
-export default authController;
+export default authCtrl;

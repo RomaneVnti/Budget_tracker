@@ -16,8 +16,8 @@ const router = Router();
 
 
 router.use('/transaction', transactionRoutes);
-router.use('/auth', authRoutes);
+router.use('/login', authRoutes);
 router.use('/budget', budgetRoutes);
-router.use('/user', userRoutes);
+router.use('/users', userRoutes);
 
 export default router;

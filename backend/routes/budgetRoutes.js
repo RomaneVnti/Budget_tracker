@@ -3,10 +3,10 @@ import budgetCtrl from '../controllers/budgetCtrl.js'
 
 const budgetRouter = Router();
 
-budgetRouter.post('/create', budgetCtrl.createOneBudget);
-budgetRouter.put('/update/:id', budgetCtrl.updateOneBudget);
-budgetRouter.get('/getOne:id', budgetCtrl.getOneBudget);
-budgetRouter.delete('/delete/:id', budgetCtrl.deleteOneBudget);
-budgetRouter.get('/getAll', budgetCtrl.getAllBudgets);
+budgetRouter.post('/', budgetCtrl.createOneBudget);
+budgetRouter.put('/:id', budgetCtrl.updateOneBudget);
+budgetRouter.get('/:id', budgetCtrl.getOneBudget);
+budgetRouter.delete('/:id', budgetCtrl.deleteOneBudget);
+budgetRouter.get('/', budgetCtrl.getAllBudgets);
 
 export default budgetRouter;
