@@ -20,4 +20,5 @@ router.use('/login', authRoutes);
 router.use('/budget', budgetRoutes);
 router.use('/users', userRoutes);
 
+
 export default router;

@@ -53,6 +53,20 @@ const budgetService = {
         } catch (error) {
             throw error;
         }
+    },
+
+    getAllBudgetsForUser: async (userId) => {
+        try {
+            console.log("Fetching budgets for user:", userId);
+            const budgets = await Budget.findAll({
+                where: { user_id: userId }
+            });
+            console.log("Budgets for user:", budgets);
+            return budgets;
+        } catch (error) {
+            console.error("Error fetching budgets:", error);
+            throw error;
+        }
     }
 };
 
