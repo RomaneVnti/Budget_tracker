@@ -1,6 +1,8 @@
+// Importation des dépendances nécessaires
 import { DataTypes } from 'sequelize';
-import db from '../db/db.js';
+import db from '../db/db.js'; 
 
+// Définition du modèle 'Category' en utilisant Sequelize
 const Category = db.define('category', {
     category_id: {
         type: DataTypes.INTEGER,
@@ -16,8 +18,8 @@ const Category = db.define('category', {
         allowNull: true,
     },
 }, {
-    tableName: 'category', // Spécifiez le nom de table personnalisé ici
-    timestamps: false
+    tableName: 'category', // Nom de table personnalisé pour le modèle 'Category'
+    timestamps: false // Désactivation des horodatages automatiques
 });
 
 
