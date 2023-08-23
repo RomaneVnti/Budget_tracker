@@ -1,4 +1,6 @@
 import Budget from '../models/budget.js';
+import Category from '../models/category.js';
+
 
 const budgetService = {
     getAllBudgets: async () => {
@@ -68,6 +70,44 @@ const budgetService = {
         }
     },
 
+    getTotalMonthlyBudgetForUser: async (userId) => {
+        try {
+            const budgets = await budgetService.getAllBudgetsForUser(userId);
+
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth() + 1;
+            const currentYear = currentDate.getFullYear();
+
+            const budgetsOfCurrentMonth = budgets.filter(budget => {
+                const startDate = new Date(budget.budget_period_start);
+                const budgetMonth = startDate.getMonth() + 1;
+                const budgetYear = startDate.getFullYear();
+                return budgetMonth === currentMonth && budgetYear === currentYear;
+            });
+
+            const categoryLastBudgets = {};
+            for (const budget of budgetsOfCurrentMonth) {
+                try {
+                    const category = await Category.findByPk(budget.category_id);
+                    if (category) {
+                        if (!categoryLastBudgets[category.categoryName] || budget.budget_period_end > categoryLastBudgets[category.categoryName].budget_period_end) {
+                            categoryLastBudgets[category.categoryName] = budget;
+                        }
+                    }
+                } catch (error) {
+                    console.error("Error while fetching category:", error);
+                }
+            }
+
+            const totalMonthlyBudget = Object.values(categoryLastBudgets).reduce((total, budget) => {
+                return total + budget.budget_amount;
+            }, 0);
+
+            return { totalMonthlyBudget, categoryLastBudgets };
+        } catch (error) {
+            throw error;
+        }
+    },
 };
 
 export default budgetService;

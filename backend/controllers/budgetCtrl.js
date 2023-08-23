@@ -1,85 +1,66 @@
-import budgetService from '../services/budgetService.js';
-import BudgetValidation from '../validation/budgetValidation.js';
-import Category from '../models/category.js';
+// Importations des modules et services nécessaires
+import budgetService from '../services/budgetService.js'; 
+import BudgetValidation from '../validation/budgetValidation.js'; 
 
+// Contrôleur de gestion des budgets
 const budgetCtrl = {
+    // Méthode pour créer ou mettre à jour un budget
     createOneBudget: async (req, res) => {
-        const { body } = req;
-    
+        const { body } = req; 
+
+        
         const { error } = BudgetValidation(body);
         if (error) {
+            // Si des erreurs de validation sont trouvées, renvoyer une réponse avec un code d'erreur 400
             return res.status(400).json({ error: error.details[0].message });
         }
-    
+
         try {
+            // Vérifier si un budget existe déjà pour la catégorie et l'utilisateur spécifiés
             const existingBudget = await budgetService.getBudgetByCategoryAndUser(body.category_id, body.user_id);
-    
+
             if (existingBudget) {
+                // Si un budget existe, mettre à jour le budget existant
                 await budgetService.updateBudgetForCategoryAndUser(body.category_id, body.user_id, body);
                 res.status(200).json({ message: 'Budget updated successfully' });
             } else {
+                // Si aucun budget n'existe, créer-en un nouveau
                 await budgetService.createOneBudget(body);
                 res.status(201).json({ message: 'Budget created successfully' });
             }
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            // Gestion des erreurs lors de la création/mise à jour du budget
+            console.error("Error in createOneBudget:", error);
+            res.status(500).json({ error: "Une erreur est survenue lors de la création/mise à jour du budget." });
         }
     },
-    
 
-    getAllBudgets: (req, res) => {
-        budgetService.getAllBudgets()
-            .then(budgets => {
-                res.status(200).json(budgets);
-            })
-            .catch(error => res.status(500).json({ error: error.message }));
+    // Méthode pour obtenir tous les budgets
+    getAllBudgets: async (req, res) => {
+        try {
+            // Récupérez tous les budgets en utilisant le service budgetService
+            const budgets = await budgetService.getAllBudgets();
+            res.status(200).json(budgets);
+        } catch (error) {
+            // Gestion des erreurs lors de la récupération des budgets
+            console.error("Error in getAllBudgets:", error);
+            res.status(500).json({ error: "Une erreur est survenue lors de la récupération des budgets." });
+        }
     },
 
+    // Méthode pour obtenir le total mensuel des budgets d'un utilisateur
     getTotalMonthlyBudget: async (req, res) => {
-        const { id } = req.params; // Obtenez l'ID de l'utilisateur à partir des paramètres de la requête
+        const { id } = req.params; 
     
         try {
-            // Récupérez les budgets de l'utilisateur
-            const budgets = await budgetService.getAllBudgetsForUser(id);
-    
-            // Filtrer les budgets pour ne garder que ceux du mois en cours
-            const currentDate = new Date();
-            const currentMonth = currentDate.getMonth() + 1; // Janvier est 0, donc ajoutez 1 pour obtenir le mois réel
-            const currentYear = currentDate.getFullYear();
-    
-            const budgetsOfCurrentMonth = budgets.filter(budget => {
-                const startDate = new Date(budget.budget_period_start);
-                const endDate = new Date(budget.budget_period_end);
-    
-                const budgetMonth = startDate.getMonth() + 1; // Janvier est 0, donc ajoutez 1 pour obtenir le mois réel
-                const budgetYear = startDate.getFullYear();
-    
-                // Vérifiez si le budget appartient au mois en cours et à l'année en cours
-                return budgetMonth === currentMonth && budgetYear === currentYear;
-            });
-    
-            // Trouver le dernier budget pour chaque catégorie
-            const categoryLastBudgets = {};
-            for (const budget of budgetsOfCurrentMonth) {
-                const category = await Category.findByPk(budget.category_id);
-                if (category) {
-                    if (!categoryLastBudgets[category.categoryName] || budget.budget_period_end > categoryLastBudgets[category.categoryName].budget_period_end) {
-                        categoryLastBudgets[category.categoryName] = budget;
-                    }
-                }
-            }
-    
-            // Calculer le budget total mensuel en additionnant les allocations des derniers budgets
-            const totalMonthlyBudget = Object.values(categoryLastBudgets).reduce((total, budget) => {
-                return total + budget.budget_amount;
-            }, 0);
-    
-            res.status(200).json({ totalMonthlyBudget, categoryLastBudgets });
+            // Obtenez les informations sur le total mensuel du budget de l'utilisateur
+            const totalBudgetInfo = await budgetService.getTotalMonthlyBudgetForUser(id);
+            res.status(200).json(totalBudgetInfo);
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            // Gestion des erreurs lors de la récupération du total des budgets
+            res.status(500).json({ error: "Une erreur est survenue lors de la récupération du total des budgets." });
         }
-    }
+    },
 };
-
 
 export default budgetCtrl;
