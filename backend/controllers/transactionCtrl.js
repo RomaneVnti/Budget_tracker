@@ -37,6 +37,8 @@ const transactionCtrl = {
     },
 
     getAllTransactions: async (req, res) => {
+        const { id } = req.params;
+
         try {
             const transactions = await transactionService.getAllTransactions();
             res.status(200).json(transactions);
@@ -69,7 +71,18 @@ const transactionCtrl = {
         } catch (error) {
             res.status(500).json(error);
         }
+    },
+
+    getUserTransactionHistory: async (req, res) => {
+        const { id: userId } = req.params;
+
+        try {
+            const transactions = await transactionService.getUserTransactionHistory(userId);
+            res.status(200).json(transactions);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
     }
-}
+};
 
 export default transactionCtrl;

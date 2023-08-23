@@ -1,4 +1,5 @@
 import Transaction from '../models/transaction.js';
+import Category from '../models/category.js';
 
 const transactionService = {
     getAllTransactions: async () => {
@@ -6,10 +7,10 @@ const transactionService = {
             const transactions = await Transaction.findAll({
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
             });
-            return transactions;
-        } catch (err) {
-            throw err;
-        }
+                return transactions;
+            } catch (err) {
+                throw err;
+            }
     },
 
     getOneTransaction: async (id) => {
@@ -62,8 +63,21 @@ const transactionService = {
         } catch (error) {
             throw error;
         }
-    }
+    },
 
+    getUserTransactionHistory: async (userId) => {
+        try {
+            console.log("Fetching transactions for user:", userId);
+            const transactions = await Transaction.findAll({
+                where: { user_id: userId },
+            });
+    
+            console.log("Transactions for user:", transactions);
+            return transactions;
+        } catch (error) {
+            throw error;
+        }
+    }
 
 };
 
