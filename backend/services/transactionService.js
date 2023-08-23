@@ -1,18 +1,20 @@
 import Transaction from '../models/transaction.js';
-import Category from '../models/category.js';
 
+// Définition du service de gestion de transactions
 const transactionService = {
+    // Fonction pour obtenir toutes les transactions
     getAllTransactions: async () => {
         try {
             const transactions = await Transaction.findAll({
                 attributes: { exclude: ['createdAt', 'updatedAt'] }
             });
-                return transactions;
-            } catch (err) {
-                throw err;
-            }
+            return transactions;
+        } catch (err) {
+            throw err;
+        }
     },
 
+    // Fonction pour obtenir une transaction par son ID
     getOneTransaction: async (id) => {
         try {
             const transaction = await Transaction.findByPk(id);
@@ -22,6 +24,7 @@ const transactionService = {
         }
     },
 
+    // Fonction pour créer une nouvelle transaction
     createOneTransaction: async (transactionData) => {
         try {
             const newTransaction = await Transaction.create(transactionData);
@@ -31,6 +34,7 @@ const transactionService = {
         }
     },
 
+    // Fonction pour mettre à jour une transaction par son ID
     updateOneTransaction: async (id, transactionData) => {
         try {
             const transaction = await Transaction.findByPk(id);
@@ -46,6 +50,7 @@ const transactionService = {
             transaction.paymentMethod_id = transactionData.paymentMethod_id;
             transaction.category_id = transactionData.category_id;
 
+            // Sauvegarde de la transaction mise à jour
             await transaction.save();
             return transaction;
         } catch (error) {
@@ -53,6 +58,7 @@ const transactionService = {
         }
     },
 
+    // Fonction pour supprimer une transaction par son ID
     deleteOneTransaction: async (id) => {
         try {
             const rowsDeleted = await Transaction.destroy({ where: { id_transaction: id } });
@@ -65,21 +71,20 @@ const transactionService = {
         }
     },
 
+    // Fonction pour obtenir l'historique des transactions d'un utilisateur
     getUserTransactionHistory: async (userId) => {
         try {
             console.log("Fetching transactions for user:", userId);
             const transactions = await Transaction.findAll({
                 where: { user_id: userId },
             });
-    
+
             console.log("Transactions for user:", transactions);
             return transactions;
         } catch (error) {
             throw error;
         }
     }
-
 };
-
 
 export default transactionService;
