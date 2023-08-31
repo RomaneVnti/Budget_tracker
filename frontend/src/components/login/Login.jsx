@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useAuth } from '../../context/AuthContext.jsx'; // Assurez-vous que le chemin est correct
+import { useAuth } from '../../context/AuthContext'; // Assurez-vous que le chemin est correct
 import { useNavigate } from 'react-router-dom'; // Utilisez useNavigate au lieu de useHistory
 
 export default function Login() {

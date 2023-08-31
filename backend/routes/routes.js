@@ -19,6 +19,6 @@ router.use('/login', authenticate, authRoutes);
 router.use('/budget', authenticate, budgetRoutes);
 
 // Montage des routes liées aux utilisateurs sur le chemin '/users'
-router.use('/users', authenticate, userRoutes);
+router.use('/users', userRoutes);
 
 export default router;
