@@ -14,7 +14,7 @@ const authCtrl = {
 
             res.status(200).json({ message: "Vous êtes bien authentifié", user: filteredUser });
         } catch (error) {
-            res.status(401).json({ message: "L'authentification a échoué." });
+            res.status(401).json({ message: "L'authentification a échoué : informations d'identification incorrectes." });
         }
     }
 };

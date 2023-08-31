@@ -12,16 +12,15 @@ export const validateInputs = (req, res, next) => {
 };
 
 
+
 export const authenticate = async (req, res, next) => {
     try {
-        console.log("Trying to authenticate...");
         const user = await authService.authenticateUser(req.body.email, req.body.password);
-        console.log("User authenticated:", user);
         req.user = user;
         next();
     } catch (error) {
         console.error("Authentication failed:", error);
-        res.status(401).json({ message: "L'authentification a échoué." });
+        res.status(401).json({ message: "L'authentification a échoué : informations d'identification incorrectes." });
     }
 };
 
