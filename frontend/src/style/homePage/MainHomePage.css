@@ -75,7 +75,19 @@
     line-height: 1.8; /* Ajustez cette valeur selon l'espace souhaité entre les lignes */
 }
 
-/* Button */
+/* Button container*/
+
+.container-button{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 2em;
+    flex-direction: column;
+}
+/* Button blue */
+
 .small-button-blue {
     display: flex;
     flex-direction: row;
@@ -86,13 +98,13 @@
     box-sizing: border-box;
 }
 
-.button {
+.button-blue {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: 8px;
-    width: 110px;
+    width: 134px;
     height: 43px;
     padding: 10px 16px;
     border-radius: 999px;
@@ -103,17 +115,60 @@
     transition: transform 0.2s ease-in-out; /* Ajoutez une transition pour l'effet d'agrandissement */
 }
 
-.button:hover {
+.button-blue:hover {
     transform: scale(1.1); /* Agrandit le bouton au survol */
 }
 
 .get {
     color: rgba(255, 255, 255, 1);
-    font-size: 14px;
+    font-size: 12px;
     line-height: 100%;
     font-family: Lato, sans-serif;
     font-weight: 700;
 }
+
+/* Button yellow */
+
+.small-button-yellow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    box-sizing: border-box;
+}
+
+.button-yellow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100px;
+    height: 43px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    box-sizing: border-box;
+    background-color: #FFBD59 ;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out; /* Ajoutez une transition pour l'effet d'agrandissement */
+}
+
+.button-yellow:hover {
+    transform: scale(1.1); /* Agrandit le bouton au survol */
+}
+
+.create-account {
+    color: rgba(255, 255, 255, 1);
+    font-size: 12px;
+    line-height: 100%;
+    font-family: Lato, sans-serif;
+    font-weight: 700;
+}
+
+
 
   /* Media Queries pour les écrans plus larges */
   @media (min-width: 768px) {
@@ -130,6 +185,23 @@
             margin-top: 17px;
             line-height: 1.8; /* Ajustez cette valeur selon l'espace souhaité entre les lignes */
         }
+
+    .button-yellow {
+        width: 134px;
+    }
+
+    .create-account {
+        font-size: 12px;
+    }
+
+    .get {
+        font-size: 12px;    
+    }
+
+    .container-button{
+        flex-direction: row;
+        gap: 89px;
+    }
   }
   
   @media (min-width: 1024px) {
@@ -147,5 +219,17 @@
             line-height: 1.8; /* Ajustez cette valeur selon l'espace souhaité entre les lignes */
         }
 
+        .container-button{
+            flex-direction: row;
+        }
+
+        .create-account {
+            font-size: 15px;
+        }
+    
+        .get {
+            font-size: 15px;
+            gap: 89px;    
+        }
   }
   
