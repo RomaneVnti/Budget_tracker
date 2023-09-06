@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap");
+
+body {
+    margin: 0;
+}
+
+.container-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    min-height: 2em;
+    max-width: 100%; /* Définissez la largeur maximale à 100% */
+    overflow-x: auto; /* Activer le débordement horizontal si nécessaire */
+    padding-left: 1em;
+    padding-right: 2em;
+}
+
+.logo img {
+    max-width: 100%; /* Ajustez la largeur du logo si nécessaire */
+    height: 7em;
+}
+
+.burgerMenu{
+    font-size: 1.6em;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+}
+
+.button {
+    display: none;
+    gap: 0;
+}
+
+.links {
+    display: none;
+    gap: 0;
+}
+
+
+@media (min-width: 1024px) {
+    .burgerMenu{
+        display: none;
+    }
+
+    .container-header {
+        padding-left: 6em;
+        padding-right: 6em;
+    }
+
+    .links {
+        display: flex;
+        gap: 10em;
+        align-items: center;
+    }
+
+    .links a { 
+        text-decoration: none;
+        font-family: Lato, sans-serif;
+        font-size: 16px;
+        color: #373844;
+        font-weight: bold;
+    }
+
+    .links a:hover{
+        color:#FFBD59 ;
+    }
+
+    .small-button-false {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100px;
+        height: 40px;
+        box-sizing: border-box;
+    }
+    
+    .button {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        width: 110px;
+        height: 43px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        box-sizing: border-box;
+        background-color: rgba(43, 46, 74, 1);
+        white-space: nowrap;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out; /* Ajoutez une transition pour l'effet d'agrandissement */
+    }
+
+    .button:hover {
+        transform: scale(1.1); /* Agrandit le bouton au survol */
+    }
+    
+    .get-it {
+        color: rgba(255, 255, 255, 1);
+        font-size: 14px;
+        line-height: 100%;
+        font-family: Lato, sans-serif;
+        font-weight: 700;
+    }
+    
+
+}

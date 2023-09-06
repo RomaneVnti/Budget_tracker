@@ -1,0 +1,151 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap");
+
+/* Image */
+.imgFinance_tracker img {
+    width: 100%;
+    max-height: 100%; /* Pour s'assurer que l'image ne dépasse pas la hauteur de l'écran */
+    opacity: 25%;
+    position: relative; /* Ajoutez cette ligne pour définir le contexte de positionnement */
+  }
+  
+  .imgFinance_tracker {
+    position: relative;
+    max-width: 100%; /* Assurez-vous que le conteneur de l'image ne dépasse pas la largeur de l'écran */
+  }
+  
+/* Texte Title */
+.text-overlay {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    font-family: Lato, sans-serif;
+    text-align: center;
+    width: 80%; /* Utilisez un pourcentage pour que le texte soit responsif */
+    max-width: 800px; /* Limitez la largeur du texte pour de grands écrans */
+    margin: 0 auto; /* Centrez le texte horizontalement */
+}
+
+
+.text-container {
+    width: 100%; /* Ajustez la largeur selon vos besoins */
+}
+
+.texte_title {
+    font-size: 4vw; /* La taille de police sera basée sur la largeur de la fenêtre d'affichage */
+}
+
+.blue-text {
+    text-transform: uppercase;
+    color: #2B2E4A;
+    display: inline-block;
+    vertical-align: middle;
+    width: auto; /* Ajustez la largeur selon vos besoins */
+}
+
+.yellow-text {
+    text-transform: uppercase;
+    color: #FFBD59;
+    
+}
+
+.blue-text, .yellow-text {
+    display: inline-block;
+    vertical-align: middle;
+    width: auto; /* Ajustez la largeur selon vos besoins */
+    margin-right: 2px; /* Pour ajouter un espace entre les deux éléments */
+}
+
+.blue-text, .yellow-text, .title {
+    font-weight: bold;
+}
+
+.title {
+    text-transform: uppercase;
+    color: #FFBD59;
+
+}
+  
+/* Texte subtitle */
+.Subtitle{
+    font-family: Lato, sans-serif ;
+    font-size: 3vw;
+    margin-top: 20px;
+    line-height: 1.8; /* Ajustez cette valeur selon l'espace souhaité entre les lignes */
+}
+
+/* Button */
+.small-button-blue {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    box-sizing: border-box;
+}
+
+.button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 110px;
+    height: 43px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    box-sizing: border-box;
+    background-color: rgba(43, 46, 74, 1);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out; /* Ajoutez une transition pour l'effet d'agrandissement */
+}
+
+.button:hover {
+    transform: scale(1.1); /* Agrandit le bouton au survol */
+}
+
+.get {
+    color: rgba(255, 255, 255, 1);
+    font-size: 14px;
+    line-height: 100%;
+    font-family: Lato, sans-serif;
+    font-weight: 700;
+}
+
+  /* Media Queries pour les écrans plus larges */
+  @media (min-width: 768px) {
+    .blue-text, .yellow-text {
+        margin-right: 3px; /* Espacement pour les écrans de largeur moyenne */
+    }
+
+    .texte_title {
+        font-size: 2.9vw; /* La taille de police sera basée sur la largeur de la fenêtre d'affichage */
+    }
+
+    .Subtitle{
+            font-size: 0.813em;
+            margin-top: 17px;
+            line-height: 1.8; /* Ajustez cette valeur selon l'espace souhaité entre les lignes */
+        }
+  }
+  
+  @media (min-width: 1024px) {
+        .blue-text, .yellow-text {
+            margin-right: 5px; /* Espacement pour les écrans plus larges */
+        }
+
+        .texte_title {
+            font-size:1.063; /* La taille de police sera basée sur la largeur de la fenêtre d'affichage */
+        }
+
+        .Subtitle{
+            font-size: 1.25em;
+            margin-top: 17px;
+            line-height: 1.8; /* Ajustez cette valeur selon l'espace souhaité entre les lignes */
+        }
+
+  }
+  
