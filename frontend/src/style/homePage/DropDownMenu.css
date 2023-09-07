@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap");
+
+/* Styles pour la liste déroulante */
+.dropdown-menu {
+    position: absolute; /* Utilisez "relative" au lieu d'"absolute" pour positionner par rapport à la position normale */
+    display: none;
+    background-color: #fff;
+    z-index: 9999 !important;
+    top: 6.1em; /* Déplacez la div de 20 pixels vers le bas par rapport à sa position normale */
+    right: 0; 
+    width: 100%;
+    text-align: center;
+    align-items: center;
+  }
+  
+  /* Style pour les éléments de la liste */
+  .dropdown-menu li {
+    list-style: none;
+    width: 100%;
+    align-items: center;
+  }
+  
+  /* Style pour les liens de la liste */
+  .dropdown-menu li a {
+        display: flex;
+        align-items: center; /* Centre verticalement */
+        justify-content: center; /* Centre horizontalement */
+        padding: 10px 0; /* Ajustez la marge pour centrer correctement */
+        text-decoration: none;
+        color: #373844;
+        transition: background-color 0.9s ease;
+        width: 100%;
+        font-size: 1.3em;
+        font-weight: Lato, sans-serif;
+    }
+  
+  
+  /* Style au survol des liens de la liste */
+  .dropdown-menu li a:hover {
+    background-color: #FFBD59;
+  }
+  
+  /* Style pour la liste déroulante active */
+  .dropdown-menu.active {
+    display: block;
+  }

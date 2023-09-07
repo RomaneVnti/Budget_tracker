@@ -82,7 +82,7 @@
     align-items: center;
     text-align: center;
     justify-content: center;
-    gap: 20px;
+    gap: 3em;
     padding-top: 2em;
     flex-direction: column;
 }
@@ -104,8 +104,8 @@
     justify-content: center;
     align-items: center;
     gap: 8px;
-    width: 134px;
-    height: 43px;
+    width: 30vw;
+    height: 5vh;
     padding: 10px 16px;
     border-radius: 999px;
     box-sizing: border-box;
@@ -121,7 +121,7 @@
 
 .get {
     color: rgba(255, 255, 255, 1);
-    font-size: 12px;
+    font-size: 2.5vw;
     line-height: 100%;
     font-family: Lato, sans-serif;
     font-weight: 700;
@@ -145,8 +145,8 @@
     justify-content: center;
     align-items: center;
     gap: 8px;
-    width: 100px;
-    height: 43px;
+    width: 30vw;
+    height: 5vh;
     padding: 10px 16px;
     border-radius: 999px;
     box-sizing: border-box;
@@ -162,17 +162,48 @@
 
 .create-account {
     color: rgba(255, 255, 255, 1);
-    font-size: 12px;
+    font-size: 2.5vw;
     line-height: 100%;
     font-family: Lato, sans-serif;
     font-weight: 700;
 }
 
+/* LogoBox */
+.container-logoBox{
+    font-size: 8vw;
+    color: #FFBD59;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 1em;
+    padding-top: 1.4em;
+    box-sizing: border-box;    
+}
 
+.box-text {
+    width: 60vw;
+    height: 15vh;
+    background-color: #6C6D81;
+    display: flex;
+    align-items: center;
+    border-radius: 0.2em;
+    overflow: hidden;
+    justify-content: center;
+}
+
+.box-paragraphe {
+    color:  white;
+    font-family: Lato, sans-serif;
+    font-size: 3.1vw;
+    text-align: center;
+    line-height: 1.8;
+}
 
   /* Media Queries pour les écrans plus larges */
   @media (min-width: 768px) {
-    .blue-text, .yellow-text {
+    .blue-text,
+    .yellow-text {
         margin-right: 3px; /* Espacement pour les écrans de largeur moyenne */
     }
 
@@ -180,11 +211,11 @@
         font-size: 2.9vw; /* La taille de police sera basée sur la largeur de la fenêtre d'affichage */
     }
 
-    .Subtitle{
-            font-size: 0.813em;
-            margin-top: 17px;
-            line-height: 1.8; /* Ajustez cette valeur selon l'espace souhaité entre les lignes */
-        }
+    .Subtitle {
+        font-size: 0.813em;
+        margin-top: 17px;
+        line-height: 1.8; /* Ajustez cette valeur selon l'espace souhaité entre les lignes */
+    }
 
     .button-yellow {
         width: 134px;
@@ -195,14 +226,33 @@
     }
 
     .get {
-        font-size: 12px;    
+        font-size: 12px;
     }
 
-    .container-button{
+    .container-button {
         flex-direction: row;
         gap: 89px;
     }
-  }
+
+    .container-logoBox {
+        flex-direction: row;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        gap: 2em;
+        font-size: 5vw;
+    }
+
+    .box-text {
+        width: 17vw; /* Ajustez la largeur en fonction de vos besoins */
+        height: 11vh;
+    }
+
+    .box-paragraphe {
+        font-size: 1.4vw;
+    }
+}
+
   
   @media (min-width: 1024px) {
         .blue-text, .yellow-text {
@@ -210,11 +260,11 @@
         }
 
         .texte_title {
-            font-size:1.063; /* La taille de police sera basée sur la largeur de la fenêtre d'affichage */
+            font: size 1.063em;; /* La taille de police sera basée sur la largeur de la fenêtre d'affichage */
         }
 
         .Subtitle{
-            font-size: 1.25em;
+            font-size: 1.2vw;
             margin-top: 17px;
             line-height: 1.8; /* Ajustez cette valeur selon l'espace souhaité entre les lignes */
         }
@@ -231,5 +281,36 @@
             font-size: 15px;
             gap: 89px;    
         }
+
+        .box-text {
+            width: 20vw;
+            height: 13vh;
+        }
+
+        .box-paragraphe{
+            font-size: 1.3vw;
+        }
+
+        .container-logoBox{
+            font-size: 3.2vw;
+
+        }
+        
   }
-  
+
+  @media (min-width: 1400px) {
+    .container-logoBox{
+        padding-top: 2em;
+        gap: 3.2em;        
+    }
+
+    .box-text{
+        width: 17vw;
+        height: 17vh;
+        
+    }
+
+    .box-paragraphe{
+        font-size: 1.2vw;
+    }
+  }

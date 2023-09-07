@@ -1,7 +1,9 @@
+// HeaderHomePage.jsx
 import React, { useState, useEffect } from 'react';
 import logo from '../../assets/logo3.png';
 import '../../style/homePage/HeaderHomePage.css';
 import { AiOutlineMenu } from 'react-icons/ai';
+import DropdownMenu from './DropDownMenu'; // Importez le composant DropdownMenu
 
 export default function HeaderHomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,36 +27,31 @@ export default function HeaderHomePage() {
   }, []);
 
   return (
-  <header className='Header'>
-    <nav>
-      <div className="container-header">
-        <div className="logo">
-        <img src={logo} alt="Logo" />
-      </div>
+    <header className='Header'>
+      <nav>
+        <div className="container-header">
+          <div className="logo">
+            <img src={logo} alt="Logo" />
+          </div>
 
-      <div className="links">
-        <a className="about-link" href="/a-propos">À propos</a>
-        <div className="small-button-false">
-            <div className="button clip-contents">
-              <p className="get-it">Se connecter</p>
+          <div className="links">
+            <a className="about-link" href="/a-propos">À propos</a>
+            <div className="small-button-false">
+              <div className="button clip-contents">
+                <p className="get-it">Se connecter</p>
+              </div>
             </div>
+          </div>
+
+          {/* Bouton du menu burger */}
+          <div className="burgerMenu" onClick={toggleMenu}>
+            <AiOutlineMenu />
+          </div>
+
+          {/* Utilisez le composant DropdownMenu ici */}
+          <DropdownMenu isOpen={menuOpen} />
         </div>
-      </div>
-
-      {/* Bouton du menu burger */}
-      <div className="burgerMenu" onClick={toggleMenu}>
-        <AiOutlineMenu />
-      </div>
-
-      {/* Menu déroulant */}
-      <ul className={`dropdown-menu ${menuOpen ? 'active' : ''}`}>
-        <li><a href="/a-propos">À propos</a></li>
-        <li><a href="/se-connecter">Se connecter</a></li>
-      </ul>
-        </div>
-    </nav>
-
-      
-  </header>
+      </nav>
+    </header>
   );
 }
