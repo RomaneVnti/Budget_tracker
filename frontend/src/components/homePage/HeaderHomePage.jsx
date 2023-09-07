@@ -29,7 +29,6 @@ export default function HeaderHomePage() {
   }, []);
 
   const handleClick = () => {
-    console.log('Clic sur le bouton Se connecter'); // Ajoutez cette ligne
     toggleLoginForm(); // Utilisez la fonction toggleLoginForm pour ouvrir le formulaire
   };
 

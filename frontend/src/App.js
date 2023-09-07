@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext'; // Assurez-vous que le che
 import Login from './components/login/Login';
 import Register from './components/register/Register';
 import HomePage from './components/homePage/HomePage';
+import HeaderDashBoard from './components/dashboard/HeaderDashBoard';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/homePage" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />  
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<HeaderDashBoard />} />
       </Routes>
     </AuthProvider>
   );

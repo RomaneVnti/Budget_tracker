@@ -77,10 +77,10 @@ export default function MainHomePage() {
 
       {/* Affichez le formulaire de connexion s'il est visible */}
       {isLoginFormVisible && (
-        <div className="login-form-container">
-          <Login />
-        </div>
-      )}
+      <div className={`login-form-container ${isLoginFormVisible ? 'visible' : ''}`}>
+        <Login />
+      </div>
+    )}
     </main>
   );
 }

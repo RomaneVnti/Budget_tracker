@@ -1,18 +1,20 @@
 /* Styles pour le formulaire */
 .form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0 auto;
-    width: 300px; /* Ajustez la largeur selon vos besoins */
-    border: 1px solid #ccc;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 300px; /* Ajustez la largeur selon vos besoins */
+  border: 1px solid #ccc;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: fixed; /* Position fixe pour rester en haut */
+  top: 20%; /* Aligner le formulaire en haut */
+  left: 50%; /* Aligner le formulaire au centre horizontalement */
+  transform: translateX(-50%); /* Centrer le formulaire horizontalement */
+  z-index: 9999; /* Assurez-vous qu'il est au-dessus du reste du contenu */
+}
   /* Styles pour les éléments du formulaire */
   .form input {
     width: 100%;
@@ -43,3 +45,12 @@
     margin-top: 10px;
   }
   
+  /* Style pour le formulaire visible */
+.login-form-container.visible {
+  display: block;
+}
+
+/* Style pour le formulaire invisible */
+.login-form-container {
+  display: none;
+}

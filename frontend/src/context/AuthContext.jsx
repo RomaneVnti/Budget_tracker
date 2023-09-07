@@ -9,7 +9,6 @@ export const AuthProvider = ({ children }) => {
 
   // Fonction pour ouvrir/fermer le formulaire
   const toggleLoginForm = () => {
-    console.log("Clic sur le bouton Se connecter");
     setIsLoginFormVisible(!isLoginFormVisible);
   };
 
