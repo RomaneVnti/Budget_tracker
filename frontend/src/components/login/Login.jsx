@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext'; // Assurez-vous que le chemin est correct
 import { useNavigate } from 'react-router-dom'; // Utilisez useNavigate au lieu de useHistory
+import '../../style/login/Login.css';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -34,21 +35,24 @@ export default function Login() {
 
   return (
     <div>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
-
-      {errorMessage && <div className="error-message">{errorMessage}</div>}
+      <form className="form" action="">
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
+        <button onClick={handleLogin}>Login</button>
+  
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+      </form>
     </div>
   );
+  
 }

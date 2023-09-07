@@ -1,0 +1,45 @@
+/* Styles pour le formulaire */
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0 auto;
+    width: 300px; /* Ajustez la largeur selon vos besoins */
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Styles pour les éléments du formulaire */
+  .form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff; /* Couleur de fond du bouton */
+    color: #fff; /* Couleur du texte du bouton */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transition de couleur de fond en survol */
+  }
+  
+  .form button:hover {
+    background-color: #0056b3; /* Couleur de fond du bouton au survol */
+  }
+  
+  /* Styles pour les messages d'erreur */
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  

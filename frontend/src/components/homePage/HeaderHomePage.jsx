@@ -1,12 +1,14 @@
-// HeaderHomePage.jsx
 import React, { useState, useEffect } from 'react';
+import '../../style/login/Login.css';
 import logo from '../../assets/logo3.png';
 import '../../style/homePage/HeaderHomePage.css';
 import { AiOutlineMenu } from 'react-icons/ai';
 import DropdownMenu from './DropDownMenu'; // Importez le composant DropdownMenu
+import { useAuth } from '../../context/AuthContext'; // Importez useAuth
 
 export default function HeaderHomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { toggleLoginForm } = useAuth(); // Utilisez useAuth pour accéder à toggleLoginForm
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -26,6 +28,11 @@ export default function HeaderHomePage() {
     };
   }, []);
 
+  const handleClick = () => {
+    console.log('Clic sur le bouton Se connecter'); // Ajoutez cette ligne
+    toggleLoginForm(); // Utilisez la fonction toggleLoginForm pour ouvrir le formulaire
+  };
+
   return (
     <header className='Header'>
       <nav>
@@ -36,7 +43,8 @@ export default function HeaderHomePage() {
 
           <div className="links">
             <a className="about-link" href="/a-propos">À propos</a>
-            <div className="small-button-false">
+            <div className="small-button-false" onClick={toggleLoginForm}>
+              {/* Utilisez la fonction handleClick pour ouvrir le formulaire */}
               <div className="button clip-contents">
                 <p className="get-it">Se connecter</p>
               </div>

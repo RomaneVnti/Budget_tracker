@@ -1,15 +1,13 @@
-// AuthContext.js
+// AuthProvider.js
 import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isLoginFormVisible, setIsLoginFormVisible] = useState(false); // Nouvel état pour gérer la visibilité du formulaire
+  const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
 
-  // Fonction pour ouvrir/fermer le formulaire
   const toggleLoginForm = () => {
-    console.log("Clic sur le bouton Se connecter");
     setIsLoginFormVisible(!isLoginFormVisible);
   };
 
@@ -19,5 +17,3 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);
