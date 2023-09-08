@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
   width: 75vw; /* Ajustez la largeur selon vos besoins */
-  height: 24vh;
+  height: 40vh;
   border: 1px solid #ccc;
   padding: 20px;
   background-color: #fff;
@@ -18,7 +18,7 @@
   left: 50%; /* Aligner le formulaire au centre horizontalement */
   transform: translateX(-50%); /* Centrer le formulaire horizontalement */
   z-index: 9999; /* Assurez-vous qu'il est au-dessus du reste du contenu */
-  
+  max-width: 800px; /* Remplacez 400px par la largeur maximale souhaitée */  
 }
   /* Styles pour les éléments du formulaire */
   .form input {
@@ -31,6 +31,8 @@
     box-sizing: border-box;
     background-color: rgba(255, 255, 255, 1);
     outline: none;
+    max-width: 600px; /* Hauteur maximale pour le bouton */
+
   }
   
   .form button {
@@ -42,6 +44,8 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease; /* Transition de couleur de fond en survol */
+    max-height: 30px; /* Hauteur maximale pour le bouton */
+    padding-top: 4em;
   }
   
   .form button:hover {
@@ -91,21 +95,23 @@ h3{
   color:white;
 }
 
-.button-login{
+.button-login {
   display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    width: 80vw;
-    height: 4.5vh;
-    padding: 10px 16px;
-    border-radius: 999px;
-    box-sizing: border-box;
-    background-color: #FFBD59 ;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out; /* Ajoutez une transition pour l'effet d'agrandissement */
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 100%; /* Utilisez 100% de la largeur de la div parente */
+  max-width: 200px; /* Définissez une largeur maximale pour le bouton */
+  height: 4.5vh;
+  padding: 10px 16px;
+  border-radius: 999px;
+  box-sizing: border-box;
+  background-color: #FFBD59;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  margin: 0 auto; /* Centre le bouton horizontalement */
 }
 
 .button-login:hover {

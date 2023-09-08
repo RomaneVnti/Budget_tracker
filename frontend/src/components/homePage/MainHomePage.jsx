@@ -6,13 +6,18 @@ import { TbPigMoney } from 'react-icons/tb';
 import { BsCalendar4Week } from 'react-icons/bs';
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { useAuth } from '../../context/AuthContext'; // Importez useAuth
+import Register from '../register/Register';
 
 export default function MainHomePage() {
-  const { isLoginFormVisible, toggleLoginForm } = useAuth(); // Utilisez useAuth pour accéder à isLoginFormVisible et toggleLoginForm
+  const { isLoginFormVisible, toggleLoginForm, isRegisterFormVisible, toggleRegisterForm } = useAuth(); // Ajoutez la fonction et l'état du formulaire de création de compte
   
   // Fonction pour fermer le formulaire
   const handleCloseLoginForm = () => {
     toggleLoginForm();
+  };
+
+  const handleCloseRegisterForm = () => {
+    toggleRegisterForm(); // Ajoutez la logique pour fermer le formulaire de création de compte
   };
   
   return (
@@ -39,7 +44,7 @@ export default function MainHomePage() {
                 <p className="get">Se connecter</p>
               </div>
             </div>
-            <div className="small-button-yellow">
+            <div className="small-button-yellow" onClick={toggleRegisterForm}>
               <div className="button-yellow">
                 <p className="create-account">Créer un compte</p>
               </div>
@@ -86,6 +91,12 @@ export default function MainHomePage() {
         <Login onClose={handleCloseLoginForm} />
       </div>
     )}
+
+{isRegisterFormVisible && ( // Affichez le formulaire de création de compte s'il est visible
+        <div className={`login-form-container ${isRegisterFormVisible ? 'visible' : ''}`}>
+          <Register onClose={handleCloseRegisterForm} />
+        </div>
+      )}
     </main>
   );
 }
