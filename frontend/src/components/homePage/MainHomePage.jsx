@@ -9,7 +9,12 @@ import { useAuth } from '../../context/AuthContext'; // Importez useAuth
 
 export default function MainHomePage() {
   const { isLoginFormVisible, toggleLoginForm } = useAuth(); // Utilisez useAuth pour accéder à isLoginFormVisible et toggleLoginForm
-
+  
+  // Fonction pour fermer le formulaire
+  const handleCloseLoginForm = () => {
+    toggleLoginForm();
+  };
+  
   return (
     <main>
       <div className='imgFinance_tracker'>
@@ -78,7 +83,7 @@ export default function MainHomePage() {
       {/* Affichez le formulaire de connexion s'il est visible */}
       {isLoginFormVisible && (
       <div className={`login-form-container ${isLoginFormVisible ? 'visible' : ''}`}>
-        <Login />
+        <Login onClose={handleCloseLoginForm} />
       </div>
     )}
     </main>

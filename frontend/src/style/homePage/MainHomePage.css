@@ -200,6 +200,7 @@
     line-height: 1.8;
 }
 
+
   /* Media Queries pour les écrans plus larges */
   @media (min-width: 768px) {
     .blue-text,

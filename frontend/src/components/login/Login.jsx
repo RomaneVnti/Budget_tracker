@@ -3,8 +3,9 @@ import axios from 'axios';
 import { useAuth } from '../../context/AuthContext'; // Assurez-vous que le chemin est correct
 import { useNavigate } from 'react-router-dom'; // Utilisez useNavigate au lieu de useHistory
 import '../../style/login/Login.css';
+import {IoMdClose} from 'react-icons/io';
 
-export default function Login() {
+export default function Login({ onClose }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -13,7 +14,6 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log('Fonction handleLogin appelée'); // Ajoutez cette ligne
 
     try {
       const response = await axios.post('http://localhost:8000/login', {
@@ -36,9 +36,18 @@ export default function Login() {
     }
   };
 
+  const handleClose = () => {
+    onClose(); // Appelez la fonction onClose pour fermer le formulaire
+  };
+
   return (
     <div>
+      
       <form className="form" action="">
+        <div className="icon-close" onClick={handleClose}>
+        <IoMdClose/>
+        </div>
+        <h3>Connectez-vous</h3>
         <input
           type="email"
           placeholder="Email"
@@ -51,7 +60,12 @@ export default function Login() {
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        <button onClick={handleLogin}>Login</button>
+        <div className="small-button-blue" onClick={handleLogin}>
+              {/* Utilisez la fonction toggleLoginForm pour ouvrir le formulaire */}
+              <div className="button-login">
+                <p className="btnLogin">Login</p>
+              </div>
+        </div>
   
         {errorMessage && <div className="error-message">{errorMessage}</div>}
       </form>

@@ -1,10 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap");
+
+
 /* Styles pour le formulaire */
 .form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 300px; /* Ajustez la largeur selon vos besoins */
+  width: 75vw; /* Ajustez la largeur selon vos besoins */
+  height: 24vh;
   border: 1px solid #ccc;
   padding: 20px;
   background-color: #fff;
@@ -14,14 +18,19 @@
   left: 50%; /* Aligner le formulaire au centre horizontalement */
   transform: translateX(-50%); /* Centrer le formulaire horizontalement */
   z-index: 9999; /* Assurez-vous qu'il est au-dessus du reste du contenu */
+  
 }
   /* Styles pour les éléments du formulaire */
   .form input {
-    width: 100%;
+    width: 77vw;
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid rgba(43, 46, 74, 1);
+    border-radius: 10px;
+    height: 5vh;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 1);
+    outline: none;
   }
   
   .form button {
@@ -53,4 +62,53 @@
 /* Style pour le formulaire invisible */
 .login-form-container {
   display: none;
+}
+
+.icon-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px; /* Facultatif : ajoutez un espace autour de l'icône */
+  cursor: pointer;
+  font-size: 1.8em;
+  color:#2B2E4A; /* Changez la couleur ici */
+}
+
+.icon-close:hover{
+  color:#FFBD59;
+}
+
+h3{
+  color:#2B2E4A;
+  font-family: Lato, sans-serif;
+  margin-bottom: 1.6em;
+}
+
+.btnLogin{
+  font-size: 1em;
+  font-family: Lato, sans-serif;
+  font-weight: bold;
+  color:white;
+}
+
+.button-login{
+  display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 80vw;
+    height: 4.5vh;
+    padding: 10px 16px;
+    border-radius: 999px;
+    box-sizing: border-box;
+    background-color: #FFBD59 ;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out; /* Ajoutez une transition pour l'effet d'agrandissement */
+}
+
+.button-login:hover {
+  transform: scale(1.1); /* Agrandit le bouton au survol */
+
 }
