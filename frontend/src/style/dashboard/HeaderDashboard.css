@@ -3,6 +3,113 @@
 
 .navigationLinks {
     display: flex; /* Utilisation de flexbox pour placer les éléments côte à côte */
-    gap: 20px; /* Ajustez la valeur selon l'espace souhaité entre les liens */
+    gap: 1.6em; /* Ajustez la valeur selon l'espace souhaité entre les liens */
 }
   
+.main{
+    background-color: #f3f3f3; /* Vous pouvez ajuster la couleur en fonction de vos préférences */
+    height: 65vh;
+}
+
+.titleFirstName {
+    font-style: italic; /* Rend le texte en italique */
+    margin-left: 1em; /* Décale le texte vers la droite */
+    padding-top: 1em;
+    color: #2B2E4A;
+    font-family: Lato, sans-serif;
+    font-size: 1em;
+}
+
+.Title {
+    text-align: center; /* Centre le texte horizontalement dans la div */
+    display: flex;
+    flex-direction: column; /* Affiche les éléments en colonne */
+    justify-content: flex-start; /* Aligne les éléments en haut de la div */
+    max-width: 15em;
+    margin: 1em auto 0; /* Marge supérieure négative pour remonter davantage la div */
+    max-height: 6em;
+    
+  }
+
+  h1{
+    font-size: 1.6em;
+    font-family: Lato, sans-serif;
+    color: #2B2E4A;
+    font-style: normal;
+    line-height: normal;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 700;
+
+}
+
+.subtitle2{
+    font-weight: 400;
+}
+
+.BoxDepense {
+    display: flex;
+    align-items: center; /* Centre verticalement */
+    height: 60vh; /* Hauteur de la fenêtre visible */
+    flex-direction: column;
+    padding-top: 2em;
+}
+.BoxtitleDepensePrevisionnelle,
+.BoxtitleDepenseReelle,
+.BudgetRestant {
+    display: flex;
+    flex-direction: column; /* Une colonne pour les petits écrans */
+    margin: 0 auto 10px; /* Marge extérieure avec espace en bas pour les séparer */
+    padding: 10px; /* Espacement intérieur pour un espace à l'intérieur des div */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Ombre pour plus de séparation visuelle */
+    width: 12em;
+    height: 3em;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+.BoxtitleDepensePrevisionnelle{
+    background-color:#6C6D81 ;
+}
+  
+.BoxtitleDepenseReelle{
+    background-color:#CFB36A ;
+}
+
+.BudgetRestant{
+    background-color: #B6C597;
+}
+
+  
+  .titleDepense{
+    color:#f3f3f3 ;
+    font-family: Lato, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+    font-size: 1em;
+  }
+
+@media (min-width: 700px) {
+    .Title {
+        margin: -2em auto 0; /* Marge supérieure négative pour remonter davantage la div */
+      }
+
+    .BoxDepense{
+        flex-direction: row;
+        height: 20vh;
+        margin: 0 auto
+    }
+
+    .main{
+        height: 39vh;
+    }
+}
+
+@media (min-width: 1024px) {
+    .BoxDepense{
+        width: 63em;
+        margin: 0 auto
+    }
+}
