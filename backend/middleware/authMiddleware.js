@@ -20,8 +20,9 @@ export const authenticate = async (req, res, next) => {
         next();
     } catch (error) {
         console.error("Authentication failed:", error);
-        res.status(401).json({ message: "L'authentification a échoué : informations d'identification incorrectes." });
+        res.status(401).json({ message: " L'authentification a échoué : informations d'identification incorrectes." });
     }
 };
+
 
 

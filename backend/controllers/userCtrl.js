@@ -75,6 +75,8 @@ const userCtrl = {
             })
             .catch(error => res.status(500).json({ error: 'Server error' }));  // Gestion des erreurs
     }
+
+    
 };
 
 export default userCtrl;

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'; // Utilisez useNavigate au lieu 
 import '../../style/login/Login.css';
 import {IoMdClose} from 'react-icons/io';
 
-export default function Login({ onClose }) {
+export default function Login({onClose}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -21,20 +21,14 @@ export default function Login({ onClose }) {
         password: password,
       });
 
-      setUser({
-        id: response.data.user.id, // Assurez-vous de récupérer l'ID de l'utilisateur depuis la réponse du serveur
-        firstName: response.data.user.firstName, // Ajoutez d'autres informations utilisateur si nécessaire
-      });
-    
       console.log('Réponse du backend :', response.data); // Ajoutez cette ligne
-    
+
       setUser(response.data.user);
-    
+
       const token = response.data.token; // Extrait le token de la réponse
       localStorage.setItem('auth_token', token); // Stocke le token localement
-    
       navigate('/dashboard');
-    
+
     } catch (error) {
       console.error('Erreur lors de la tentative de connexion :', error); // Ajoutez cette ligne
       if (error.response && error.response.data && error.response.data.message) {

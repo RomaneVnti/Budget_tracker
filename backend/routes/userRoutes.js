@@ -2,6 +2,7 @@
 import { Router } from 'express';
 import userCtrl from '../controllers/userCtrl.js';
 
+
 // Création d'un nouvel objet de routeur Express
 const userRouter = Router();
 
@@ -19,5 +20,7 @@ userRouter.delete('/:id', userCtrl.deleteUser);
 
 // Route GET pour obtenir tous les utilisateurs
 userRouter.get('/', userCtrl.getAllUsers);
+
+
 
 export default userRouter;
