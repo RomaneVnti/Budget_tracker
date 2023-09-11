@@ -20,10 +20,7 @@ const User = db.define('user', {
         allowNull: true,
         unique: true // Chaque utilisateur a un identifiant unique
     },
-    username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
+   
     email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -43,10 +40,8 @@ const User = db.define('user', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    lastName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
+    
+    
 });
 
 // Avant de sauvegarder l'utilisateur, cryptez son mot de passe

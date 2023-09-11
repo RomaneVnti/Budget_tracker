@@ -2,26 +2,32 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import '../../style/login/Login.css'; // Réutilisez le CSS du formulaire de connexion
-import { IoMdClose } from 'react-icons/io'; // Importez IoMdClose depuis la bibliothèque d'icônes
-
+import '../../style/login/Login.css';
+import { IoMdClose } from 'react-icons/io';
 
 export default function Register({ onClose }) {
   const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   const { setUser } = useAuth();
 
+  const isEmailValid = (email) => {
+    // Utilisez une expression régulière pour valider l'email
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(email);
+  };
+
   const handleRegister = async () => {
+    if (!isEmailValid(email)) {
+      setErrorMessage('Veuillez saisir une adresse email valide.');
+      return;
+    }
+
     try {
       const response = await axios.post('http://localhost:8000/users', {
         firstName: firstName,
-        lastName: lastName,
-        username: username,
         email: email,
         password: password,
       });
@@ -42,16 +48,13 @@ export default function Register({ onClose }) {
   };
 
   const handleCloseRegister = () => {
-    onClose(); // Appelez la fonction onClose pour fermer le formulaire de création de compte
+    onClose();
   };
-
 
   return (
     <div>
-      {/* Réutilisez la structure HTML du formulaire de connexion */}
       <form className="form" action="">
         <div className="icon-close" onClick={handleCloseRegister}>
-          {/* Icône de fermeture */}
           <IoMdClose />
         </div>
         <h3>Créer un compte</h3>
@@ -60,18 +63,6 @@ export default function Register({ onClose }) {
           placeholder="Prénom"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Nom"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Pseudo"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
         />
         <input
           type="email"
@@ -87,7 +78,7 @@ export default function Register({ onClose }) {
         />
         <div className="small-button-blue" onClick={handleRegister}>
           <div className="button-login">
-            <p className="btnLogin">Register</p>
+            <p className="btnLogin">Valider</p>
           </div>
         </div>
 

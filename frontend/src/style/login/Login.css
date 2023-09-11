@@ -11,7 +11,7 @@
   height: 40vh;
   border: 1px solid #ccc;
   padding: 20px;
-  background-color: #fff;
+  background-color: #edebeb;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   position: fixed; /* Position fixe pour rester en haut */
   top: 20%; /* Aligner le formulaire en haut */

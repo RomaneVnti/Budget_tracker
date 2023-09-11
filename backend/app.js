@@ -5,6 +5,7 @@ import passport from 'passport';
 import cors from 'cors';
 
 
+
 const app = express();
 
 //configuration de CORS pour autoriser les requêtes provenant de localhost 3000
