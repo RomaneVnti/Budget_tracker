@@ -4,7 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './components/login/Login';
 import Register from './components/register/Register';
 import HomePage from './components/homePage/HomePage';
-import HeaderDashBoard from './components/dashboard/HeaderDashBoard';
+import Dashboard from './components/dashboard/Dashboard';
 
 function PrivateRoute({ path, element }) {
   const { user } = useAuth();
@@ -12,7 +12,7 @@ function PrivateRoute({ path, element }) {
   return user ? (
     element
   ) : (
-    <Navigate to="/login" replace state={{ from: path }} />
+    <Navigate to="/homePage" replace state={{ from: path }} />
   );
 }
 
@@ -27,7 +27,7 @@ function App() {
         {/* Utilisez PrivateRoute pour protéger le tableau de bord */}
         <Route
           path="/dashboard"
-          element={<PrivateRoute element={<HeaderDashBoard />} />}
+          element={<PrivateRoute element={<Dashboard />} />}
         />
       </Routes>
     </AuthProvider>

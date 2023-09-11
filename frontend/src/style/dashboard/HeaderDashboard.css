@@ -1,0 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap");
+
+
+.navigationLinks {
+    display: flex; /* Utilisation de flexbox pour placer les éléments côte à côte */
+    gap: 20px; /* Ajustez la valeur selon l'espace souhaité entre les liens */
+}
+  

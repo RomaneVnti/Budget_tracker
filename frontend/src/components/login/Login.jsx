@@ -8,6 +8,7 @@ import {IoMdClose} from 'react-icons/io';
 export default function Login({onClose}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const { setUser } = useAuth();
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function Login({onClose}) {
       const response = await axios.post('http://localhost:8000/login', {
         email: email,
         password: password,
+        firstName: firstName
       });
 
       console.log('Réponse du backend :', response.data); // Ajoutez cette ligne

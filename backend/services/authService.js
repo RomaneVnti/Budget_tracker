@@ -28,18 +28,18 @@ const authService = {
 
             console.log("Password valid");
 
-            const secretKey = process.env.JWT_SECRET; // Utilisez process.env pour accéder à la variable d'environnement
 
             // Génération d'un jeton JWT contenant l'ID de l'utilisateur
             const payload = { sub: user.id };
-            const token = jwt.sign(payload, 'yourSecretKey', { expiresIn: '24h' });
+            const token = jwt.sign(payload, 'yourSecretKey', { expiresIn: '7d' });
 
             console.log("Token generated:", token);
 
-            // Retour des informations pertinentes de l'utilisateur et du jeton
+            // Retour des informations pertinentes de l'utilisateur et du jeton, y compris le prénom
             return {
                 userId: user.user_id,
                 email: user.email,
+                firstName: user.firstName, // Ajoutez cette ligne pour inclure le prénom
                 token: token
             };
         } catch (error) {

@@ -5,8 +5,8 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
   const [isRegisterFormVisible, setIsRegisterFormVisible] = useState(false);
-  const [isForgotPasswordFormVisible, setIsForgotPasswordFormVisible] = useState(false); // Ajoutez l'état pour le formulaire de mot de passe oublié ici
-  const [user, setUser] = useState(null); // Ajoutez l'état pour l'utilisateur connecté ici
+  const [isForgotPasswordFormVisible, setIsForgotPasswordFormVisible] = useState(false);
+  const [user, setUser] = useState();
 
   const toggleLoginForm = () => {
     setIsLoginFormVisible(!isLoginFormVisible);
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const toggleForgotPasswordForm = () => {
-    setIsForgotPasswordFormVisible(!isForgotPasswordFormVisible); // Ajoutez la logique pour basculer la visibilité du formulaire de mot de passe oublié
+    setIsForgotPasswordFormVisible(!isForgotPasswordFormVisible);
   };
 
   return (
@@ -27,10 +27,10 @@ export const AuthProvider = ({ children }) => {
         toggleLoginForm,
         isRegisterFormVisible,
         toggleRegisterForm,
-        isForgotPasswordFormVisible, // Ajoutez l'état du formulaire de mot de passe oublié ici
-        toggleForgotPasswordForm, // Ajoutez la fonction pour basculer la visibilité du formulaire de mot de passe oublié
-        user, // Ajoutez l'état de l'utilisateur connecté ici
-        setUser, // Ajoutez la fonction pour définir l'utilisateur connecté
+        isForgotPasswordFormVisible,
+        toggleForgotPasswordForm,
+        user,
+        setUser,
       }}
     >
       {children}

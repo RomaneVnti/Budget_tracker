@@ -12,6 +12,7 @@ const authCtrl = {
             const filteredUser = {
                 id: user.userId,
                 email: user.email,
+                firstName:user.firstName,
             };
 
             res.status(200).json({ message: "Vous êtes bien authentifié", user: filteredUser, token: user.token });

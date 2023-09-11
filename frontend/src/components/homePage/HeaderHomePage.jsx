@@ -42,7 +42,7 @@ export default function HeaderHomePage() {
 
           <div className="links">
             <a className="about-link" href="/a-propos">À propos</a>
-            <div className="small-button-false" onClick={toggleLoginForm}>
+            <div className="small-button-false" onClick={handleClick}>
               {/* Utilisez la fonction handleClick pour ouvrir le formulaire */}
               <div className="button clip-contents">
                 <p className="get-it">Se connecter</p>
@@ -62,3 +62,5 @@ export default function HeaderHomePage() {
     </header>
   );
 }
+
+
