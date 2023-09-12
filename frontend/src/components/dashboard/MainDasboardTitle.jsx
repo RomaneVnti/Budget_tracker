@@ -19,7 +19,7 @@ export default function MainDasboardTitle() {
       // Effectuez une requête GET pour récupérer le total du budget mensuel
       axios.get(`http://localhost:8000/budget/totalMonthlyBudget/${user.id}`, {
         headers: {
-          Authorization: `Bearer ${authToken}`, // Incluez le jeton JWT dans l'en-tête
+          Authorization: `Basic ${authToken}`, // Incluez le jeton JWT dans l'en-tête
         },
       })
       .then((response) => {
