@@ -80,14 +80,19 @@ const budgetService = {
     // Fonction pour obtenir le budget mensuel total pour un utilisateur
     getTotalMonthlyBudgetForUser: async (userId) => {
         try {
+            console.log('Fetching budgets for user:', userId);
+    
             // Obtention de tous les budgets de l'utilisateur
             const budgets = await budgetService.getAllBudgetsForUser(userId);
-
+            console.log('Budgets retrieved:', budgets);
+    
             // Obtention du mois et de l'année actuels
             const currentDate = new Date();
             const currentMonth = currentDate.getMonth() + 1;
             const currentYear = currentDate.getFullYear();
-
+            console.log('Current month:', currentMonth);
+            console.log('Current year:', currentYear);
+    
             // Filtrage des budgets pour le mois et l'année actuels
             const budgetsOfCurrentMonth = budgets.filter(budget => {
                 const startDate = new Date(budget.budget_period_start);
@@ -95,7 +100,8 @@ const budgetService = {
                 const budgetYear = startDate.getFullYear();
                 return budgetMonth === currentMonth && budgetYear === currentYear;
             });
-
+            console.log('Budgets for current month/year:', budgetsOfCurrentMonth);
+    
             // Création d'un objet pour stocker le dernier budget de chaque catégorie
             const categoryLastBudgets = {};
             for (const budget of budgetsOfCurrentMonth) {
@@ -112,19 +118,22 @@ const budgetService = {
                     console.error("Error while fetching category:", error);
                 }
             }
-
+            console.log('Category last budgets:', categoryLastBudgets);
+    
             // Calcul du budget total mensuel en additionnant les montants de chaque budget de catégorie
             const totalMonthlyBudget = Object.values(categoryLastBudgets).reduce((total, budget) => {
                 return total + budget.budget_amount;
             }, 0);
-
+            console.log('Total monthly budget:', totalMonthlyBudget);
+    
             // Retour du budget total mensuel et des derniers budgets de chaque catégorie
             return { totalMonthlyBudget, categoryLastBudgets };
         } catch (error) {
+            console.error("Error in getTotalMonthlyBudgetForUser:", error);
             throw error;
         }
     },
-};
+}   
 
 // Exportation du service de gestion de budgets
 export default budgetService;

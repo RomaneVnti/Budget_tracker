@@ -5,7 +5,7 @@ import budgetRoutes from './budgetRoutes.js';
 import userRoutes from './userRoutes.js';
 
 import { Router } from 'express';
-import { authenticate } from '../middleware/authMiddleware.js';
+import {validateInputs, authenticate } from '../middleware/authMiddleware.js';
 
 const router = Router();
 
@@ -13,7 +13,7 @@ const router = Router();
 router.use('/transaction', authenticate, transactionRoutes);
 
 // Montez les routes d'authentification sur le chemin '/login'
-router.use('/login', authenticate, authRoutes);
+router.use('/login', validateInputs, authRoutes);
 
 // Montez les routes de gestion de budgets sur le chemin '/budget'
 router.use('/budget', authenticate, budgetRoutes);

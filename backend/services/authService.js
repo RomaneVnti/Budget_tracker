@@ -1,6 +1,13 @@
+// authService.js
 import User from '../models/user.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv'; // Importez le module dotenv
+
+dotenv.config({ path: '/Users/lunoroli/Library/Mobile Documents/com~apple~CloudDocs/ROMANE/PROJET_FIN_ETUDE/Budget_tracker/.env' });
+
+const secretKey = process.env.JWT_SECRET;
+
 
 // Définition du service d'authentification
 const authService = {
@@ -28,16 +35,13 @@ const authService = {
 
             console.log("Password valid");
 
-            const secretKey = process.env.JWT_SECRET; // Utilisez process.env pour accéder à la variable d'environnement
-
             // Génération d'un jeton JWT contenant l'ID de l'utilisateur
             const payload = { sub: user.id };
-            const token = jwt.sign(payload, 'yourSecretKey', { expiresIn: '24h' });
+            const token = jwt.sign(payload, secretKey, { expiresIn: '24h' });
 
             console.log("Token generated:", token);
 
             // Retour des informations pertinentes de l'utilisateur et du jeton
-            // Retour des informations pertinentes de l'utilisateur et du jeton, y compris le prénom
             return {
                 userId: user.user_id,
                 email: user.email,
@@ -47,6 +51,17 @@ const authService = {
         } catch (error) {
             console.error("Authentication error:", error);
             throw error;
+        }
+    },
+
+    verifyJWT: async (token) => {
+        try {
+            // Vérifiez et décryptez le token JWT
+            const decoded = jwt.verify(token, secretKey);
+            const user = await User.findOne({ where: { id: decoded.sub } });
+            return user;
+        } catch (error) {
+            throw new Error('Invalid JWT token');
         }
     }
 };
