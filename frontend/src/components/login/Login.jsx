@@ -33,11 +33,14 @@ export default function Login({ onClose }) {
       const token = response.data.token;
       console.log('Token extrait de la réponse :', token);
 
+      // Stockez le token JWT dans le localStorage
       localStorage.setItem('auth_token', token);
-      console.log(token)
+      console.log('Token stocké dans le localStorage :', localStorage.getItem('auth_token'));
+
 
       // Configurez Axios pour inclure automatiquement l'en-tête d'autorisation
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      console.log('En-tête d\'autorisation Axios configuré :', axios.defaults.headers.common['Authorization']);
 
       navigate('/dashboard');
     } catch (error) {

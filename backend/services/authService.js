@@ -2,68 +2,70 @@
 import User from '../models/user.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv'; // Importez le module dotenv
+import '../db/db.js';
+import jwtSecret from '../config.js'; // Importez jwtSecret depuis le fichier de configuration
 
-dotenv.config({ path: '/Users/lunoroli/Library/Mobile Documents/com~apple~CloudDocs/ROMANE/PROJET_FIN_ETUDE/Budget_tracker/.env' });
+// Utilisez la clé secrète du fichier de configuration
+const secretKey = jwtSecret;
 
-const secretKey = process.env.JWT_SECRET;
-
-
-// Définition du service d'authentification
+// Service d'authentification
 const authService = {
-    authenticateUser: async (email, password) => {
-        try {
-            console.log("Attempting login...");
+  // Méthode pour authentifier l'utilisateur
+  authenticateUser: async (email, password) => {
+    try {
+      console.log("Tentative de connexion...");
 
-            // Recherche de l'utilisateur par email
-            const user = await User.findOne({ where: { email } });
+      // Recherche de l'utilisateur par email
+      const user = await User.findOne({ where: { email } });
 
-            if (!user) {
-                console.log("User not found");
-                throw new Error('login/mot de passe incorrecte');
-            }
+      // Si l'utilisateur n'existe pas, renvoyez une erreur
+      if (!user) {
+        console.log("Utilisateur introuvable");
+        throw new Error('Login/mot de passe incorrect');
+      }
 
-            console.log("User found:", user);
+      console.log("Utilisateur trouvé:", user);
 
-            // Vérification du mot de passe en comparant le mot de passe hashé stocké avec le mot de passe fourni
-            const valid = await bcrypt.compare(password, user.password);
+      // Vérification du mot de passe en comparant le mot de passe haché stocké avec celui fourni
+      const valid = await bcrypt.compare(password, user.password);
 
-            if (!valid) {
-                console.log("Invalid password");
-                throw new Error('login/mot de passe incorrecte');
-            }
+      // Si le mot de passe est invalide, renvoyez une erreur
+      if (!valid) {
+        console.log("Mot de passe invalide");
+        throw new Error('Login/mot de passe incorrect');
+      }
 
-            console.log("Password valid");
+      console.log("Mot de passe valide");
 
-            // Génération d'un jeton JWT contenant l'ID de l'utilisateur
-            const payload = { sub: user.id };
-            const token = jwt.sign(payload, secretKey, { expiresIn: '24h' });
-
-            console.log("Token generated:", token);
-
-            // Retour des informations pertinentes de l'utilisateur et du jeton
-            return {
-                userId: user.user_id,
-                email: user.email,
-                firstName: user.firstName, // Ajoutez cette ligne pour inclure le prénom
-                token: token
-            };
-        } catch (error) {
-            console.error("Authentication error:", error);
-            throw error;
-        }
-    },
-
-    verifyJWT: async (token) => {
-        try {
-            // Vérifiez et décryptez le token JWT
-            const decoded = jwt.verify(token, secretKey);
-            const user = await User.findOne({ where: { id: decoded.sub } });
-            return user;
-        } catch (error) {
-            throw new Error('Invalid JWT token');
-        }
+      // Génération d'un jeton JWT contenant l'ID de l'utilisateur
+      const payload = { sub: user.id };
+      const token = jwt.sign({ userId: user.user_id }, secretKey, { expiresIn: '1h' });
+      console.log("Token généré:", token);
+      console.log("Clé secrète JWT:", secretKey);
+      // Retournez les informations pertinentes de l'utilisateur et le jeton
+      return {
+        userId: user.user_id,
+        email: user.email,
+        firstName: user.firstName,
+        token: token
+      };
+    } catch (error) {
+      console.error("Erreur d'authentification:", error);
+      throw error; // Réutilisez la même erreur plutôt que d'en créer une nouvelle
     }
+  },
+
+  // Méthode pour vérifier un jeton JWT
+  verifyJWT: async (token) => {
+    try {
+      // Vérifiez et décryptez le jeton JWT
+      const decoded = jwt.verify(token, secretKey);
+      const user = await User.findOne({ where: { id: decoded.sub } });
+      return user;
+    } catch (error) {
+      throw new Error('Jeton JWT invalide');
+    }
+  }
 };
 
 export default authService;

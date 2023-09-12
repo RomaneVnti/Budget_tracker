@@ -1,8 +1,6 @@
+import jwt from 'jsonwebtoken';
+import jwtSecret from '../config.js'; // Importez jwtSecret depuis le fichier de configuration
 import authService from '../services/authService.js';
-import dotenv from 'dotenv';
-dotenv.config({ path: '/Users/lunoroli/Library/Mobile Documents/com~apple~CloudDocs/ROMANE/PROJET_FIN_ETUDE/Budget_tracker/.env' });
-
-const secretKey = process.env.JWT_SECRET;
 
 export const validateInputs = (req, res, next) => {
     const { email, password } = req.body;
@@ -21,8 +19,28 @@ export const authenticate = async (req, res, next) => {
         // Vérifier si le token JWT est présent dans l'en-tête d'authorization
         const token = req.headers.authorization;
         if (token) {
-            // Si un token JWT est présent, vérifiez-le en utilisant process.env.JWT_SECRET
-            user = await authService.verifyJWT(token);
+            try {
+                // Si un token JWT est présent, vérifiez-le en utilisant jwtSecret
+                const decodedToken = jwt.verify(token, jwtSecret);
+                const userIdFromToken = decodedToken.userId; // Récupérer l'ID de l'utilisateur depuis le token
+
+                // Récupérez l'ID de l'utilisateur depuis l'URL ou d'où vous l'avez
+                const userIdFromRequest = req.params.userId;
+
+                // Comparez les deux ID pour vous assurer qu'ils correspondent
+                if (userIdFromToken !== userIdFromRequest) {
+                    return res.status(401).json({ message: "ID utilisateur incorrect." });
+                }
+
+                // Utilisez l'ID de l'utilisateur pour récupérer les informations de l'utilisateur
+                user = await authService.getUserById(userIdFromToken);
+                
+                if (!user) {
+                    return res.status(401).json({ message: "L'utilisateur associé au token n'existe pas." });
+                }
+            } catch (error) {
+                return res.status(401).json({ message: "Token invalide" });
+            }
         } else {
             // Sinon, utilisez l'authentification basée sur l'email et le mot de passe
             user = await authService.authenticateUser(req.body.email, req.body.password);

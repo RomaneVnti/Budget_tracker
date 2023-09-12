@@ -15,6 +15,9 @@ budgetRouter.get('/', authenticate, budgetCtrl.getAllBudgets);
 
 
 // Route GET pour obtenir le total du budget mensuel pour un ID spécifique
-budgetRouter.get('/totalMonthlyBudget/:userId', authenticate, budgetCtrl.getTotalMonthlyBudget);
-
+budgetRouter.get('/totalMonthlyBudget/:userId', authenticate, budgetCtrl.getTotalMonthlyBudget, (req, res) => {
+    // Le paramètre "userId" est accessible ici via req.params.userId
+    const userId = req.params.userId;
+    // ...
+  });
 export default budgetRouter;
