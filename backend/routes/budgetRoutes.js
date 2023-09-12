@@ -14,6 +14,6 @@ budgetRouter.post('/', authenticate, budgetCtrl.createOneBudget);
 budgetRouter.get('/', authenticate, budgetCtrl.getAllBudgets);
 
 // Route GET pour obtenir le total du budget mensuel pour un ID spécifique
-budgetRouter.get('/totalMonthlyBudget/:id', authenticate, budgetCtrl.getTotalMonthlyBudget);
+budgetRouter.get('/totalMonthlyBudget', authenticate, budgetCtrl.getTotalMonthlyBudget);
 
 export default budgetRouter;

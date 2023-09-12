@@ -1,3 +1,4 @@
+// Importations des modèles Budget et Category depuis '../models'
 import Budget from '../models/budget.js';
 import Category from '../models/category.js';
 
@@ -125,4 +126,5 @@ const budgetService = {
     },
 };
 
+// Exportation du service de gestion de budgets
 export default budgetService;

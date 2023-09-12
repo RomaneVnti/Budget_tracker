@@ -50,6 +50,7 @@ const budgetCtrl = {
 
     // Méthode pour obtenir le total mensuel des budgets d'un utilisateur
     getTotalMonthlyBudget: async (req, res) => {
+        // Utilisez req.user.id pour obtenir l'ID de l'utilisateur connecté
         const { id } = req.params; 
     
         try {
@@ -61,6 +62,7 @@ const budgetCtrl = {
             res.status(500).json({ error: "Une erreur est survenue lors de la récupération du total des budgets." });
         }
     },
+    
 };
 
 export default budgetCtrl;
