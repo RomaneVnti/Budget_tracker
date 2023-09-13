@@ -9,6 +9,10 @@ import {validateInputs, authenticate } from '../middleware/authMiddleware.js';
 
 const router = Router();
 
+
+// Montez les routes liées aux utilisateurs sur le chemin '/users'
+router.use('/users', userRoutes);
+
 // Montez les routes liées aux transactions sur le chemin '/transaction'
 router.use('/transaction', authenticate, transactionRoutes);
 
@@ -18,8 +22,7 @@ router.use('/login', validateInputs, authRoutes);
 // Montez les routes de gestion de budgets sur le chemin '/budget'
 router.use('/budget', authenticate, budgetRoutes);
 
-// Montez les routes liées aux utilisateurs sur le chemin '/users'
-router.use('/users', userRoutes);
+
 
 
 

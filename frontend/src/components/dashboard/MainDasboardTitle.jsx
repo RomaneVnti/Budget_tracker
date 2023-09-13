@@ -8,22 +8,15 @@ export default function MainDasboardTitle() {
 
   useEffect(() => {
     if (user) {
-      console.log(user.id);
-
-      // Récupérez le jeton JWT depuis localStorage
-      const authToken = localStorage.getItem('auth_token');
-
-      console.log('Token inclus dans l\'en-tête :', authToken);
-
-      // Effectuez une requête GET pour récupérer le total du budget mensuel
+      console.log('Objet user:', user);
+  
+      // Utilisez user.userId pour extraire l'ID de l'utilisateur
+      const userId = user.id;
+      console.log('ID de l\'utilisateur:', userId);
+  
+      // Effectuez une requête GET pour récupérer le total du budget mensuel de l'utilisateur
       axios
-        .get(`http://localhost:8000/budget/totalMonthlyBudget/${user.id}`, {
-          headers: {
-            Authorization: `Bearer ${authToken}`, // Incluez le jeton JWT dans l'en-tête
-            
-          },
-          
-        })
+        .get(`http://localhost:8000/budget/totalMonthlyBudget/${userId}`)
         .then((response) => {
           // Mettez à jour l'état local avec le total du budget mensuel récupéré
           setTotalMonthlyBudget(response.data.totalMonthlyBudget);
@@ -33,7 +26,6 @@ export default function MainDasboardTitle() {
         });
     }
   }, [user]);
-
 
   // Fonction pour mettre en majuscule la première lettre d'une chaîne
   const capitalizeFirstLetter = (str) => {

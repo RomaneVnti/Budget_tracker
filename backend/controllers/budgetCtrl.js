@@ -50,19 +50,24 @@ const budgetCtrl = {
 
     // Méthode pour obtenir le total mensuel des budgets d'un utilisateur
     getTotalMonthlyBudget: async (req, res) => {
-        // Utilisez req.user.id pour obtenir l'ID de l'utilisateur connecté
-        const userId = req.user.id; // Utilisez userId au lieu de id
-        console.log(`getTotalMonthlyBudget called for userId: ${userId}`);
-
         try {
+            // Vérifiez la valeur de req.user.id ici
+            console.log('req.user.id:', req.user.id);
+    
+            const userId = req.user.id; // Utilisez userId au lieu de id
+            console.log(`getTotalMonthlyBudget called for userId: ${userId}`);
+    
             // Obtenez les informations sur le total mensuel du budget de l'utilisateur
             const totalBudgetInfo = await budgetService.getTotalMonthlyBudgetForUser(userId);
-        res.status(200).json(totalBudgetInfo);
-    } catch (error) {
-        // Gestion des erreurs lors de la récupération du total des budgets
-        console.error("Error in getTotalMonthlyBudget:", error);
-        res.status(500).json({ error: "Une erreur est survenue lors de la récupération du total des budgets." });
-    }
+    
+            // Ajoutez un log pour vérifier le contenu de totalBudgetInfo
+            console.log('totalBudgetInfo:', totalBudgetInfo);
+    
+            res.status(200).json(totalBudgetInfo);
+        } catch (error) {
+            console.error("Error in getTotalMonthlyBudget:", error);
+            res.status(500).json({ error: "Une erreur est survenue lors de la récupération du total des budgets." });
+        }
     },
     
 };

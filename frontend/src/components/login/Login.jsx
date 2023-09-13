@@ -21,26 +21,25 @@ export default function Login({ onClose }) {
     }
 
     try {
+      // Envoyez la requête de connexion
       const response = await axios.post('http://localhost:8000/login', {
         email: email,
         password: password,
       });
 
-      console.log('Réponse du backend :', response.data);
+      // Extrait les données de la réponse
+      const { user, token } = response.data;
 
-      setUser(response.data.user);
-
-      const token = response.data.token;
-      console.log('Token extrait de la réponse :', token);
-
-      // Stockez le token JWT dans le localStorage
+      // Stockez le token JWT et les informations de l'utilisateur dans le localStorage
       localStorage.setItem('auth_token', token);
-
 
       // Configurez Axios pour inclure automatiquement l'en-tête d'autorisation
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      console.log('En-tête d\'autorisation Axios configuré :', axios.defaults.headers.common['Authorization']);
 
+      // Mettez à jour l'état local de l'utilisateur
+      setUser(user);
+
+      // Naviguez vers le tableau de bord
       navigate('/dashboard');
     } catch (error) {
       console.error('Erreur lors de la tentative de connexion :', error);
