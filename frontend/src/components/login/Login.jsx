@@ -35,7 +35,6 @@ export default function Login({ onClose }) {
 
       // Stockez le token JWT dans le localStorage
       localStorage.setItem('auth_token', token);
-      console.log('Token stocké dans le localStorage :', localStorage.getItem('auth_token'));
 
 
       // Configurez Axios pour inclure automatiquement l'en-tête d'autorisation

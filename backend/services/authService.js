@@ -2,11 +2,9 @@
 import User from '../models/user.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import '../db/db.js';
 import jwtSecret from '../config.js'; // Importez jwtSecret depuis le fichier de configuration
 
-// Utilisez la clé secrète du fichier de configuration
-const secretKey = jwtSecret;
+
 
 // Service d'authentification
 const authService = {
@@ -39,9 +37,9 @@ const authService = {
 
       // Génération d'un jeton JWT contenant l'ID de l'utilisateur
       const payload = { sub: user.id };
-      const token = jwt.sign({ userId: user.user_id }, secretKey, { expiresIn: '1h' });
+      const token = jwt.sign(payload, jwtSecret, { expiresIn: '24h', subject:`${user.user_id}` });
       console.log("Token généré:", token);
-      console.log("Clé secrète JWT:", secretKey);
+      console.log("Clé secrète JWT:", jwtSecret);
       // Retournez les informations pertinentes de l'utilisateur et le jeton
       return {
         userId: user.user_id,
@@ -59,8 +57,9 @@ const authService = {
   verifyJWT: async (token) => {
     try {
       // Vérifiez et décryptez le jeton JWT
-      const decoded = jwt.verify(token, secretKey);
-      const user = await User.findOne({ where: { id: decoded.sub } });
+      const decoded = jwt.verify(token, jwtSecret);
+      console.log("Clé secrète JWT:", jwtSecret);
+      const user = await User.findOne({ where: { user_id: decoded.sub } });
       return user;
     } catch (error) {
       throw new Error('Jeton JWT invalide');

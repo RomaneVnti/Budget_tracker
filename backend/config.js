@@ -1,4 +1,4 @@
 // config.js
-const jwtSecret = process.env.JWT_SECRET;
+const jwtSecret = 'secretKey';
 
 export default jwtSecret;
