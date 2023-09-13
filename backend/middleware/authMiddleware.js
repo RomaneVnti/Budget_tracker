@@ -19,32 +19,15 @@ export const authenticate = async (req, res, next) => {
         // Vérifier si le token JWT est présent dans l'en-tête d'authorization
         const token = req.headers.authorization;
         if (token) {
-            console.log("Token JWT reçu:", token); 
-            user = await authService.verifyJWT(token.substring("Bearer ".length));
-            console.log("Utilisateur vérifié avec succès:", user); 
-            try {
-                // Si un token JWT est présent, vérifiez-le en utilisant jwtSecret
-                const decodedToken = jwt.verify(token, jwtSecret);
-                const userIdFromToken = decodedToken.userId; // Récupérer l'ID de l'utilisateur depuis le token
-                console.log("ID utilisateur extrait du token:", userIdFromToken); 
-
-                // Récupérez l'ID de l'utilisateur depuis l'URL ou d'où vous l'avez
-                const userIdFromRequest = req.params.userId;
-                console.log("ID utilisateur de la requête:", userIdFromRequest); 
-
-                // Comparez les deux ID pour vous assurer qu'ils correspondent
-                if (userIdFromToken !== userIdFromRequest) {
-                    return res.status(401).json({ message: "ID utilisateur incorrect." });
-                }
-
-                console.log(userIdFromToken);
-                // Utilisez l'ID de l'utilisateur pour récupérer les informations de l'utilisateur
-                user = await authService.getUserById(userIdFromToken);
-                
+            try{
+                console.log("Token JWT reçu:", token); 
+                user = await authService.verifyJWT(token.substring("Bearer ".length));
                 if (!user) {
                     return res.status(401).json({ message: "L'utilisateur associé au token n'existe pas." });
+                }else{
+                    console.log("Utilisateur vérifier avec succès", user);
                 }
-            } catch (error) {
+            }catch (error) {
                 console.error("Erreur de vérification du token:", error);
                 return res.status(401).json({ message: "Token invalide" });
             }
