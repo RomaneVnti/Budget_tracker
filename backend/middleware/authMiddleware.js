@@ -19,18 +19,18 @@ export const authenticate = async (req, res, next) => {
         // Vérifier si le token JWT est présent dans l'en-tête d'authorization
         const token = req.headers.authorization;
         if (token) {
-            console.log("Token JWT reçu:", token); // Ajoutez cette ligne
+            console.log("Token JWT reçu:", token); 
             user = await authService.verifyJWT(token.substring("Bearer ".length));
-            console.log("Utilisateur vérifié avec succès:", user); // Ajoutez cette ligne
+            console.log("Utilisateur vérifié avec succès:", user); 
             try {
                 // Si un token JWT est présent, vérifiez-le en utilisant jwtSecret
                 const decodedToken = jwt.verify(token, jwtSecret);
                 const userIdFromToken = decodedToken.userId; // Récupérer l'ID de l'utilisateur depuis le token
-                console.log("ID utilisateur extrait du token:", userIdFromToken); // Ajoutez cette ligne
+                console.log("ID utilisateur extrait du token:", userIdFromToken); 
 
                 // Récupérez l'ID de l'utilisateur depuis l'URL ou d'où vous l'avez
                 const userIdFromRequest = req.params.userId;
-                console.log("ID utilisateur de la requête:", userIdFromRequest); // Ajoutez cette ligne
+                console.log("ID utilisateur de la requête:", userIdFromRequest); 
 
                 // Comparez les deux ID pour vous assurer qu'ils correspondent
                 if (userIdFromToken !== userIdFromRequest) {

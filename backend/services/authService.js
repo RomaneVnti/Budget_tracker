@@ -58,7 +58,6 @@ const authService = {
     try {
       // Vérifiez et décryptez le jeton JWT
       const decoded = jwt.verify(token, jwtSecret);
-      console.log("Clé secrète JWT:", jwtSecret);
       const user = await User.findOne({ where: { user_id: decoded.sub } });
       return user;
     } catch (error) {
