@@ -11,6 +11,7 @@ export default function DropdownMenuDropdownMenuDashboard({ isOpen}) {
         <li><a href="/transaction">Transactions</a></li>
         <li><a href="/statistiques">Statistiques</a></li>
         <li><a href="/paramètres">Paramètres</a></li>
+        <li><a href="/login">Déconnection</a></li>
       </ul>
     );
   }

@@ -81,7 +81,10 @@
 }
 
   
-  .titleDepense{
+.titleDepense,
+.totalMonthlyBudget,
+.totalExpenseAmount,
+.remainingBudget{
     color:#f3f3f3 ;
     font-family: Lato, sans-serif;
     font-style: normal;
@@ -90,6 +93,9 @@
     text-transform: capitalize;
     font-size: 1em;
   }
+
+
+
 
 @media (min-width: 700px) {
     .Title {

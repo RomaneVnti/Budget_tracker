@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
+import '../../style/dashboard/HeaderDashboard.css';
 
 export default function MainDasboardTitle() {
   const { user } = useAuth();
@@ -74,7 +75,7 @@ export default function MainDasboardTitle() {
             <div className="titleDepense">
               Dépenses prévisionnelles
             </div>
-            <div>
+            <div className='totalMonthlyBudget'>
               {totalMonthlyBudget ?? '0'}
             </div>
           </div>
@@ -83,7 +84,7 @@ export default function MainDasboardTitle() {
             <div className="titleDepense">
               Dépenses réelles
             </div>
-            <div>
+            <div className='totalExpenseAmount'>
             {totalExpenseAmount ?? '0'}
             </div>
           </div>
@@ -92,7 +93,7 @@ export default function MainDasboardTitle() {
             <div className="titleDepense">
               Budget restant
             </div>
-            <div>
+            <div className='remainingBudget'>
             {remainingBudget !== null ? remainingBudget : 'Calcul en cours...'}
 
             </div>
