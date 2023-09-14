@@ -1,22 +1,38 @@
 import Transaction from '../models/transaction.js';
+import { Op } from 'sequelize';
 
 // Définition du service de gestion de transactions
 const transactionService = {
     // Fonction pour obtenir toutes les transactions
     getAllExpenseTransactionsForUser: async (userId) => {
         try {
-          const transactions = await Transaction.findAll({
-            where: {
-              user_id: userId, // Filtre par l'ID de l'utilisateur
-              type_transaction: "dépense", // Filtre par le type "dépense"
-            },
-            attributes: { exclude: ['createdAt', 'updatedAt'] },
-          });
-          return transactions;
-        } catch (error) {
-          throw error;
-        }
-      },
+            const today = new Date();
+            const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        
+            const transactions = await Transaction.findAll({
+              where: {
+                user_id: userId,
+                type_transaction: "dépense",
+                date: {
+                  [Op.between]: [firstDayOfMonth, lastDayOfMonth],
+                },
+              },
+              attributes: ['transaction_amount'],
+            });
+        
+            const totalExpenseAmount = transactions.reduce(
+              (total, transaction) => total + transaction.transaction_amount,
+              0
+            );
+        
+            return totalExpenseAmount;
+          } catch (error) {
+            throw error;
+          }
+        },
+    
+      
 
     // Fonction pour obtenir une transaction par son ID
     getOneTransaction: async (id) => {

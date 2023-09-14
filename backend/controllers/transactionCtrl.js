@@ -42,9 +42,12 @@ const transactionCtrl = {
     getAllExpenseTransactions: async (req, res) => {
         try {
           const userId = req.user.user_id;
+          console.log(`User ID: ${userId}`); // Affiche l'ID de l'utilisateur dans les journaux
           const transactions = await transactionService.getAllExpenseTransactionsForUser(userId);
+          console.log('Transactions:', transactions); // Affiche les transactions dans les journaux
           res.status(200).json(transactions);
         } catch (error) {
+          console.error('Erreur lors de la récupération des transactions de dépense:', error); // Affiche les erreurs dans les journaux
           res.status(500).json(error); // Erreur interne du serveur
         }
       },

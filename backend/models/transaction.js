@@ -65,6 +65,8 @@ const Transaction = db.define('transaction', {
             key: 'category_id' // Champ dans le modèle Category auquel il est fait référence
         },
     },
+}, {
+    timestamps: false, // désactiver les timestamps (createdAt et updatedAt)
 });
 
 // Définition des associations (relations) entre les modèles

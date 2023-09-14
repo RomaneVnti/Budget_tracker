@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 export default function MainDasboardTitle() {
   const { user } = useAuth();
   const [totalMonthlyBudget, setTotalMonthlyBudget] = useState(null);
-  const [totalRealExpenses, setTotalRealExpenses] = useState(null); // État pour le total des dépenses réelles
+  const [totalExpenseAmount, setTotalExpenseAmount] = useState(null);
 
   useEffect(() => {
     if (user) {
@@ -25,14 +25,16 @@ export default function MainDasboardTitle() {
 
       // Effectuez une requête GET pour récupérer le total des dépenses réelles de l'utilisateur
       axios
-        .get(`http://localhost:8000/transaction/totalRealExpenses/${userId}`)
+        .get(`http://localhost:8000/transaction/totalExpenseAmount/${userId}`)
         .then((response) => {
+
           // Mettez à jour l'état local avec le total des dépenses réelles récupéré
-          setTotalRealExpenses(response.data.totalRealExpenses);
+          setTotalExpenseAmount(response.data);
         })
         .catch((error) => {
           console.error('Erreur lors de la récupération du total des dépenses réelles:', error);
         });
+
     }
   }, [user]);
 
@@ -70,7 +72,7 @@ export default function MainDasboardTitle() {
               Dépenses réelles
             </div>
             <div>
-            {totalRealExpenses ?? '0'}
+            {totalExpenseAmount ?? '0'}
             </div>
           </div>
 

@@ -7,7 +7,7 @@ const transactionRouter = Router();
 
 
 // Route pour obtenir le total des dépenses réelles de l'utilisateur
-transactionRouter.get('/totalRealExpenses/:userId', authenticate, transactionCtrl.getAllExpenseTransactions);
+transactionRouter.get('/totalExpenseAmount/:userId', authenticate, transactionCtrl.getAllExpenseTransactions);
 
 // Route GET pour obtenir une transaction spécifique par son ID
 transactionRouter.get('/:id',authenticate, transactionCtrl.getOneTransaction);
