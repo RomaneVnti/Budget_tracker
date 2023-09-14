@@ -5,15 +5,13 @@ import { useAuth } from '../../context/AuthContext';
 export default function MainDasboardTitle() {
   const { user } = useAuth();
   const [totalMonthlyBudget, setTotalMonthlyBudget] = useState(null);
+  const [totalRealExpenses, setTotalRealExpenses] = useState(null); // État pour le total des dépenses réelles
 
   useEffect(() => {
     if (user) {
-      console.log('Objet user:', user);
-  
       // Utilisez user.userId pour extraire l'ID de l'utilisateur
       const userId = user.id;
-      console.log('ID de l\'utilisateur:', userId);
-  
+
       // Effectuez une requête GET pour récupérer le total du budget mensuel de l'utilisateur
       axios
         .get(`http://localhost:8000/budget/totalMonthlyBudget/${userId}`)
@@ -23,6 +21,17 @@ export default function MainDasboardTitle() {
         })
         .catch((error) => {
           console.error('Erreur lors de la récupération du total du budget mensuel:', error);
+        });
+
+      // Effectuez une requête GET pour récupérer le total des dépenses réelles de l'utilisateur
+      axios
+        .get(`http://localhost:8000/transaction/totalRealExpenses/${userId}`)
+        .then((response) => {
+          // Mettez à jour l'état local avec le total des dépenses réelles récupéré
+          setTotalRealExpenses(response.data.totalRealExpenses);
+        })
+        .catch((error) => {
+          console.error('Erreur lors de la récupération du total des dépenses réelles:', error);
         });
     }
   }, [user]);
@@ -52,7 +61,7 @@ export default function MainDasboardTitle() {
               Dépenses prévisionnelles
             </div>
             <div>
-              {totalMonthlyBudget !== null ? totalMonthlyBudget : '0'}
+              {totalMonthlyBudget ?? '0'}
             </div>
           </div>
 
@@ -60,7 +69,9 @@ export default function MainDasboardTitle() {
             <div className="titleDepense">
               Dépenses réelles
             </div>
-            <div></div>
+            <div>
+            {totalRealExpenses ?? '0'}
+            </div>
           </div>
 
           <div className='BudgetRestant'>

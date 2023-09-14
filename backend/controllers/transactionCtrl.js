@@ -39,14 +39,15 @@ const transactionCtrl = {
     },
 
     // Méthode pour récupérer toutes les transactions
-    getAllTransactions: async (req, res) => {
+    getAllExpenseTransactions: async (req, res) => {
         try {
-            const transactions = await transactionService.getAllTransactions(); 
-            res.status(200).json(transactions);
+          const userId = req.user.user_id;
+          const transactions = await transactionService.getAllExpenseTransactionsForUser(userId);
+          res.status(200).json(transactions);
         } catch (error) {
-            res.status(500).json(error); // Erreur interne du serveur
+          res.status(500).json(error); // Erreur interne du serveur
         }
-    },
+      },
 
     // Méthode pour récupérer les détails d'une transaction spécifique
     getOneTransaction: async (req, res) => {

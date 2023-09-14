@@ -6,8 +6,8 @@ import { authenticate } from '../middleware/authMiddleware.js';
 const transactionRouter = Router();
 
 
-// Route GET pour obtenir toutes les transactions
-transactionRouter.get('/', authenticate,transactionCtrl.getAllTransactions);
+// Route pour obtenir le total des dépenses réelles de l'utilisateur
+transactionRouter.get('/totalRealExpenses/:userId', authenticate, transactionCtrl.getAllExpenseTransactions);
 
 // Route GET pour obtenir une transaction spécifique par son ID
 transactionRouter.get('/:id',authenticate, transactionCtrl.getOneTransaction);

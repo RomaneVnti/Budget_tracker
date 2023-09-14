@@ -3,16 +3,20 @@ import Transaction from '../models/transaction.js';
 // Définition du service de gestion de transactions
 const transactionService = {
     // Fonction pour obtenir toutes les transactions
-    getAllTransactions: async () => {
+    getAllExpenseTransactionsForUser: async (userId) => {
         try {
-            const transactions = await Transaction.findAll({
-                attributes: { exclude: ['createdAt', 'updatedAt'] }
-            });
-            return transactions;
-        } catch (err) {
-            throw err;
+          const transactions = await Transaction.findAll({
+            where: {
+              user_id: userId, // Filtre par l'ID de l'utilisateur
+              type_transaction: "dépense", // Filtre par le type "dépense"
+            },
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+          });
+          return transactions;
+        } catch (error) {
+          throw error;
         }
-    },
+      },
 
     // Fonction pour obtenir une transaction par son ID
     getOneTransaction: async (id) => {
