@@ -6,6 +6,8 @@ export default function MainDasboardTitle() {
   const { user } = useAuth();
   const [totalMonthlyBudget, setTotalMonthlyBudget] = useState(null);
   const [totalExpenseAmount, setTotalExpenseAmount] = useState(null);
+  const [remainingBudget, setRemainingBudget] = useState(null); // État pour le budget restant
+
 
   useEffect(() => {
     if (user) {
@@ -30,6 +32,7 @@ export default function MainDasboardTitle() {
 
           // Mettez à jour l'état local avec le total des dépenses réelles récupéré
           setTotalExpenseAmount(response.data);
+          
         })
         .catch((error) => {
           console.error('Erreur lors de la récupération du total des dépenses réelles:', error);
@@ -37,6 +40,15 @@ export default function MainDasboardTitle() {
 
     }
   }, [user]);
+
+  useEffect(() => {
+    if (totalMonthlyBudget !== null && totalExpenseAmount !== null) {
+      // Calculez le budget restant en soustrayant les dépenses aux revenus mensuels
+      const remaining = totalMonthlyBudget - totalExpenseAmount;
+      setRemainingBudget(remaining);
+    }
+  }, [totalMonthlyBudget, totalExpenseAmount]);
+
 
   // Fonction pour mettre en majuscule la première lettre d'une chaîne
   const capitalizeFirstLetter = (str) => {
@@ -80,7 +92,10 @@ export default function MainDasboardTitle() {
             <div className="titleDepense">
               Budget restant
             </div>
-            <div></div>
+            <div>
+            {remainingBudget !== null ? remainingBudget : 'Calcul en cours...'}
+
+            </div>
           </div>
         </div>
       </div>
