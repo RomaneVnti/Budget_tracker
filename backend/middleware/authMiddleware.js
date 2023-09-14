@@ -26,6 +26,7 @@ export const authenticate = async (req, res, next) => {
                     return res.status(401).json({ message: "L'utilisateur associé au token n'existe pas." });
                 }else{
                     console.log("Utilisateur vérifier avec succès", user);
+                   
                 }
             }catch (error) {
                 console.error("Erreur de vérification du token:", error);
@@ -39,7 +40,10 @@ export const authenticate = async (req, res, next) => {
         if (!user) {
             return res.status(401).json({ message: "L'authentification a échoué : informations d'identification incorrectes." });
         }
+        
         req.user = user;
+        console.log("Utilisateur yoyo",req.user)
+        console.log("Utilisateur ajouté à req avec succès", user); // Ajout du console.log ici
         next();
     } catch (error) {
         console.error("Authentication failed:", error);

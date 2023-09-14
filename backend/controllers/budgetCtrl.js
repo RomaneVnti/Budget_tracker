@@ -69,7 +69,25 @@ const budgetCtrl = {
             res.status(500).json({ error: "Une erreur est survenue lors de la récupération du total des budgets." });
         }
     },
-    
+
+
+  getTotalMonthlyBudget: async (req, res) => {
+    try {
+      // Utilisez req.user.id pour obtenir l'ID de l'utilisateur connecté
+      const userId = req.user.user_id;          
+        console.log(`getTotalMonthlyBudget called for userId: ${userId}`);
+
+      // Obtenez les informations sur le total mensuel du budget de l'utilisateur
+      const totalBudgetInfo = await budgetService.getTotalMonthlyBudgetForUser(userId);
+
+      res.status(200).json(totalBudgetInfo);
+    } catch (error) {
+      console.error("Error in getTotalMonthlyBudget:", error);
+      res.status(500).json({ error: "Une erreur est survenue lors de la récupération du total des budgets." });
+    }
+  },
 };
+    
+
 
 export default budgetCtrl;

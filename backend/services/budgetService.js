@@ -80,60 +80,56 @@ const budgetService = {
     // Fonction pour obtenir le budget mensuel total pour un utilisateur
     getTotalMonthlyBudgetForUser: async (userId) => {
         try {
-            console.log('Fetching budgets for user:', userId);
+          // Obtention de tous les budgets de l'utilisateur
+          const budgets = await budgetService.getAllBudgetsForUser(userId);
     
-            // Obtention de tous les budgets de l'utilisateur
-            const budgets = await budgetService.getAllBudgetsForUser(userId);
-            console.log('Budgets retrieved:', budgets);
+          // Obtention du mois et de l'année actuels
+          const currentDate = new Date();
+          const currentMonth = currentDate.getMonth() + 1;
+          const currentYear = currentDate.getFullYear();
     
-            // Obtention du mois et de l'année actuels
-            const currentDate = new Date();
-            const currentMonth = currentDate.getMonth() + 1;
-            const currentYear = currentDate.getFullYear();
-            console.log('Current month:', currentMonth);
-            console.log('Current year:', currentYear);
+          // Filtrage des budgets pour le mois et l'année actuels
+          const budgetsOfCurrentMonth = budgets.filter((budget) => {
+            const startDate = new Date(budget.budget_period_start);
+            const budgetMonth = startDate.getMonth() + 1;
+            const budgetYear = startDate.getFullYear();
+            return budgetMonth === currentMonth && budgetYear === currentYear;
+          });
     
-            // Filtrage des budgets pour le mois et l'année actuels
-            const budgetsOfCurrentMonth = budgets.filter(budget => {
-                const startDate = new Date(budget.budget_period_start);
-                const budgetMonth = startDate.getMonth() + 1;
-                const budgetYear = startDate.getFullYear();
-                return budgetMonth === currentMonth && budgetYear === currentYear;
-            });
-            console.log('Budgets for current month/year:', budgetsOfCurrentMonth);
-    
-            // Création d'un objet pour stocker le dernier budget de chaque catégorie
-            const categoryLastBudgets = {};
-            for (const budget of budgetsOfCurrentMonth) {
-                try {
-                    // Obtention de la catégorie associée au budget
-                    const category = await Category.findByPk(budget.category_id);
-                    if (category) {
-                        // Stockage du dernier budget pour chaque catégorie
-                        if (!categoryLastBudgets[category.categoryName] || budget.budget_period_end > categoryLastBudgets[category.categoryName].budget_period_end) {
-                            categoryLastBudgets[category.categoryName] = budget;
-                        }
-                    }
-                } catch (error) {
-                    console.error("Error while fetching category:", error);
+          // Création d'un objet pour stocker le dernier budget de chaque catégorie
+          const categoryLastBudgets = {};
+          for (const budget of budgetsOfCurrentMonth) {
+            try {
+              // Obtention de la catégorie associée au budget
+              const category = await Category.findByPk(budget.category_id);
+              if (category) {
+                // Stockage du dernier budget pour chaque catégorie
+                if (
+                  !categoryLastBudgets[category.categoryName] ||
+                  budget.budget_period_end > categoryLastBudgets[category.categoryName].budget_period_end
+                ) {
+                  categoryLastBudgets[category.categoryName] = budget;
                 }
+              }
+            } catch (error) {
+              console.error("Error while fetching category:", error);
             }
-            console.log('Category last budgets:', categoryLastBudgets);
+          }
     
-            // Calcul du budget total mensuel en additionnant les montants de chaque budget de catégorie
-            const totalMonthlyBudget = Object.values(categoryLastBudgets).reduce((total, budget) => {
-                return total + budget.budget_amount;
-            }, 0);
-            console.log('Total monthly budget:', totalMonthlyBudget);
+          // Calcul du budget total mensuel en additionnant les montants de chaque budget de catégorie
+          const totalMonthlyBudget = Object.values(categoryLastBudgets).reduce((total, budget) => {
+            return total + budget.budget_amount;
+          }, 0);
     
-            // Retour du budget total mensuel et des derniers budgets de chaque catégorie
-            return { totalMonthlyBudget, categoryLastBudgets };
+          // Retour du budget total mensuel et des derniers budgets de chaque catégorie
+          return { totalMonthlyBudget, categoryLastBudgets };
         } catch (error) {
-            console.error("Error in getTotalMonthlyBudgetForUser:", error);
-            throw error;
+          console.error("Error in getTotalMonthlyBudgetForUser:", error);
+          throw error;
         }
-    },
-}   
+      },
+    };
+
 
 // Exportation du service de gestion de budgets
 export default budgetService;
