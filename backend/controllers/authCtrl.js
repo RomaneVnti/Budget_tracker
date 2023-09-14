@@ -2,9 +2,6 @@
 const authCtrl = {
     login: async (req, res) => {
         try {
-
-            
-
             // Récupère l'utilisateur à partir des informations stockées dans le middleware d'authentification
             const user = req.user; // L'utilisateur est déjà authentifié grâce au middleware
             
@@ -19,7 +16,8 @@ const authCtrl = {
         } catch (error) {
             res.status(401).json({ message: "L'authentification a échoué : informations d'identification incorrectes." });
         }
-    }
+    },
+    
 };
 
 export default authCtrl;

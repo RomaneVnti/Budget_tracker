@@ -45,18 +45,11 @@ export default function BudgetForm() {
         };
 
         try {
-            // Envoyez les données du formulaire au serveur pour créer le budget (vous devez implémenter cette fonction côté serveur)
-            const response = await fetch('http://localhost:3000/budget/createOneBudget', { // Assurez-vous d'ajuster la route
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(budgetData),
-            });
-
+            // Envoyez les données du formulaire au serveur pour créer le budget en utilisant Axios
+            const response = await axios.post('http://localhost:8000/budget/createOneBudget', budgetData);
             console.log('Response from createOneBudget:', response); // Log de la réponse du serveur
 
-            if (response.ok) {
+            if (response.status === 201) {
                 // Budget créé avec succès
                 console.log('Budget créé avec succès');
                 // Réinitialisez les champs du formulaire si nécessaire
@@ -71,7 +64,6 @@ export default function BudgetForm() {
             console.error('Erreur lors de la création du budget :', error);
         }
     };
-
   return (
     <div className="budgetForm">
       <h2>Créer un nouveau budget</h2>
