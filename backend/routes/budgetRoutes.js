@@ -8,11 +8,13 @@ const budgetRouter = Router();
 // Définition des routes pour la gestion de budgets
 
 // Route POST pour créer un nouveau budget
-budgetRouter.post('/', authenticate, budgetCtrl.createOneBudget);
+budgetRouter.post('/createOneBudget', authenticate, budgetCtrl.createOneBudget);
 
 // Route GET pour obtenir tous les budgets
 budgetRouter.get('/', authenticate, budgetCtrl.getAllBudgets);
 
+// Route pour récupérer toutes les catégories
+budgetRouter.get('/getCategories', authenticate,budgetCtrl.getAllCategories);
 
 // Route GET pour obtenir le total du budget mensuel pour un ID spécifique
 budgetRouter.get('/totalMonthlyBudget/:userId', authenticate, budgetCtrl.getTotalMonthlyBudget);

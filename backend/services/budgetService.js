@@ -129,6 +129,18 @@ const budgetService = {
         }
       },
 
+      getAllCategories: async () => {
+        try {
+          const categories = await Category.findAll();
+          console.log('Categories data from getAllCategories:', categories); // Log des données des catégories
+          return categories;
+        } catch (error) {
+          console.error('Error in getAllCategories:', error); // Log des erreurs
+          throw error;
+        }
+      }
+      
+      
       
     };
 

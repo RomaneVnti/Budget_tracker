@@ -4,7 +4,6 @@ import { useAuth } from '../../context/AuthContext';
 import '../../style/dashboard/HeaderDashboard.css';
 import logo from '../../assets/logo3.png';
 import { AiOutlineMenu } from 'react-icons/ai';
-import HeaderHomePage from '../homePage/HeaderHomePage';
 import DropdownMenuDashboard from './DropDownMenuDashboard';
 import HomePage from '../homePage/HomePage'
 
