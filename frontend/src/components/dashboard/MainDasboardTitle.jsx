@@ -3,12 +3,13 @@ import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import '../../style/dashboard/HeaderDashboard.css';
 
-
 export default function MainDasboardTitle() {
   const { user } = useAuth();
   const [totalMonthlyBudget, setTotalMonthlyBudget] = useState(null);
   const [totalExpenseAmount, setTotalExpenseAmount] = useState(null);
   const [remainingBudget, setRemainingBudget] = useState(null); // État pour le budget restant
+  const [successMessage, setSuccessMessage] = useState(null);
+
 
 
   useEffect(() => {
@@ -26,7 +27,6 @@ export default function MainDasboardTitle() {
         .catch((error) => {
           console.error('Erreur lors de la récupération du total du budget mensuel:', error);
         });
-        
 
       // Effectuez une requête GET pour récupérer le total des dépenses réelles de l'utilisateur
       axios

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import axios from 'axios';
@@ -45,11 +46,12 @@ export default function BudgetForm() {
         };
 
         try {
+            
             // Envoyez les données du formulaire au serveur pour créer le budget en utilisant Axios
             const response = await axios.post('http://localhost:8000/budget/createOneBudget', budgetData);
             console.log('Response from createOneBudget:', response); // Log de la réponse du serveur
 
-            if (response.status === 201) {
+            if (response.status === 200) {
                 // Budget créé avec succès
                 console.log('Budget créé avec succès');
                 // Réinitialisez les champs du formulaire si nécessaire
@@ -64,6 +66,7 @@ export default function BudgetForm() {
             console.error('Erreur lors de la création du budget :', error);
         }
     };
+
   return (
     <div className="budgetForm">
       <h2>Créer un nouveau budget</h2>

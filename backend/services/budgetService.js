@@ -66,8 +66,6 @@ const budgetService = {
 
             // Mise à jour des propriétés du budget avec les nouvelles données
             existingBudget.budget_amount = budgetData.budget_amount;
-            existingBudget.budget_period_start = budgetData.budget_period_start;
-            existingBudget.budget_period_end = budgetData.budget_period_end;
 
             // Sauvegarde du budget mis à jour
             await existingBudget.save();
