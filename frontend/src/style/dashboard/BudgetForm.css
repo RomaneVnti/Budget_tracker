@@ -18,7 +18,7 @@
     margin: 26px auto; /* Centrer le formulaire horizontalement */
     z-index: 1000;
     position: relative;
-    height: 20em;
+    height: 22em;
   }
   
   .budgetForm h2 {
@@ -54,6 +54,23 @@
   .buttonSubmit{
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .message{
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+  }
+  .message.success{
+    color: #B6C597;
+    font-family: Lato, sans-serif;
+  }
+
+  .message.error{
+    color: #ff0000;
+    font-family: Lato, sans-serif;
   }
 
   .budgetForm button {
@@ -68,7 +85,7 @@
     font-weight: 700;
     margin-top: 3em;
     transition: transform 0.2s ease-in-out;
-
+    width: 10em;
   }
   
   .budgetForm button:hover {

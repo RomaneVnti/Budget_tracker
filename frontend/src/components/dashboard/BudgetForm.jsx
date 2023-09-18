@@ -20,6 +20,10 @@ export default function BudgetForm(props) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [categories, setCategories] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(true);
+  const [message, setMessage] = useState(''); // Ajout du message
+  const [messageClass, setMessageClass] = useState(''); // Ajout de la classe CSS
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,6 +41,9 @@ export default function BudgetForm(props) {
 
       if (response.status === 201 || response.status === 200) {
         console.log('Budget créé avec succès');
+        setMessage('Budget créé avec succès'); // Mettez à jour le message en cas de succès
+        setMessageClass('success');
+
         axios
           .get(`http://localhost:8000/budget/totalMonthlyBudget/${user.id}`)
           .then((response) => {
@@ -50,9 +57,13 @@ export default function BudgetForm(props) {
         setSelectedCategory(null);
       } else {
         console.error('Erreur lors de la création du budget');
+        setMessage('Erreur lors de la création du budget'); // Mettez à jour le message en cas d'erreur
+        setMessageClass('error'); 
       }
     } catch (error) {
       console.error('Erreur lors de la création du budget :', error);
+      setMessage('Erreur lors de la création/mise à jour du budget'); // Mettez à jour le message en cas d'erreur
+      setMessageClass('error'); 
     }
   };
 
@@ -126,6 +137,8 @@ export default function BudgetForm(props) {
         </div>
         <div className="buttonSubmit">
         <button className='buttonBudgetSubmit' type="submit">Créer le budget</button>
+        <div className={`message ${messageClass}`}>{message}</div> {/* Affichez le message ici */}
+
         </div>
         </form>
       )}
