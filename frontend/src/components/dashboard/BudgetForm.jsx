@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { IoMdClose } from 'react-icons/io';
+import {FaEuroSign} from 'react-icons/fa';
 import '../../style/dashboard/BudgetForm.css';
 import Select, { components } from "react-select";
 
@@ -91,7 +92,9 @@ export default function BudgetForm(props) {
           </div>
           <div className="form-group">
             <h2>Créer un nouveau budget</h2>
+            
             <label htmlFor="budgetAmount">Montant du budget</label>
+            <div className="inputLogo">
             <input
               type="number"
               id="budgetAmount"
@@ -100,6 +103,11 @@ export default function BudgetForm(props) {
               onChange={(e) => setBudgetAmount(e.target.value)}
               required
             />
+            <div className="Logoprice">
+                <FaEuroSign/>
+            </div>
+            </div>
+            
           </div>
           <input type="hidden" name="budgetPeriodStart" value={budgetPeriodStart} />
           <input type="hidden" name="budgetPeriodEnd" value={budgetPeriodEnd} />
@@ -116,7 +124,9 @@ export default function BudgetForm(props) {
             placeholder="Choisissez une catégorie"
           />
         </div>
-          <button type="submit">Créer le budget</button>
+        <div className="buttonSubmit">
+        <button className='buttonBudgetSubmit' type="submit">Créer le budget</button>
+        </div>
         </form>
       )}
     </div>
