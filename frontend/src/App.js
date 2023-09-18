@@ -4,7 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './components/login/Login';
 import Register from './components/register/Register';
 import HomePage from './components/homePage/HomePage';
-import Dashboard from './components/dashboard/Dashboard';
+import Dashboard from './components/dashboard/Dashboard.jsx';
 
 function PrivateRoute({ path, element }) {
   const { user } = useAuth();

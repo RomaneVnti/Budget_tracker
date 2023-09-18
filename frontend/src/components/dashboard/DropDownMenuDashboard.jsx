@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import '../../style/homePage/DropDownMenu.css';
 
 export default function DropdownMenuDropdownMenuDashboard({ isOpen}) {

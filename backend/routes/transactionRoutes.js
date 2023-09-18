@@ -13,7 +13,7 @@ transactionRouter.get('/totalExpenseAmount/:userId', authenticate, transactionCt
 transactionRouter.get('/:id',authenticate, transactionCtrl.getOneTransaction);
 
 // Route GET pour obtenir l'historique des transactions d'un utilisateur spécifique par son ID
-transactionRouter.get('/history/:id', authenticate, transactionCtrl.getUserTransactionHistory);
+transactionRouter.get('/history/:userId', authenticate, transactionCtrl.getUserTransactionHistory);
 
 // Route POST pour créer une nouvelle transaction
 transactionRouter.post('/', authenticate,transactionCtrl.createOneTransaction);

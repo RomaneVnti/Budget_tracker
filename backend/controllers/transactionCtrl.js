@@ -82,7 +82,7 @@ const transactionCtrl = {
 
     // Méthode pour récupérer l'historique des transactions d'un utilisateur
     getUserTransactionHistory: async (req, res) => {
-        const { id: userId } = req.params;
+        const userId = req.user.user_id;
         try {
             const transactions = await transactionService.getUserTransactionHistory(userId); 
             res.status(200).json(transactions);
