@@ -112,6 +112,7 @@ const handleBudgetFormClose = () => {
               {remainingBudget !== null ? remainingBudget : 'Calcul en cours...'}
             </div>
           </div>
+          
         </div>
 
         <div className='buttonCreateBudget'>

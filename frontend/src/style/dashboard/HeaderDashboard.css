@@ -95,24 +95,24 @@
 }
 
 .buttonCreateBudget {
-    clear: both; /* Force le bouton à être en dessous des éléments flottants */
-    text-align: center;
-    margin-top: -11em;
-    margin-left: 1em;
-  }
-  
-  .buttonAddBudget {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #2B2E4A;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: transform 0.2s ease-in-out;
-  }
+  text-align: center;
+  z-index: 999;
+  position: absolute;
+  top: 40em;
+  margin-left: 1em;
+}
+
+.buttonAddBudget {
+  display: flex;
+  background-color: #2B2E4A;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  flex-direction: row;
+}
   
   .iconPlus {
     margin-right: 10px;
@@ -152,7 +152,7 @@
     }
 
     .buttonCreateBudget {
-        margin-top: 1em;
+      top: 28em;
       }
 }
 
