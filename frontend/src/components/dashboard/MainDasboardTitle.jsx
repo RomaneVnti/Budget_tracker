@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import '../../style/dashboard/HeaderDashboard.css';
-import BudgetForm from './BudgetForm'; // Importez BudgetForm
+import BudgetForm from './BudgetForm'; // Importez le composant du formulaire
+import { AiOutlinePlus } from 'react-icons/ai';
+import { IoMdClose } from 'react-icons/io';
+
 
 export default function MainDasboardTitle() {
   const { user } = useAuth();
   const [totalMonthlyBudget, setTotalMonthlyBudget] = useState(null);
   const [totalExpenseAmount, setTotalExpenseAmount] = useState(null);
   const [remainingBudget, setRemainingBudget] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [showPopup, setShowPopup] = useState(false); // Nouvelle variable d'état pour la fenêtre pop-up
 
   useEffect(() => {
     if (user) {
@@ -45,10 +49,21 @@ export default function MainDasboardTitle() {
   const updateTotalMonthlyBudget = (newBudgetAmount) => {
     // Mettez à jour le montant total du budget ici
     setTotalMonthlyBudget(newBudgetAmount);
+    // Affichez la fenêtre pop-up
+    setShowPopup(true);
   };
 
   const capitalizeFirstLetter = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  const toggleFormVisibility = () => {
+    setIsFormVisible(!isFormVisible);
+  };
+
+  const closePopup = () => {
+    // Fermez la fenêtre pop-up en mettant showPopup à false
+    setShowPopup(false);
   };
 
   return (
@@ -80,7 +95,7 @@ export default function MainDasboardTitle() {
               Dépenses réelles
             </div>
             <div className='totalExpenseAmount'>
-            {totalExpenseAmount ?? '0'}
+              {totalExpenseAmount ?? '0'}
             </div>
           </div>
 
@@ -89,12 +104,31 @@ export default function MainDasboardTitle() {
               Budget restant
             </div>
             <div className='remainingBudget'>
-            {remainingBudget !== null ? remainingBudget : 'Calcul en cours...'}
+              {remainingBudget !== null ? remainingBudget : 'Calcul en cours...'}
             </div>
           </div>
         </div>
-        {/* Intégration du formulaire de création de budget */}
-        <BudgetForm updateTotalMonthlyBudget={updateTotalMonthlyBudget} />
+
+        <div className='buttonCreateBudget'>
+          <button onClick={toggleFormVisibility}>
+            <div className="iconPlus">
+              <AiOutlinePlus />
+            </div>
+            <div className="texteButton">Ajouter ou modifier un budget</div>
+          </button>
+        </div>
+
+        {isFormVisible && <BudgetForm updateTotalMonthlyBudget={updateTotalMonthlyBudget} />}
+        
+        {/* Affichez la fenêtre pop-up si showPopup est vrai */}
+        {showPopup && (
+          <div className="popup">
+            <div className="popup-content">
+              <p>Le budget a été créé avec succès !</p>
+              <IoMdClose onClick={closePopup}/>
+            </div>
+          </div>
+        )}
       </div>
     </main>
   );
