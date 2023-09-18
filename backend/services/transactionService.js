@@ -95,21 +95,23 @@ const transactionService = {
     // Fonction pour obtenir l'historique des transactions d'un utilisateur
      getUserTransactionHistory : async (userId) => {
         try {
-          // Utilisez la méthode findAll de Sequelize pour récupérer les transactions avec la catégorie associée
-          const transactions = await Transaction.findAll({
-            where: { user_id: userId },
-            include: {
-              model: Category,
-              attributes: ['categoryName'],
-              as: 'category', // Assurez-vous que l'alias correspond à celui défini dans votre modèle Transaction
-            },
-          });
-      
-          // transactions sera un tableau d'objets avec chaque objet contenant également la catégorie
-          return transactions;
-        } catch (error) {
-          throw error;
-        }
+            // Utilisez la méthode findAll de Sequelize pour récupérer les 10 dernières transactions avec la catégorie associée
+            const transactions = await Transaction.findAll({
+              where: { user_id: userId },
+              include: {
+                model: Category,
+                attributes: ['categoryName'],
+                as: 'category',
+              },
+              order: [['date', 'DESC']], // Triez par date décroissante (plus récente en premier)
+              limit: (5), // Limitez le nombre de résultats à 10
+            });
+        
+            // transactions contiendra les 10 dernières transactions de l'utilisateur avec les noms de catégorie
+            return transactions;
+          } catch (error) {
+            throw error;
+          }
       }
 };
 

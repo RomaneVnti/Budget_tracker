@@ -31,7 +31,7 @@ export default function MainDashboardArray() {
 
   return (
     <main className="mainArray">
-      <h2>Les 10 dernières transactions</h2>
+      <h2>Vos dernières transactions</h2>
       <table>
         <thead>
           <tr>
