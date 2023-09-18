@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
+import { IoMdClose } from 'react-icons/io';
+
 
 export default function BudgetForm(props) {
   const { user } = useAuth();
@@ -15,6 +17,7 @@ export default function BudgetForm(props) {
   const [budgetPeriodEnd, setBudgetPeriodEnd] = useState(initialEndDate);
   const [categoryId, setCategoryId] = useState('');
   const [categories, setCategories] = useState([]);
+  const [isFormVisible, setIsFormVisible] = useState(true); // Ajoutez une variable d'état pour gérer la visibilité du formulaire
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,6 +49,8 @@ export default function BudgetForm(props) {
         // Réinitialisez les champs du formulaire si nécessaire
         setBudgetAmount('');
         setCategoryId('');
+        // Cachez le formulaire après la création du budget
+        setIsFormVisible(false);
   
       } else {
         console.error('Erreur lors de la création du budget');
@@ -73,44 +78,55 @@ export default function BudgetForm(props) {
     fetchCategories();
   }, []);
 
+  // Fonction pour gérer la fermeture du formulaire
+  const handleFormClose = () => {
+    setIsFormVisible(false);
+  };
+
   return (
     <div className="budgetForm">
-      <h2>Créer un nouveau budget</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="budgetAmount">Montant du budget</label>
-          <input
-            type="number"
-            id="budgetAmount"
-            name="budgetAmount"
-            value={budgetAmount}
-            onChange={(e) => setBudgetAmount(e.target.value)}
-            required
-          />
-        </div>
-        {/* Champ de date de début invisible */}
-        <input type="hidden" name="budgetPeriodStart" value={budgetPeriodStart} />
-        {/* Champ de date de fin invisible */}
-        <input type="hidden" name="budgetPeriodEnd" value={budgetPeriodEnd} />
-        <div className="form-group">
-          <label htmlFor="categoryId">Catégorie</label>
-          <select
-            id="categoryId"
-            name="categoryId"
-            value={categoryId}
-            onChange={(e) => setCategoryId(e.target.value)}
-            required
-          >
-            <option value="" disabled>Choisissez une catégorie</option>
-            {categories.map((category) => (
-              <option key={category.category_id} value={category.category_id}>
-                {category.categoryName}
-              </option>
-            ))}
-          </select>
-        </div>
-        <button type="submit">Créer le budget</button>
-      </form>
+      {isFormVisible && (
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+          <h2>Créer un nouveau budget</h2>
+            <label htmlFor="budgetAmount">Montant du budget</label>
+            <input
+              type="number"
+              id="budgetAmount"
+              name="budgetAmount"
+              value={budgetAmount}
+              onChange={(e) => setBudgetAmount(e.target.value)}
+              required
+            />
+          </div>
+          {/* Champ de date de début invisible */}
+          <input type="hidden" name="budgetPeriodStart" value={budgetPeriodStart} />
+          {/* Champ de date de fin invisible */}
+          <input type="hidden" name="budgetPeriodEnd" value={budgetPeriodEnd} />
+          <div className="form-group">
+            <label htmlFor="categoryId">Catégorie</label>
+            <select
+              id="categoryId"
+              name="categoryId"
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+              required
+            >
+              <option value="" disabled>Choisissez une catégorie</option>
+              {categories.map((category) => (
+                <option key={category.category_id} value={category.category_id}>
+                  {category.categoryName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <button type="submit">Créer le budget</button>
+        </form>
+      )}
+      {/* Bouton pour fermer le formulaire */}
+      {isFormVisible && (
+        <IoMdClose onClick={handleFormClose}/>
+      )}
     </div>
   );
 }
