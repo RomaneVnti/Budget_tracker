@@ -3,8 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import '../../style/dashboard/HeaderDashboard.css';
 import BudgetForm from './BudgetForm'; // Importez le composant du formulaire
-import { IoMdClose } from 'react-icons/io';
-import AddBudgetButton from './AddBudgetButton'; // Importez le nouveau composant
+import AddBudgetButton from './ButtonBudget';
 
 // Définissez la fonction capitalizeFirstLetter dans le même fichier
 function capitalizeFirstLetter(str) {
@@ -17,7 +16,6 @@ export default function MainDasboardTitle() {
   const [totalExpenseAmount, setTotalExpenseAmount] = useState(null);
   const [remainingBudget, setRemainingBudget] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [showPopup, setShowPopup] = useState(false); // Nouvelle variable d'état pour la fenêtre pop-up
 
   useEffect(() => {
     if (user) {
@@ -53,8 +51,7 @@ export default function MainDasboardTitle() {
   const updateTotalMonthlyBudget = (newBudgetAmount) => {
     // Mettez à jour le montant total du budget ici
     setTotalMonthlyBudget(newBudgetAmount);
-    // Affichez la fenêtre pop-up
-    setShowPopup(true);
+
   };
 
   const toggleFormVisibility = () => {
@@ -65,11 +62,6 @@ const handleBudgetFormClose = () => {
   setIsFormVisible(false); // Mettez à jour l'état ici pour fermer le formulaire
 };
 
-
-  const closePopup = () => {
-    // Fermez la fenêtre pop-up en mettant showPopup à false
-    setShowPopup(false);
-  };
 
   return (
     <main className='main'>
@@ -121,15 +113,6 @@ const handleBudgetFormClose = () => {
 
         {isFormVisible && <BudgetForm updateTotalMonthlyBudget={updateTotalMonthlyBudget} onFormClose={handleBudgetFormClose}  />}
         
-        {/* Affichez la fenêtre pop-up si showPopup est vrai */}
-        {showPopup && (
-          <div className="popup">
-            <div className="popup-content">
-              <p>Le budget a été créé avec succès !</p>
-              <IoMdClose onClick={closePopup}/>
-            </div>
-          </div>
-        )}
       </div>
     </main>
   );

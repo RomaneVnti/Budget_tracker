@@ -5,30 +5,27 @@ import BudgetValidation from '../validation/budgetValidation.js';
 // Contrôleur de gestion des budgets
 const budgetCtrl = {
     // Méthode pour créer ou mettre à jour un budget
-    createOneBudget: async (req, res) =>{
+    createOrUpdateBudget: async (req, res) => {
       const { body } = req;
-    
+  
       const { error } = BudgetValidation(body);
       if (error) {
         return res.status(400).json({ error: error.details[0].message });
       }
-    
+  
       try {
-        // Récupérez l'ID de l'utilisateur connecté depuis req.user (assumant que votre middleware d'authentification stocke l'utilisateur connecté dans req.user)
         const userId = req.user.user_id;
-    
+  
         // Vérifiez si un budget existe déjà pour la catégorie et l'utilisateur spécifiés
         const existingBudget = await budgetService.getBudgetByCategoryAndUser(body.category_id, userId);
-    
+  
         if (existingBudget) {
           // Si un budget existe, mettez à jour le budget existant
           await budgetService.updateBudgetForCategoryAndUser(body.category_id, userId, body);
           res.status(200).json({ message: 'Budget updated successfully' });
         } else {
           // Si aucun budget n'existe, créez-en un nouveau
-          // Assurez-vous d'ajouter l'ID de l'utilisateur au corps du budget
           body.user_id = userId;
-    
           await budgetService.createOneBudget(body);
           res.status(201).json({ message: 'Budget created successfully' });
         }

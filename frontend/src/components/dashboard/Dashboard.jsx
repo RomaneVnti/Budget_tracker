@@ -10,7 +10,7 @@ export default function Dashboard() {
         <HeaderDashBoard/>
         <MainDasboardTitle/>
         <MainDashboardArray/>
-        
+    
     </div>
   )
 }

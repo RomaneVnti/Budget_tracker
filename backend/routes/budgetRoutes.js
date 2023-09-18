@@ -8,7 +8,7 @@ const budgetRouter = Router();
 // Définition des routes pour la gestion de budgets
 
 // Route POST pour créer un nouveau budget
-budgetRouter.post('/createOneBudget', authenticate, budgetCtrl.createOneBudget);
+budgetRouter.post('/createOrUpdateBudget', authenticate, budgetCtrl.createOrUpdateBudget);
 
 // Route GET pour obtenir tous les budgets
 budgetRouter.get('/', authenticate, budgetCtrl.getAllBudgets);

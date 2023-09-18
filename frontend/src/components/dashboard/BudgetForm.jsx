@@ -33,9 +33,9 @@ export default function BudgetForm(props) {
     };
 
     try {
-      const response = await axios.post('http://localhost:8000/budget/createOneBudget', budgetData);
+      const response = await axios.post('http://localhost:8000/budget/createOrUpdateBudget', budgetData);
 
-      if (response.status === 200) {
+      if (response.status === 201 || response.status === 200) {
         console.log('Budget créé avec succès');
         axios
           .get(`http://localhost:8000/budget/totalMonthlyBudget/${user.id}`)
