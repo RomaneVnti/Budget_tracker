@@ -9,9 +9,9 @@
   }
 
 .budgetForm {
-    background-color: #fff; /* Couleur de fond du formulaire */
+    background-color: #edebeb;
     padding: 20px;
-    border: 1px solid #ccc; /* Bordure du formulaire */
+    border: 1px solid #ccc;
     border-radius: 4px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Ombre légère */
     max-width: 400px; /* Largeur maximale du formulaire */
@@ -33,10 +33,10 @@
     display: block;
     margin-bottom: 10px;
     font-weight: bold;
+    margin-left: 8px;
   }
   
-  .budgetForm input[type="number"],
-  .budgetForm select {
+  .budgetForm input[type="number"]{
     width: 95%;
     padding: 10px;
     margin-bottom: 15px;
@@ -44,9 +44,11 @@
     background-color: rgba(255, 255, 255, 1);
     outline: none;
     border: 1px solid rgba(43, 46, 74, 1);
-    border-radius: 10px;
+    border-radius: 5px;
+    margin-left: 6px;
   }
-  
+
+
   .budgetForm button {
     background-color: #007bff; /* Couleur de fond du bouton */
     color: #fff; /* Couleur du texte du bouton */

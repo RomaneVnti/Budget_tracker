@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { IoMdClose } from 'react-icons/io';
 import '../../style/dashboard/BudgetForm.css';
+import Select, { components } from "react-select";
 
 export default function BudgetForm(props) {
   const { user } = useAuth();
@@ -15,7 +16,7 @@ export default function BudgetForm(props) {
   const [budgetAmount, setBudgetAmount] = useState('');
   const [budgetPeriodStart, setBudgetPeriodStart] = useState(initialStartDate);
   const [budgetPeriodEnd, setBudgetPeriodEnd] = useState(initialEndDate);
-  const [categoryId, setCategoryId] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [categories, setCategories] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(true);
 
@@ -26,7 +27,7 @@ export default function BudgetForm(props) {
       budget_amount: parseFloat(budgetAmount),
       budget_period_start: budgetPeriodStart,
       budget_period_end: budgetPeriodEnd,
-      category_id: parseInt(categoryId),
+      category_id: selectedCategory ? selectedCategory.value : null,
       user_id: user ? user.id : '',
     };
 
@@ -45,8 +46,7 @@ export default function BudgetForm(props) {
           });
 
         setBudgetAmount('');
-        setCategoryId('');
-        setIsFormVisible(false);
+        setSelectedCategory(null);
       } else {
         console.error('Erreur lors de la création du budget');
       }
@@ -60,8 +60,12 @@ export default function BudgetForm(props) {
       try {
         const response = await axios.get('http://localhost:8000/budget/getCategories');
         if (response.status === 200) {
-          const data = response.data;
-          setCategories(data);
+          const categoriesData = response.data;
+          const formattedCategories = categoriesData.map((category) => ({
+            value: category.category_id,
+            label: category.categoryName,
+          }));
+          setCategories(formattedCategories);
         } else {
           console.error('Erreur lors du chargement des catégories');
         }
@@ -75,15 +79,14 @@ export default function BudgetForm(props) {
 
   const handleFormClose = () => {
     setIsFormVisible(false);
-    props.onFormClose(); // Appelez la fonction de rappel pour signaler la fermeture du formulaire
+    props.onFormClose();
   };
 
   return (
-    <div className="budgetForm" >
+    <div className="budgetForm">
       {isFormVisible && (
         <form onSubmit={handleSubmit}>
           <div className="iconCloseBudget" onClick={handleFormClose}>
-            {/* Bouton pour fermer le formulaire */}
             <IoMdClose />
           </div>
           <div className="form-group">
@@ -101,22 +104,18 @@ export default function BudgetForm(props) {
           <input type="hidden" name="budgetPeriodStart" value={budgetPeriodStart} />
           <input type="hidden" name="budgetPeriodEnd" value={budgetPeriodEnd} />
           <div className="form-group">
-            <label htmlFor="categoryId">Catégorie</label>
-            <select
-              id="categoryId"
-              name="categoryId"
-              value={categoryId}
-              onChange={(e) => setCategoryId(e.target.value)}
-              required
-            >
-              <option value="" disabled>Choisissez une catégorie</option>
-              {categories.map((category) => (
-                <option key={category.category_id} value={category.category_id}>
-                  {category.categoryName}
-                </option>
-              ))}
-            </select>
-          </div>
+          <label htmlFor="categoryId">Catégorie</label>
+          <Select
+            id="categoryId"
+            name="categoryId"
+            value={selectedCategory}
+            onChange={(selectedOption) => setSelectedCategory(selectedOption)}
+            options={categories}
+            required
+            className="custom-select"
+            placeholder="Choisissez une catégorie"
+          />
+        </div>
           <button type="submit">Créer le budget</button>
         </form>
       )}
