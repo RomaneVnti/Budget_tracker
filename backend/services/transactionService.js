@@ -1,5 +1,6 @@
 import Transaction from '../models/transaction.js';
 import { Op } from 'sequelize';
+import Category from '../models/category.js';
 
 // Définition du service de gestion de transactions
 const transactionService = {
@@ -92,19 +93,24 @@ const transactionService = {
     },
 
     // Fonction pour obtenir l'historique des transactions d'un utilisateur
-    getUserTransactionHistory: async (userId) => {
+     getUserTransactionHistory : async (userId) => {
         try {
-            console.log("Fetching transactions for user:", userId);
-            const transactions = await Transaction.findAll({
-                where: { user_id: userId },
-            });
-
-            console.log("Transactions for user:", transactions);
-            return transactions;
+          // Utilisez la méthode findAll de Sequelize pour récupérer les transactions avec la catégorie associée
+          const transactions = await Transaction.findAll({
+            where: { user_id: userId },
+            include: {
+              model: Category,
+              attributes: ['categoryName'],
+              as: 'category', // Assurez-vous que l'alias correspond à celui défini dans votre modèle Transaction
+            },
+          });
+      
+          // transactions sera un tableau d'objets avec chaque objet contenant également la catégorie
+          return transactions;
         } catch (error) {
-            throw error;
+          throw error;
         }
-    }
+      }
 };
 
 export default transactionService;

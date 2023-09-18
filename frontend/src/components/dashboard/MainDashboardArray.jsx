@@ -46,7 +46,7 @@ export default function MainDashboardArray() {
               <tr key={transaction.id_transaction}>
               <td>{formatDate(transaction.date)}</td>
               <td>{transaction.description}</td>
-              <td>{transaction.category_id}</td>
+              <td>{transaction.category.categoryName}</td>
               <td>{transaction.transaction_amount}</td>
             </tr>
           ))}
