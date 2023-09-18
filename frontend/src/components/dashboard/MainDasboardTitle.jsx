@@ -58,8 +58,13 @@ export default function MainDasboardTitle() {
   };
 
   const toggleFormVisibility = () => {
-    setIsFormVisible(!isFormVisible);
-  };
+  setIsFormVisible(!isFormVisible); // Inverse la visibilité du formulaire
+};
+
+const handleBudgetFormClose = () => {
+  setIsFormVisible(false); // Mettez à jour l'état ici pour fermer le formulaire
+};
+
 
   const closePopup = () => {
     // Fermez la fenêtre pop-up en mettant showPopup à false
@@ -113,7 +118,7 @@ export default function MainDasboardTitle() {
           <AddBudgetButton onClick={toggleFormVisibility} />
         </div>
 
-        {isFormVisible && <BudgetForm updateTotalMonthlyBudget={updateTotalMonthlyBudget} />}
+        {isFormVisible && <BudgetForm updateTotalMonthlyBudget={updateTotalMonthlyBudget} onFormClose={handleBudgetFormClose}  />}
         
         {/* Affichez la fenêtre pop-up si showPopup est vrai */}
         {showPopup && (

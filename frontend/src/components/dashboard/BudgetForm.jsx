@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import { IoMdClose } from 'react-icons/io';
-
+import '../../style/dashboard/BudgetForm.css';
 
 export default function BudgetForm(props) {
   const { user } = useAuth();
@@ -17,11 +17,11 @@ export default function BudgetForm(props) {
   const [budgetPeriodEnd, setBudgetPeriodEnd] = useState(initialEndDate);
   const [categoryId, setCategoryId] = useState('');
   const [categories, setCategories] = useState([]);
-  const [isFormVisible, setIsFormVisible] = useState(true); // Ajoutez une variable d'état pour gérer la visibilité du formulaire
+  const [isFormVisible, setIsFormVisible] = useState(true);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const budgetData = {
       budget_amount: parseFloat(budgetAmount),
       budget_period_start: budgetPeriodStart,
@@ -29,14 +29,12 @@ export default function BudgetForm(props) {
       category_id: parseInt(categoryId),
       user_id: user ? user.id : '',
     };
-  
+
     try {
       const response = await axios.post('http://localhost:8000/budget/createOneBudget', budgetData);
-  
+
       if (response.status === 200) {
         console.log('Budget créé avec succès');
-  
-        // Rappeler la route pour récupérer le totalMonthlyBudget ici
         axios
           .get(`http://localhost:8000/budget/totalMonthlyBudget/${user.id}`)
           .then((response) => {
@@ -45,13 +43,10 @@ export default function BudgetForm(props) {
           .catch((error) => {
             console.error('Erreur lors de la récupération du total du budget mensuel:', error);
           });
-  
-        // Réinitialisez les champs du formulaire si nécessaire
+
         setBudgetAmount('');
         setCategoryId('');
-        // Cachez le formulaire après la création du budget
         setIsFormVisible(false);
-  
       } else {
         console.error('Erreur lors de la création du budget');
       }
@@ -78,17 +73,21 @@ export default function BudgetForm(props) {
     fetchCategories();
   }, []);
 
-  // Fonction pour gérer la fermeture du formulaire
   const handleFormClose = () => {
     setIsFormVisible(false);
+    props.onFormClose(); // Appelez la fonction de rappel pour signaler la fermeture du formulaire
   };
 
   return (
-    <div className="budgetForm">
+    <div className="budgetForm" >
       {isFormVisible && (
         <form onSubmit={handleSubmit}>
+          <div className="iconCloseBudget" onClick={handleFormClose}>
+            {/* Bouton pour fermer le formulaire */}
+            <IoMdClose />
+          </div>
           <div className="form-group">
-          <h2>Créer un nouveau budget</h2>
+            <h2>Créer un nouveau budget</h2>
             <label htmlFor="budgetAmount">Montant du budget</label>
             <input
               type="number"
@@ -99,9 +98,7 @@ export default function BudgetForm(props) {
               required
             />
           </div>
-          {/* Champ de date de début invisible */}
           <input type="hidden" name="budgetPeriodStart" value={budgetPeriodStart} />
-          {/* Champ de date de fin invisible */}
           <input type="hidden" name="budgetPeriodEnd" value={budgetPeriodEnd} />
           <div className="form-group">
             <label htmlFor="categoryId">Catégorie</label>
@@ -122,10 +119,6 @@ export default function BudgetForm(props) {
           </div>
           <button type="submit">Créer le budget</button>
         </form>
-      )}
-      {/* Bouton pour fermer le formulaire */}
-      {isFormVisible && (
-        <IoMdClose onClick={handleFormClose}/>
       )}
     </div>
   );

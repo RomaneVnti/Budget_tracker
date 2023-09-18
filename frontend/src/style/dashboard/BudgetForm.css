@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap");
+
+
+.iconCloseBudget {
+    float: right; /* Place l'icône à droite */
+    margin-top: -30px; /* Ajustez la position verticale si nécessaire */
+    margin-right: -10px; /* Ajustez la position horizontale si nécessaire */
+    font-size: 25px;
+  }
+
+.budgetForm {
+    background-color: #fff; /* Couleur de fond du formulaire */
+    padding: 20px;
+    border: 1px solid #ccc; /* Bordure du formulaire */
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Ombre légère */
+    max-width: 400px; /* Largeur maximale du formulaire */
+    margin: 26px auto; /* Centrer le formulaire horizontalement */
+    z-index: 1000;
+    position: relative;
+  }
+  
+  .budgetForm h2 {
+    font-size: 1.3em; /* Taille de la police du titre */
+    margin-bottom: 38px; /* Espace en bas du titre */
+    justify-content: center;
+    display: flex;
+    font-family: Lato, sans-serif;
+    color: #2B2E4A;
+  }
+  
+  .budgetForm label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .budgetForm input[type="number"],
+  .budgetForm select {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 1);
+    outline: none;
+    border: 1px solid rgba(43, 46, 74, 1);
+    border-radius: 10px;
+  }
+  
+  .budgetForm button {
+    background-color: #007bff; /* Couleur de fond du bouton */
+    color: #fff; /* Couleur du texte du bouton */
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Animation au survol */
+  }
+  
+  .budgetForm button:hover {
+    background-color: #0056b3; /* Couleur de fond au survol */
+  }
+  
+  /* Style pour l'icône de fermeture */
+  .budgetForm .IoMdClose {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+  
+  /* Style pour les messages d'erreur (si nécessaire) */
+  .budgetForm .error-message {
+    color: #ff0000;
+    font-size: 0.8em;
+    margin-top: 5px;
+  }
+  
