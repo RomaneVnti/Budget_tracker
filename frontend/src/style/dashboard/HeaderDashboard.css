@@ -8,7 +8,7 @@
   
 .main{
     background-color: #f3f3f3; /* Vous pouvez ajuster la couleur en fonction de vos préférences */
-    height: 65vh;
+    height: 500px;
 }
 
 .titleFirstName {
@@ -92,9 +92,48 @@
     line-height: normal;
     text-transform: capitalize;
     font-size: 1em;
+}
+
+.buttonCreateBudget {
+    clear: both; /* Force le bouton à être en dessous des éléments flottants */
+    text-align: center;
+    margin-top: -11em;
+    margin-left: 1em;
+  }
+  
+  .buttonAddBudget {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2B2E4A;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .iconPlus {
+    margin-right: 10px;
+    color: #FFBD59;
+    font-size: 20px;
+    display: flex;
+  }
+  
+  .texteButton {
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    font-family: Lato, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
   }
 
-
+.buttonAddBudget:hover {
+    transform: scale(1.1); /* Grossissement du bouton au survol */
+  }
 
 
 @media (min-width: 700px) {
@@ -109,8 +148,12 @@
     }
 
     .main{
-        height: 39vh;
+        height: 300px;
     }
+
+    .buttonCreateBudget {
+        margin-top: 1em;
+      }
 }
 
 @media (min-width: 1024px) {
@@ -118,4 +161,9 @@
         width: 63em;
         margin: 0 auto
     }
+
+    .buttonCreateBudget {
+        margin-left: 40px;
+      }
+
 }

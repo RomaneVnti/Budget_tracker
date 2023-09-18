@@ -3,9 +3,13 @@ import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import '../../style/dashboard/HeaderDashboard.css';
 import BudgetForm from './BudgetForm'; // Importez le composant du formulaire
-import { AiOutlinePlus } from 'react-icons/ai';
 import { IoMdClose } from 'react-icons/io';
+import AddBudgetButton from './AddBudgetButton'; // Importez le nouveau composant
 
+// Définissez la fonction capitalizeFirstLetter dans le même fichier
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 export default function MainDasboardTitle() {
   const { user } = useAuth();
@@ -51,10 +55,6 @@ export default function MainDasboardTitle() {
     setTotalMonthlyBudget(newBudgetAmount);
     // Affichez la fenêtre pop-up
     setShowPopup(true);
-  };
-
-  const capitalizeFirstLetter = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
   const toggleFormVisibility = () => {
@@ -110,12 +110,7 @@ export default function MainDasboardTitle() {
         </div>
 
         <div className='buttonCreateBudget'>
-          <button onClick={toggleFormVisibility}>
-            <div className="iconPlus">
-              <AiOutlinePlus />
-            </div>
-            <div className="texteButton">Ajouter ou modifier un budget</div>
-          </button>
+          <AddBudgetButton onClick={toggleFormVisibility} />
         </div>
 
         {isFormVisible && <BudgetForm updateTotalMonthlyBudget={updateTotalMonthlyBudget} />}
