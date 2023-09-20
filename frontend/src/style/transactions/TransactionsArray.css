@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap");
+
+/* MainDashboardArray.css */
+
+/* Style général pour le composant */
+.mainArrayTransaction {
+    margin: 12px;
+    margin-top: 125px;
+    overflow-x: auto; /* Ajoute une barre de défilement horizontale en cas de débordement */
+    max-width: 1024px; /* Largeur maximale pour le tableau à partir de 1024px */
+    margin: 146px auto 0 auto; /* Ajoute 50px d'espace en haut, centre horizontalement */
+    width: 90%;
+    border-radius: 13px; 
+    background-color: #FFF2DE;
+  }
+
+  
+  /* Style pour le titre "Vos dernières transactions" */
+  .mainArrayTransaction h2 {
+    font-size: 1.5rem;
+    margin-bottom: 35px;
+    margin-top: 30px;   
+    text-align: center;
+    font-family: Lato, sans-serif;
+    color: #2B2E4A;
+  }
+  
+  /* Style pour la table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    font-size: 1rem; /* Taille de police de base pour les appareils mobiles */
+  }
+  
+  /* Style pour les cellules de l'en-tête */
+  table th {
+    text-align: left;
+    padding: 10px;
+    color: #2B2E4A;
+    font-family: Lato,sans-serif;
+    opacity: 64%;
+    text-align: center;
+    max-width: 100px; /* Définissez une largeur maximale pour les cellules */
+    white-space: nowrap; /* Empêche le texte de se retourner à la ligne */
+    overflow: hidden; /* Masque tout texte qui dépasse la largeur maximale */
+    text-overflow: ellipsis;
+  }
+  
+  /* Style pour les cellules de données */
+  table td {
+    padding: 10px;
+    font-family: Lato, sans-serif;
+    color: #2B2E4A;
+    font-weight: 600;
+    text-align: center;
+    max-width: 100px; /* Définissez une largeur maximale pour les cellules */
+    white-space: nowrap; /* Empêche le texte de se retourner à la ligne */
+    overflow: hidden; /* Masque tout texte qui dépasse la largeur maximale */
+    text-overflow: ellipsis;
+    font-size: 0.9em;
+    
+  }
+  
+  table tbody tr {
+    border-bottom: 1px dashed #ccc; /* Ligne en pointillé de couleur grise */
+  }
+  
+  /* Style pour le montant (par exemple, pour le rendre en gras) */
+  table td.amount {
+    font-weight: bold;
+  }
+  
+  
+  /* Style pour le tableau complet lorsqu'il n'y a pas de données */
+  table.empty {
+    text-align: center;
+    margin-top: 20px;
+    font-style: italic;
+  }
+
+  .text-green {
+    color: #B6C597;
+  }
+  
+  .text-red {
+    color: rgb(239, 99, 99);
+  }
+  
+  @media screen and (min-width: 962px) {
+    table {
+      font-size: 1.2rem; /* Ajustez la taille de la police pour les écrans plus larges si nécessaire */
+    }
+  
+    /* Ajoutez ces styles pour définir la largeur à 50% et l'aligner à gauche */
+    .mainArrayTransaction {
+      max-width: 45%; /* Définissez la largeur à 50% */
+      margin-left: 25px; /* Alignez le tableau à gauche */
+
+    }
+  
+    /* Vous pouvez ajouter plus de styles pour la mise en page des écrans plus larges si nécessaire */
+  }
+
+  /* Style pour la table lorsque la largeur de l'écran est plus grande (par exemple, pour les tablettes et les ordinateurs de bureau) */
+  @media screen and (min-width: 601px) {
+    table {
+      font-size: 1.2rem; /* Ajustez la taille de la police pour les écrans plus larges si nécessaire */
+    }
+  }

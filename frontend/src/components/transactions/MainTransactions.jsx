@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 import '../../style/transactions/MainTransaction.css';
+import TransactionArray from './TransactionsArray';
 
 export default function MainTransactions() {
-  // Tableau de noms de mois (janvier est à l'indice 0)
   const months = [
     'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
     'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
@@ -14,9 +14,9 @@ export default function MainTransactions() {
 
   const navigateMonth = (direction) => {
     if (direction === 'previous') {
-      setCurrentMonthIndex((prevIndex) => prevIndex - 1);
+      setCurrentMonthIndex((prevIndex) => (prevIndex - 1 + 12) % 12);
     } else if (direction === 'next') {
-      setCurrentMonthIndex((prevIndex) => prevIndex + 1);
+      setCurrentMonthIndex((prevIndex) => (prevIndex + 1) % 12);
     }
   };
 
@@ -25,15 +25,15 @@ export default function MainTransactions() {
   return (
     <div>
       <div className="month-navigation">
-        <div className="iconPreious">
-            <GrFormPrevious onClick={() => navigateMonth('previous')} />
+        <div className="iconPrevious">
+          <GrFormPrevious onClick={() => navigateMonth('previous')} />
         </div>
         <h1>{currentMonth} {currentDate.getFullYear()}</h1>
         <div className="iconNext">
-            <GrFormNext onClick={() => navigateMonth('next')} />
+          <GrFormNext onClick={() => navigateMonth('next')} />
         </div>
       </div>
-      {/* Ajoutez le reste de votre contenu ici */}
+      <TransactionArray monthIndex={currentMonthIndex} />
     </div>
   );
 }

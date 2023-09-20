@@ -8,16 +8,17 @@ function formatDate(dateString) {
   const date = new Date(dateString);
   return date.toLocaleDateString('fr-FR', options);
 }
+
 export default function BudgetArray() {
   const { user } = useAuth();
   const [transactions, setTransactions] = useState([]);
 
-  // Effectue une requête pour obtenir les 10 dernières transactions de l'utilisateur
+  // Effectuez la requête pour obtenir toutes les transactions de l'utilisateur
   useEffect(() => {
     if (user) {
       const userId = user.id;
 
-      // Faites une requête AJAX (par exemple avec axios) pour récupérer les transactions depuis votre API
+      // Faites une requête AJAX pour récupérer toutes les transactions depuis votre API
       // Remplacez cette URL par l'URL de votre API
       axios.get(`http://localhost:8000/transaction/history/${userId}`)
         .then((response) => {
@@ -28,6 +29,9 @@ export default function BudgetArray() {
         });
     }
   }, [user]);
+
+  // Affichez uniquement les 5 dernières transactions
+  const lastFiveTransactions = transactions.slice(0, 5);
 
   return (
     <main className="mainArray">
@@ -42,15 +46,15 @@ export default function BudgetArray() {
           </tr>
         </thead>
         <tbody>
-          {transactions.map((transaction) => (
-              <tr key={transaction.id_transaction}>
-                <td>{formatDate(transaction.date)}</td>
-                <td>{transaction.description}</td>
-                <td>{transaction.category.categoryName}</td>
-                <td className={transaction.type_transaction === 'recette' ? 'text-green' : 'text-red'}>
-                  {transaction.type_transaction === 'recette' ? '+' : '-'}
-                  {transaction.transaction_amount}
-                </td>            
+          {lastFiveTransactions.map((transaction) => (
+            <tr key={transaction.id_transaction}>
+              <td>{formatDate(transaction.date)}</td>
+              <td>{transaction.description}</td>
+              <td>{transaction.category.categoryName}</td>
+              <td className={transaction.type_transaction === 'recette' ? 'text-green' : 'text-red'}>
+                {transaction.type_transaction === 'recette' ? '+' : '-'}
+                {transaction.transaction_amount}
+              </td>
             </tr>
           ))}
         </tbody>

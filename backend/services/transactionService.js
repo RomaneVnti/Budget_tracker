@@ -104,7 +104,6 @@ const transactionService = {
                 as: 'category',
               },
               order: [['date', 'DESC']], // Triez par date décroissante (plus récente en premier)
-              limit: (5), // Limitez le nombre de résultats à 10
             });
         
             // transactions contiendra les 10 dernières transactions de l'utilisateur avec les noms de catégorie
