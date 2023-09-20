@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import '../../style/dashboard/MainDashboardArray.css';
+import '../../style/dashboard/BudgetArray.css';
 import axios from 'axios';
 
 function formatDate(dateString) {
@@ -38,16 +38,19 @@ export default function BudgetArray() {
             <th>Date</th>
             <th>Description</th>
             <th>Catégorie</th>
-            <th>Montant</th>
+            <th>+/-</th>
           </tr>
         </thead>
         <tbody>
           {transactions.map((transaction) => (
               <tr key={transaction.id_transaction}>
-              <td>{formatDate(transaction.date)}</td>
-              <td>{transaction.description}</td>
-              <td>{transaction.category.categoryName}</td>
-              <td>{transaction.transaction_amount}</td>
+                <td>{formatDate(transaction.date)}</td>
+                <td>{transaction.description}</td>
+                <td>{transaction.category.categoryName}</td>
+                <td className={transaction.type_transaction === 'recette' ? 'text-green' : 'text-red'}>
+                  {transaction.type_transaction === 'recette' ? '+' : '-'}
+                  {transaction.transaction_amount}
+                </td>            
             </tr>
           ))}
         </tbody>
