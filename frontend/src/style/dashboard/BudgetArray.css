@@ -71,9 +71,6 @@
     font-weight: bold;
   }
   
-  /* Style pour les lignes alternées */
-  table tbody tr:nth-child(even) {
-  }
   
   /* Style pour le tableau complet lorsqu'il n'y a pas de données */
   table.empty {
@@ -83,11 +80,11 @@
   }
 
   .text-green {
-    color: green;
+    color: #B6C597;
   }
   
   .text-red {
-    color: red;
+    color: rgb(239, 99, 99);
   }
   
   /* Style pour la table lorsque la largeur de l'écran est plus grande (par exemple, pour les tablettes et les ordinateurs de bureau) */

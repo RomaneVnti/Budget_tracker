@@ -6,6 +6,7 @@ import logo from '../../assets/logo3.png';
 import { AiOutlineMenu } from 'react-icons/ai';
 import DropdownMenuDashboard from './DropDownMenuDashboard';
 import HomePage from '../homePage/HomePage'
+import { Link } from 'react-router-dom';
 
 export default function HeaderDashBoard() {
   const { user, setUser } = useAuth();
@@ -31,7 +32,7 @@ export default function HeaderDashBoard() {
   }, [user]);
 
   const handleLogout = () => {
-    localStorage.removeItem('auth_token');
+    sessionStorage.removeItem('auth_token');
     setUser(null);
     window.location.href = '/homePage';
   };
@@ -45,10 +46,11 @@ export default function HeaderDashBoard() {
           </div>
           <div className="links">
             <div className="navigationLinks">
-            <a className="about-link" href="/homePage">Accueil</a>
-            <a className="about-link" href="/transaction">Transactions</a>
-            <a className="about-link" href="/statistique">Statistiques</a>
-            <a className="about-link" href="/paramètres">Paramètres</a>
+            <Link to="/dashboard" className="about-link">Accueil</Link>
+            <Link to="/transactions" className="about-link">Transactions</Link>
+            <Link to="/statistique" className="about-link">Statistiques</Link>
+            <Link to="/paramètres" className="about-link">Paramètres</Link>
+
             </div>
             <div className="small-button-false" onClick={handleLogout}>
               <div className="button clip-contents">

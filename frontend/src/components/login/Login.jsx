@@ -31,7 +31,7 @@ export default function Login({ onClose }) {
       const { user, token } = response.data;
 
       // Stockez le token JWT et les informations de l'utilisateur dans le localStorage
-      localStorage.setItem('auth_token', token);
+      sessionStorage.setItem('auth_token', token);
 
       // Configurez Axios pour inclure automatiquement l'en-tête d'autorisation
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
