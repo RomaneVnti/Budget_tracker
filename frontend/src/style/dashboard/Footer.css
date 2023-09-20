@@ -1,0 +1,47 @@
+/* Footer.css */
+
+/* Style général pour le composant de footer */
+.footer {
+    background-color: #EDEBEB; /* Fond blanc */
+    color: #2B2E4A; /* Couleur du texte */
+    padding: 20px 0;
+    margin-top: 100px; /* Margin-top ajouté */
+  }
+  
+  /* Style pour le contenu du footer */
+  .footer-content {
+    max-width: 1024px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Style pour le texte du copyright */
+  .footer p {
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  /* Style pour la liste de liens dans le footer */
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .footer-links li {
+    font-size: 14px;
+  }
+  
+  .footer-links a {
+    text-decoration: none;
+    color: #2B2E4A; /* Couleur du texte */
+    transition: color 0.3s ease;
+  }
+  
+  .footer-links a:hover {
+    color: #FFBD59; /* Couleur au survol */
+  }
+  
