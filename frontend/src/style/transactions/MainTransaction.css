@@ -1,0 +1,43 @@
+/* Styles pour le bandeau de navigation des mois en mobile */
+.month-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #EFEFF1;
+  color: #fff;
+  padding: 10px;
+  font-size: 18px;
+  height: 3em;
+}
+
+.month-navigation h1 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Styles pour les icônes de navigation */
+.month-navigation svg {
+  cursor: pointer;
+  font-size: 24px;
+  fill: #fff;
+}
+
+/* Styles pour les icônes de navigation au survol */
+.month-navigation svg:hover {
+  fill: #FFD700; /* Couleur jaune au survol */
+}
+
+
+
+/* Styles pour les écrans de largeur supérieure à 768px (par exemple, tablettes et ordinateurs) */
+@media screen and (min-width: 769px) {
+  .month-navigation {
+    font-size: 24px;
+    padding: 15px 30px;
+  }
+  
+  .month-navigation h1 {
+    font-size: 24px;
+  }
+}
