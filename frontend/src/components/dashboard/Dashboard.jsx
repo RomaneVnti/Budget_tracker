@@ -1,7 +1,7 @@
 import React from 'react'
 import HeaderDashBoard from './HeaderDashBoard'
 import MainDasboardTitle from './MainDasboardTitle'
-import MainDashboardArray from './MainDashboardArray'
+import BudgetArray from './BudgetArray'
 
 
 export default function Dashboard() {
@@ -9,8 +9,7 @@ export default function Dashboard() {
     <div>
         <HeaderDashBoard/>
         <MainDasboardTitle/>
-        <MainDashboardArray/>
-    
+        <BudgetArray/>
     </div>
   )
 }

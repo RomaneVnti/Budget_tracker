@@ -8,7 +8,7 @@ function formatDate(dateString) {
   const date = new Date(dateString);
   return date.toLocaleDateString('fr-FR', options);
 }
-export default function MainDashboardArray() {
+export default function BudgetArray() {
   const { user } = useAuth();
   const [transactions, setTransactions] = useState([]);
 

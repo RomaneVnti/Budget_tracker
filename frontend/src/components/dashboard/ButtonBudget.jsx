@@ -8,7 +8,6 @@ function AddBudgetButton({ onClick, user }) {
         <AiOutlinePlus />
       </div>
       <div className="texteButton">Ajouter ou modifier un budget</div>
-      {/* Utilisez la propriété user ici si nécessaire */}
     </button>
   );
 }
