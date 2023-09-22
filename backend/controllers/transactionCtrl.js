@@ -23,6 +23,8 @@ const transactionCtrl = {
 
     // Méthode pour mettre à jour une transaction existante
     updateOneTransaction: async (req, res) => {
+        console.log(req.body); // Vérifiez si les données sont correctement reçues
+
         const { body, params: { id } } = req;
         const { error } = transactionValidation(body); // Validation des données reçues
 

@@ -56,28 +56,41 @@ const transactionService = {
     },
 
     // Fonction pour mettre à jour une transaction par son ID
+    // Ajoutez cette méthode à votre service transaction
     updateOneTransaction: async (id, transactionData) => {
-        try {
-            const transaction = await Transaction.findByPk(id);
-            if (!transaction) {
-                throw new Error('Transaction not found');
-            }
-
-            // Mettre à jour les propriétés de la transaction avec les valeurs de transactionData
-            transaction.transaction_amount = transactionData.transaction_amount;
-            transaction.date = transactionData.date;
-            transaction.type_transaction = transactionData.type_transaction;
-            transaction.description = transactionData.description;
-            transaction.paymentMethod_id = transactionData.paymentMethod_id;
-            transaction.category_id = transactionData.category_id;
-
-            // Sauvegarde de la transaction mise à jour
-            await transaction.save();
-            return transaction;
-        } catch (error) {
-            throw error;
+      try {
+        // Recherchez la transaction par son ID
+        const transaction = await Transaction.findByPk(id);
+    
+        if (!transaction) {
+          throw new Error('Transaction not found');
         }
+    
+        // Mettez à jour les propriétés de la transaction avec les nouvelles données
+        transaction.transaction_amount = transactionData.transaction_amount;
+        transaction.date = transactionData.date;
+        transaction.type_transaction = transactionData.type_transaction;
+        transaction.description = transactionData.description;
+    
+        // Avant d'attribuer le category_id à la transaction, recherchez-le dans la table Category
+        const category = await Category.findOne({ where: { categoryName: transactionData.categoryName } });
+    
+        if (!category) {
+          throw new Error('Category not found');
+        }
+    
+        transaction.category_id = category.category_id;
+    
+        // Sauvegarde de la transaction mise à jour
+        await transaction.save();
+    
+        return transaction;
+      } catch (error) {
+        throw error;
+      }
     },
+
+
 
     // Fonction pour supprimer une transaction par son ID
     deleteOneTransaction: async (id) => {

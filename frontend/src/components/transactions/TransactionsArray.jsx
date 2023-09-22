@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import axios from 'axios';
 import '../../style/transactions/TransactionsArray.css';
-import { AiOutlineEdit } from 'react-icons/ai'; // Importez l'icône
+import { AiOutlineEdit } from 'react-icons/ai';
+import TransactionsUpdateForm from './TransactionsUpdateForm';
 
 function formatDate(dateString) {
   const options = { day: '2-digit', month: '2-digit' };
@@ -16,6 +17,20 @@ export default function TransactionArray() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentMonthIndex, setCurrentMonthIndex] = useState(new Date().getMonth());
+  const [isCreateFormOpen, setIsCreateFormOpen] = useState(false);
+  const [selectedTransactionId, setSelectedTransactionId] = useState(null); // Ajout de l'état pour stocker l'ID de la transaction sélectionnée
+
+  // Gestionnaire d'ouverture de la pop-up
+  const handleOpenUpdateForm = (transactionId) => {
+    setSelectedTransactionId(transactionId);
+    setIsCreateFormOpen(true);
+  };
+
+  // Gestionnaire de fermeture de la pop-up
+  const handleCloseUpdateForm = () => {
+    setSelectedTransactionId(null);
+    setIsCreateFormOpen(false);
+  };
 
   const navigateMonth = (direction) => {
     if (direction === 'previous') {
@@ -63,7 +78,7 @@ export default function TransactionArray() {
             <th>Description</th>
             <th>Catégorie</th>
             <th>+/-</th>
-            <th>Action</th> {/* Colonne pour l'icône d'édition */}
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -76,12 +91,24 @@ export default function TransactionArray() {
                 <td>{filteredTransaction.category.categoryName}</td>
                 <td className="text-red">-{filteredTransaction.transaction_amount}</td>
                 <td>
-                  <AiOutlineEdit /> {/* Affichez l'icône d'édition ici */}
+                  <button onClick={() => handleOpenUpdateForm(filteredTransaction.id_transaction)}>
+                    <AiOutlineEdit />
+                  </button>
                 </td>
               </tr>
             ))}
         </tbody>
       </table>
+
+      {/* Pop-up de mise à jour de la transaction */}
+      {isCreateFormOpen && selectedTransactionId !== null && (
+        <div className="popup">
+          <TransactionsUpdateForm
+            transactionId={selectedTransactionId}
+            onClose={handleCloseUpdateForm}
+          />
+        </div>
+      )}
     </main>
   );
 }
