@@ -103,6 +103,21 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
       });
   };
 
+  const handleDelete = () => {
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer cette transaction définitivement ?")) {
+      axios
+        .delete(`http://localhost:8000/transaction/${transactionId}`)
+        .then((response) => {
+          console.log('Transaction supprimée avec succès !');
+          onUpdateSuccess(response.data);
+          onClose();
+        })
+        .catch((error) => {
+          console.error('Erreur lors de la suppression de la transaction :', error);
+        });
+    }
+  };
+
   if (error) {
     return <div>Une erreur s'est produite : {error.message}</div>;
   }
@@ -167,13 +182,13 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
         </div>
         <div className="containerButton">
           <button type="submit">Mettre à jour</button>
-          <button type="button" onClick={onClose}>
-            Annuler
+          <button type="button" onClick={handleDelete}>
+            Supprimer
           </button>
         </div>
       </form>
       {formErrors.description && <p className="error-message">{formErrors.description}</p>}
-      <div className={`message ${messageClass}`}>{message}</div> {/* Affichez le message ici */}
+      <div className={`message ${messageClass}`}>{message}</div>
     </div>
   );
 }
