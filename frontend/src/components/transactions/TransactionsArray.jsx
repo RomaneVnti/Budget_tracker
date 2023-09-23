@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../context/AuthContext';
 import axios from 'axios';
+import { useAuth } from '../../context/AuthContext';
 import '../../style/transactions/TransactionsArray.css';
 import { AiOutlineEdit } from 'react-icons/ai';
 import TransactionsUpdateForm from './TransactionsUpdateForm';
@@ -18,36 +18,39 @@ export default function TransactionArray() {
   const [error, setError] = useState(null);
   const [currentMonthIndex, setCurrentMonthIndex] = useState(new Date().getMonth());
   const [isCreateFormOpen, setIsCreateFormOpen] = useState(false);
-  const [selectedTransactionId, setSelectedTransactionId] = useState(null); // Ajout de l'état pour stocker l'ID de la transaction sélectionnée
+  const [selectedTransactionId, setSelectedTransactionId] = useState(null);
 
-  // Gestionnaire d'ouverture de la pop-up
   const handleOpenUpdateForm = (transactionId) => {
     setSelectedTransactionId(transactionId);
     setIsCreateFormOpen(true);
   };
 
-  // Gestionnaire de fermeture de la pop-up
   const handleCloseUpdateForm = () => {
     setSelectedTransactionId(null);
     setIsCreateFormOpen(false);
   };
 
-  const navigateMonth = (direction) => {
-    if (direction === 'previous') {
-      setCurrentMonthIndex((prevIndex) => (prevIndex - 1 + 12) % 12);
-    } else if (direction === 'next') {
-      setCurrentMonthIndex((prevIndex) => (prevIndex + 1) % 12);
-    }
+  const updateTransactionInArray = (updatedTransaction) => {
+    setTransactions((prevTransactions) => {
+      const updatedIndex = prevTransactions.findIndex(
+        (transaction) => transaction.id_transaction === updatedTransaction.id_transaction
+      );
+
+      if (updatedIndex !== -1) {
+        const updatedTransactions = [...prevTransactions];
+        updatedTransactions[updatedIndex] = updatedTransaction;
+        return updatedTransactions;
+      } else {
+        return prevTransactions;
+      }
+    });
   };
 
-  useEffect(() => {
+  const loadTransactions = (year, month) => {
     if (user) {
       const userId = user.id;
-
-      const currentDate = new Date();
-      const year = currentDate.getFullYear();
-      const month = currentMonthIndex + 1;
-      axios.get(`http://localhost:8000/transaction/history/${userId}?year=${year}&month=${month}&type=dépense`)
+      axios
+        .get(`http://localhost:8000/transaction/history/${userId}?year=${year}&month=${month}&type=dépense`)
         .then((response) => {
           setTransactions(response.data);
           setLoading(false);
@@ -58,6 +61,13 @@ export default function TransactionArray() {
           setLoading(false);
         });
     }
+  };
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = currentMonthIndex + 1;
+    loadTransactions(year, month);
   }, [user, currentMonthIndex]);
 
   if (loading) {
@@ -100,12 +110,14 @@ export default function TransactionArray() {
         </tbody>
       </table>
 
-      {/* Pop-up de mise à jour de la transaction */}
       {isCreateFormOpen && selectedTransactionId !== null && (
         <div className="popup">
           <TransactionsUpdateForm
             transactionId={selectedTransactionId}
             onClose={handleCloseUpdateForm}
+            onUpdateSuccess={updateTransactionInArray}
+            loadTransactions={loadTransactions} // Passer la fonction de chargement des transactions
+            currentMonthIndex={currentMonthIndex} // Passer l'indice du mois actuel
           />
         </div>
       )}

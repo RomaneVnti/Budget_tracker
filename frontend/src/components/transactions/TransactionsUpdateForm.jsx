@@ -2,19 +2,18 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
 
-export default function TransactionsUpdateForm({ transactionId, onClose }) {
+export default function TransactionsUpdateForm({ transactionId, onClose, onUpdateSuccess, loadTransactions, currentMonthIndex }) {
   const [formData, setFormData] = useState({
     transaction_amount: '',
     date: '',
     type_transaction: '',
     description: '',
-    categoryName: '', // Remplacez category_id par categoryName
+    categoryName: '',
   });
-  const [categories, setCategories] = useState([]); // État pour stocker les catégories
+  const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Charger les données de la transaction à partir de l'API
     axios
       .get(`http://localhost:8000/transaction/${transactionId}`)
       .then((response) => {
@@ -24,7 +23,7 @@ export default function TransactionsUpdateForm({ transactionId, onClose }) {
           date: transactionData.date,
           type_transaction: transactionData.type_transaction,
           description: transactionData.description,
-          categoryName: transactionData.categoryName, // Remplacez category_id par categoryName
+          categoryName: transactionData.categoryName,
         });
       })
       .catch((error) => {
@@ -32,14 +31,13 @@ export default function TransactionsUpdateForm({ transactionId, onClose }) {
         setError(error);
       });
 
-    // Récupérer les catégories depuis l'API
     const fetchCategories = async () => {
       try {
         const response = await axios.get('http://localhost:8000/budget/getCategories');
         if (response.status === 200) {
           const categoriesData = response.data;
           const formattedCategories = categoriesData.map((category) => ({
-            value: category.categoryName, // Remplacez category_id par categoryName
+            value: category.categoryName,
             label: category.categoryName,
           }));
           setCategories(formattedCategories);
@@ -65,13 +63,17 @@ export default function TransactionsUpdateForm({ transactionId, onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Envoyer les données mises à jour de la transaction à l'API
     axios
       .put(`http://localhost:8000/transaction/${transactionId}`, formData)
       .then((response) => {
-        // Gérer la réussite de la mise à jour (par exemple, afficher un message de succès)
         console.log('Transaction mise à jour avec succès !');
-        onClose(); // Fermer la pop-up de mise à jour après la réussite
+        onUpdateSuccess(response.data);
+        onClose();
+
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = currentMonthIndex + 1;
+        loadTransactions(year, month);
       })
       .catch((error) => {
         console.error('Erreur lors de la mise à jour de la transaction :', error);
@@ -130,9 +132,9 @@ export default function TransactionsUpdateForm({ transactionId, onClose }) {
         <div className="form-group">
           <label>Catégorie :</label>
           <Select
-            name="categoryName" // Remplacez category_id par categoryName
+            name="categoryName"
             value={categories.find((category) => category.value === formData.categoryName)}
-            onChange={(selectedOption) => setFormData({ ...formData, categoryName: selectedOption.value })} // Remplacez category_id par categoryName
+            onChange={(selectedOption) => setFormData({ ...formData, categoryName: selectedOption.value })}
             options={categories}
             required
             placeholder="Sélectionnez une catégorie"
@@ -144,7 +146,5 @@ export default function TransactionsUpdateForm({ transactionId, onClose }) {
         </button>
       </form>
     </div>
- 
-
   );
 }
