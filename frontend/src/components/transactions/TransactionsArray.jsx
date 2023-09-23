@@ -61,7 +61,11 @@ export default function TransactionArray() {
       axios
         .get(`http://localhost:8000/transaction/history/${userId}?year=${year}&month=${month}&type=dépense`)
         .then((response) => {
-          setTransactions(response.data);
+          const filteredTransactions = response.data.filter((transaction) => {
+            const transactionDate = new Date(transaction.date);
+            return transactionDate.getFullYear() === year && transactionDate.getMonth() === month - 1;
+          });
+          setTransactions(filteredTransactions);
           setLoading(false);
         })
         .catch((error) => {
@@ -97,7 +101,7 @@ export default function TransactionArray() {
             <th>Description</th>
             <th>Catégorie</th>
             <th>+/-</th>
-            <th>Action</th>
+            <th>Modifier</th>
           </tr>
         </thead>
         <tbody>
@@ -110,7 +114,7 @@ export default function TransactionArray() {
                 <td>{filteredTransaction.category.categoryName}</td>
                 <td className="text-red">-{filteredTransaction.transaction_amount}</td>
                 <td>
-                  <button onClick={() => handleOpenUpdateForm(filteredTransaction)}>
+                  <button onClick={() => handleOpenUpdateForm(filteredTransaction)} className="icon-buttonUpdate">
                     <AiOutlineEdit />
                   </button>
                 </td>

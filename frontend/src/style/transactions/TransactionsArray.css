@@ -86,7 +86,21 @@
   .text-red {
     color: rgb(239, 99, 99);
   }
+
+  .icon-buttonUpdate{
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
   
+  .icon-buttonUpdate:focus {
+    outline: none;
+  }
+
+  .icon-buttonUpdate svg {
+    font-size: 1.5rem; /* Ajustez la taille de l'icône selon vos préférences */
+  }
   @media screen and (min-width: 962px) {
     table {
       font-size: 1.2rem; /* Ajustez la taille de la police pour les écrans plus larges si nécessaire */
