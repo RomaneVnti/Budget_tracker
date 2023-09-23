@@ -46,6 +46,15 @@ export default function TransactionArray() {
     });
   };
 
+  const deleteTransactionFromArray = (transactionId) => {
+    setTransactions((prevTransactions) => {
+      const updatedTransactions = prevTransactions.filter(
+        (transaction) => transaction.id_transaction !== transactionId
+      );
+      return updatedTransactions;
+    });
+  };
+
   const loadTransactions = (year, month) => {
     if (user) {
       const userId = user.id;
@@ -116,6 +125,7 @@ export default function TransactionArray() {
             transactionId={selectedTransaction.id_transaction}
             onClose={handleCloseUpdateForm}
             onUpdateSuccess={updateTransactionInArray}
+            onDeleteSuccess={deleteTransactionFromArray} // Ajoutez cette ligne
             loadTransactions={loadTransactions}
             currentMonthIndex={currentMonthIndex}
           />

@@ -4,7 +4,7 @@ import Select from 'react-select';
 import '../../style/transactions/UpdateForm.css';
 import { IoMdClose } from 'react-icons/io';
 
-export default function TransactionsUpdateForm({ transactionId, onClose, onUpdateSuccess, loadTransactions, currentMonthIndex }) {
+export default function TransactionsUpdateForm({ transactionId, onClose, onUpdateSuccess, onDeleteSuccess, loadTransactions, currentMonthIndex }) {
   const [formData, setFormData] = useState({
     transaction_amount: '',
     date: '',
@@ -14,9 +14,9 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
   });
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
-  const [formErrors, setFormErrors] = useState({}); // Nouvel état pour les erreurs de formulaire
-  const [message, setMessage] = useState(''); // État pour les messages de succès ou d'erreur
-  const [messageClass, setMessageClass] = useState(''); // Classe de style pour le message
+  const [formErrors, setFormErrors] = useState({});
+  const [message, setMessage] = useState('');
+  const [messageClass, setMessageClass] = useState('');
 
   useEffect(() => {
     axios
@@ -107,9 +107,9 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette transaction définitivement ?")) {
       axios
         .delete(`http://localhost:8000/transaction/${transactionId}`)
-        .then((response) => {
+        .then(() => {
           console.log('Transaction supprimée avec succès !');
-          onUpdateSuccess(response.data);
+          onDeleteSuccess(transactionId);
           onClose();
         })
         .catch((error) => {
@@ -130,7 +130,7 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
         </div>
         <h2>Mettre à jour la transaction</h2>
         <div className="form-group">
-          <label>Montant de la transaction </label>
+          <label>Montant de la transaction</label>
           <input
             type="number"
             name="transaction_amount"
@@ -140,7 +140,7 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
           />
         </div>
         <div className="form-group">
-          <label>Date </label>
+          <label>Date</label>
           <input
             type="date"
             name="date"
@@ -150,7 +150,7 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
           />
         </div>
         <div className="form-group">
-          <label>Type de transaction </label>
+          <label>Type de transaction</label>
           <select
             name="type_transaction"
             value={formData.type_transaction}
@@ -162,7 +162,7 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
           </select>
         </div>
         <div className="form-group">
-          <label>Description </label>
+          <label>Description</label>
           <textarea
             name="description"
             value={formData.description}
@@ -171,7 +171,7 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
           />
         </div>
         <div className="form-group">
-          <label>Catégorie </label>
+          <label>Catégorie</label>
           <Select
             name="categoryName"
             value={categories.find((category) => category.value === formData.categoryName)}
