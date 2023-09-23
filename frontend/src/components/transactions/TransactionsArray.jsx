@@ -17,17 +17,17 @@ export default function TransactionArray() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentMonthIndex, setCurrentMonthIndex] = useState(new Date().getMonth());
-  const [isCreateFormOpen, setIsCreateFormOpen] = useState(false);
-  const [selectedTransactionId, setSelectedTransactionId] = useState(null);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
 
-  const handleOpenUpdateForm = (transactionId) => {
-    setSelectedTransactionId(transactionId);
-    setIsCreateFormOpen(true);
+  const handleOpenUpdateForm = (transaction) => {
+    setSelectedTransaction(transaction);
+    setIsUpdateModalOpen(true);
   };
 
   const handleCloseUpdateForm = () => {
-    setSelectedTransactionId(null);
-    setIsCreateFormOpen(false);
+    setSelectedTransaction(null);
+    setIsUpdateModalOpen(false);
   };
 
   const updateTransactionInArray = (updatedTransaction) => {
@@ -101,7 +101,7 @@ export default function TransactionArray() {
                 <td>{filteredTransaction.category.categoryName}</td>
                 <td className="text-red">-{filteredTransaction.transaction_amount}</td>
                 <td>
-                  <button onClick={() => handleOpenUpdateForm(filteredTransaction.id_transaction)}>
+                  <button onClick={() => handleOpenUpdateForm(filteredTransaction)}>
                     <AiOutlineEdit />
                   </button>
                 </td>
@@ -110,14 +110,14 @@ export default function TransactionArray() {
         </tbody>
       </table>
 
-      {isCreateFormOpen && selectedTransactionId !== null && (
-        <div className="popup">
+      {isUpdateModalOpen && selectedTransaction && (
+        <div className="update-modal">
           <TransactionsUpdateForm
-            transactionId={selectedTransactionId}
+            transactionId={selectedTransaction.id_transaction}
             onClose={handleCloseUpdateForm}
             onUpdateSuccess={updateTransactionInArray}
-            loadTransactions={loadTransactions} // Passer la fonction de chargement des transactions
-            currentMonthIndex={currentMonthIndex} // Passer l'indice du mois actuel
+            loadTransactions={loadTransactions}
+            currentMonthIndex={currentMonthIndex}
           />
         </div>
       )}
