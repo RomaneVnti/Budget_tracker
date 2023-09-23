@@ -128,7 +128,7 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
         <div className="iconCloseBudget" onClick={onClose}>
           <IoMdClose />
         </div>
-        <h2>Mettre à jour la transaction</h2>
+        <h2>Modifier ou supprimer la transaction</h2>
         <div className="form-group">
           <label>Montant de la transaction</label>
           <input
@@ -181,8 +181,8 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
           />
         </div>
         <div className="containerButton">
-          <button type="submit">Mettre à jour</button>
-          <button type="button" onClick={handleDelete}>
+          <button className="transactionUpdate" type="submit">Mettre à jour</button>
+          <button className="transactionDelete" type="button" onClick={handleDelete}>
             Supprimer
           </button>
         </div>
