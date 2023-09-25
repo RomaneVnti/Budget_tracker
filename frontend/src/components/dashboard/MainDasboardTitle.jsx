@@ -101,7 +101,7 @@ const handleBudgetFormClose = () => {
               Budget restant
             </div>
             <div className='remainingBudget'>
-              {remainingBudget !== null ? remainingBudget : 'Calcul en cours...'}
+            {remainingBudget !== null ? remainingBudget.toFixed(2) : 'Calcul en cours...'}
             </div>
           </div>
           
