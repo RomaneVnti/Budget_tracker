@@ -36,7 +36,7 @@ const Transaction = db.define('transaction', {
     },
     date: {
         type: DataTypes.DATE,
-        allowNull: true,
+        allowNull: false,
         defaultValue: new Date().toISOString() // Utilise la date et l'heure actuelles au format ISO 8601
     },
     paymentMethod_id: {
