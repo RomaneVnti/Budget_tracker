@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 
-function AddBudgetButton({ onClick, user }) {
+function AddBudgetButton({ onClick }) {
   return (
     <button className='buttonAddBudget' onClick={onClick}>
       <div className="iconPlus">

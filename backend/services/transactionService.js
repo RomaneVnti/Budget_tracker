@@ -46,13 +46,41 @@ const transactionService = {
     },
 
     // Fonction pour créer une nouvelle transaction
-    createOneTransaction: async (transactionData) => {
-        try {
-            const newTransaction = await Transaction.create(transactionData);
-            return newTransaction;
-        } catch (err) {
-            throw err;
+     createOneTransaction: async (transactionData, userId) => {
+      try {
+        console.log('Valeur de transactionData.category_id :', transactionData.category_id);
+
+        // Extraire category_id à partir de categoryName
+        const category = await Category.findOne({ where: { category_id: transactionData.category_id } });
+    
+        if (!category) {
+          // Si la catégorie n'existe pas, retournez une réponse avec un code d'erreur 400 (Bad Request)
+          throw new Error('La catégorie spécifiée n\'existe pas.');
         }
+    
+        // Créez la transaction avec les données mises à jour
+        const newTransaction = await Transaction.create({
+          user_id: userId,
+          transaction_amount: transactionData.transaction_amount,
+          description: transactionData.description,
+          date: transactionData.date,
+          type_transaction: transactionData.type_transaction,
+          category_id: category.category_id, // Utilisez category_id extrait
+        });
+    
+        return newTransaction;
+      } catch (err) {
+        console.error('Error in createOneTransaction:', err);
+    
+        // En fonction du type d'erreur, vous pouvez retourner une réponse HTTP appropriée avec un message d'erreur
+        if (err.message === 'La catégorie spécifiée n\'existe pas.' || err.message === 'La propriété categoryName est manquante dans transactionData.') {
+          // Si c'est une erreur de catégorie manquante ou de propriété manquante, retournez un code d'erreur 400 (Bad Request)
+          throw { status: 400, message: err.message };
+        } else {
+          // Sinon, retournez un code d'erreur 500 (Internal Server Error) avec un message générique
+          throw { status: 500, message: 'Erreur interne du serveur.' };
+        }
+      }
     },
 
     // Fonction pour mettre à jour une transaction par son ID

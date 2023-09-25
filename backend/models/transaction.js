@@ -41,7 +41,7 @@ const Transaction = db.define('transaction', {
     },
     paymentMethod_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: PaymentMethod, // Clé étrangère faisant référence au modèle PaymentMethod
             key: 'paymentMethod_id' // Champ dans le modèle PaymentMethod auquel il est fait référence

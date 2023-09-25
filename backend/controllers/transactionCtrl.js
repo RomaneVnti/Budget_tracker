@@ -6,18 +6,19 @@ import transactionService from "../services/transactionService.js";
 const transactionCtrl = {
     // Méthode pour créer une nouvelle transaction
     createOneTransaction: async (req, res) => {
-        const { body } = req;
+        console.log('hello',req.body); // Vérifiez si les données sont correctement reçues
+        const { body } = req; // Utilisez le destructuring pour obtenir le corps de la requête
         const { error } = transactionValidation(body); // Validation des données reçues
-
+        
         if (error) {
-            return res.status(400).json({ error: error.details[0].message }); // Erreur de validation
+          return res.status(400).json({ error: error.details[0].message }); // Erreur de validation
         }
-
+        
         try {
-            const newTransaction = await transactionService.createOneTransaction(body); 
+            const newTransaction = await transactionService.createOneTransaction(body, body.user_id);
             res.status(201).json({ message: 'Transaction created successfully', data: newTransaction });
         } catch (error) {
-            res.status(500).json(error); // Erreur interne du serveur
+          res.status(500).json(error); // Erreur interne du serveur
         }
     },
 

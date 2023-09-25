@@ -14,12 +14,16 @@ const transactionValidation = (body) => {
             'any.required': 'Le champ Date est manquant',
             'string.empty': 'Le champ date ne peut pas être vide',
         }),
-        categoryName: Joi.string().required(), // Mettez à jour le champ ici
+        category_id: Joi.number().required().messages({
+            'any.required': 'Le champ categorie est manquant',
+        }),
         type_transaction: Joi.string().required().allow('dépense').allow('recette').messages({
             'any.required': 'Le champ Type de transaction est manquant',
             'string.allow': 'Le champ Type de transaction doit être "dépense" ou "recette"',
             'string.empty': 'Le champ Type de transaction ne peut pas être vide',
         }),
+
+        user_id: Joi.number().required()
     });
 
     return TransactionSchema.validate(body);

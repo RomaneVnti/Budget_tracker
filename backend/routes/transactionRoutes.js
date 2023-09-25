@@ -16,7 +16,7 @@ transactionRouter.get('/:id',authenticate, transactionCtrl.getOneTransaction);
 transactionRouter.get('/history/:userId', authenticate, transactionCtrl.getUserTransactionHistory);
 
 // Route POST pour créer une nouvelle transaction
-transactionRouter.post('/', authenticate,transactionCtrl.createOneTransaction);
+transactionRouter.post('/create', authenticate,transactionCtrl.createOneTransaction);
 
 // Route PUT pour mettre à jour une transaction existante par son ID
 transactionRouter.put('/:id', authenticate,transactionCtrl.updateOneTransaction);
