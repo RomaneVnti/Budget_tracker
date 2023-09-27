@@ -3,7 +3,7 @@
 /* MainDashboardArray.css */
 
 /* Style général pour le composant */
-.mainArrayTransaction {
+.expenseTableContainer {
     margin: 12px;
     margin-top: 125px;
     overflow-x: auto; /* Ajoute une barre de défilement horizontale en cas de débordement */
@@ -16,7 +16,7 @@
 
   
   /* Style pour le titre "Vos dernières transactions" */
-  .mainArrayTransaction h2 {
+  .expenseTableContainer h2 {
     font-size: 1.5rem;
     margin-bottom: 35px;
     margin-top: 30px;   
@@ -101,17 +101,47 @@
   .icon-buttonUpdate svg {
     font-size: 1.5rem; /* Ajustez la taille de l'icône selon vos préférences */
   }
+
+  .incomeTableContainer{
+    margin: 12px;
+    margin-top: 125px;
+    overflow-x: auto; /* Ajoute une barre de défilement horizontale en cas de débordement */
+    max-width: 1024px; /* Largeur maximale pour le tableau à partir de 1024px */
+    margin: 34px auto 0 auto; /* Ajoute 50px d'espace en haut, centre horizontalement */
+    width: 90%;
+    border-radius: 13px; 
+    background-color: #FFF2DE; 
+   }
+
+   .incomeTableContainer h2 {
+    font-size: 1.5rem;
+    margin-bottom: 35px;
+    margin-top: 30px;   
+    text-align: center;
+    font-family: Lato, sans-serif;
+    color: #2B2E4A;
+  }
+
   @media screen and (min-width: 962px) {
     table {
       font-size: 1.2rem; /* Ajustez la taille de la police pour les écrans plus larges si nécessaire */
     }
   
     /* Ajoutez ces styles pour définir la largeur à 50% et l'aligner à gauche */
-    .mainArrayTransaction {
-      max-width: 45%; /* Définissez la largeur à 50% */
-      margin-left: 25px; /* Alignez le tableau à gauche */
+    .expenseTableContainer {
+      max-width: 48%; /* Définissez la largeur à 50% */
+      margin-left: 10px; /* Alignez le tableau à gauche */
 
     }
+
+    .incomeTableContainer{
+      max-width: 49%;
+      margin-right: 10px;
+      bottom: 613px;
+      position: relative;
+    }
+
+
   
     /* Vous pouvez ajouter plus de styles pour la mise en page des écrans plus larges si nécessaire */
   }
