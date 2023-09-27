@@ -1,0 +1,52 @@
+.create-transaction-form {
+    background-color: #edebeb;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    margin: 0 auto;
+    z-index: 1000;
+    position: absolute;
+    top: 539px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 90vh;
+    overflow-y: auto;
+    height: auto;
+    width: 67vw;
+}
+
+.create-transaction-form h2 {
+    font-size: 1.3em;
+    margin-bottom: 38px;
+    justify-content: center;
+    display: flex;
+    font-family: Lato, sans-serif;
+    color: #2B2E4A;
+    text-align: center;
+}
+
+.transactionCreate{
+    color: #fff;
+    padding: 8px 16px; /* Réduisez la taille du padding pour les petits écrans */
+    border: none;
+    border-radius: 24px; /* Réduisez le rayon de bordure pour les petits écrans */
+    font-size: 14px; /* Réduisez la taille de la police pour les petits écrans */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: Lato, sans-serif;
+    font-weight: 600;
+    background-color: #ffbd58;
+}
+
+.transactionCreate:hover{
+    transform: scale(1.1); /* Mise à l'échelle à 110% au survol */
+
+}
+
+@media (min-width: 760px) {
+    .create-transaction-form {
+        top: 576px;
+    }
+}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
 import { IoMdClose } from 'react-icons/io';
+import '../../style/transactions/CreateForm.css';
 
 import { useAuth } from '../../context/AuthContext';
 
@@ -101,7 +102,7 @@ function CreateTransactionForm({ onClose }) {
   };
 
   return (
-    <div className="update-transaction-form">
+    <div className="create-transaction-form">
       <form onSubmit={handleCreateTransaction}>
         <div className="iconCloseBudget" onClick={onClose}>
           <IoMdClose />

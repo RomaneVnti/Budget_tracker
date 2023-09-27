@@ -5,13 +5,13 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    max-width: 500px; /* Largeur maximale du formulaire */
+    max-width: 500px;
     margin: 0 auto;
     z-index: 1000;
-    position: fixed;
-    top: 50%; /* Centrer verticalement */
-    left: 50%; /* Centrer horizontalement */
-    transform: translate(-50%, -50%); /* Centrer précisément */
+    position: absolute;
+    top: 590px;
+    left: 50%;
+    transform: translate(-50%, -50%);
     max-height: 90vh;
     overflow-y: auto;
     height: auto;
