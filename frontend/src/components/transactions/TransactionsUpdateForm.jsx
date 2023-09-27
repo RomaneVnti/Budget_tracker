@@ -4,19 +4,28 @@ import Select from 'react-select';
 import '../../style/transactions/UpdateForm.css';
 import { IoMdClose } from 'react-icons/io';
 
+import { useAuth } from '../../context/AuthContext';
+
 export default function TransactionsUpdateForm({ transactionId, onClose, onUpdateSuccess, onDeleteSuccess, loadTransactions, currentMonthIndex }) {
+  const { user } = useAuth();
+
   const [formData, setFormData] = useState({
     transaction_amount: '',
     date: '',
     type_transaction: '',
     description: '',
-    categoryName: '',
+    category_id: '', // Utilisez formData.category_id pour stocker l'ID de la catégorie
+    user_id: user ? user.id : ''
+
   });
+  
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const [formErrors, setFormErrors] = useState({});
   const [message, setMessage] = useState('');
   const [messageClass, setMessageClass] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
 
   useEffect(() => {
     axios
@@ -28,7 +37,7 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
           date: transactionData.date,
           type_transaction: transactionData.type_transaction,
           description: transactionData.description,
-          categoryName: transactionData.categoryName,
+          category_id: transactionData.category_id, // Utilisez la valeur correcte de category_id
         });
       })
       .catch((error) => {
@@ -42,7 +51,7 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
         if (response.status === 200) {
           const categoriesData = response.data;
           const formattedCategories = categoriesData.map((category) => ({
-            value: category.categoryName,
+            value: category.category_id,
             label: category.categoryName,
           }));
           setCategories(formattedCategories);
@@ -64,8 +73,16 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
       [name]: value,
     });
   };
+  const handleCategoryChange = (selectedOption) => {
+    setSelectedCategory(selectedOption);
+    // Mettez à jour formData.category_id avec la valeur sélectionnée
+    setFormData({
+      ...formData,
+      category_id: selectedOption ? selectedOption.value : '',
+    });
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validation du champ "description"
@@ -76,6 +93,8 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
 
     // Réinitialisez les erreurs si le champ est rempli
     setFormErrors({});
+
+    formData.user_id = user ? user.id : '';
 
     axios
       .put(`http://localhost:8000/transaction/${transactionId}`, formData)
@@ -173,11 +192,14 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
         <div className="form-group">
           <label>Catégorie</label>
           <Select
-            name="categoryName"
-            value={categories.find((category) => category.value === formData.categoryName)}
-            onChange={(selectedOption) => setFormData({ ...formData, categoryName: selectedOption.value })}
+            id="categoryId"
+            name="categoryId"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
             options={categories}
             required
+            className="custom-select"
+            placeholder="Choisissez une catégorie"
           />
         </div>
         <div className="containerButton">

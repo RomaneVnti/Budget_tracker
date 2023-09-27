@@ -9,17 +9,21 @@ function formatDate(dateString) {
   return date.toLocaleDateString('fr-FR', options);
 }
 
+function getCurrentMonthYear() {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth() + 1; // Notez que les mois vont de 0 à 11, donc ajoutez 1.
+  return { year: currentYear, month: currentMonth };
+}
+
 export default function BudgetArray() {
   const { user } = useAuth();
   const [transactions, setTransactions] = useState([]);
 
-  // Effectuez la requête pour obtenir toutes les transactions de l'utilisateur
   useEffect(() => {
     if (user) {
       const userId = user.id;
 
-      // Faites une requête AJAX pour récupérer toutes les transactions depuis votre API
-      // Remplacez cette URL par l'URL de votre API
       axios.get(`http://localhost:8000/transaction/history/${userId}`)
         .then((response) => {
           setTransactions(response.data);
@@ -30,8 +34,17 @@ export default function BudgetArray() {
     }
   }, [user]);
 
-  // Affichez uniquement les 5 dernières transactions
-  const lastFiveTransactions = transactions.slice(0, 5);
+  const { year, month } = getCurrentMonthYear();
+
+  const currentMonthTransactions = transactions.filter((transaction) => {
+    const transactionDate = new Date(transaction.date);
+    const transactionYear = transactionDate.getFullYear();
+    const transactionMonth = transactionDate.getMonth() + 1;
+
+    return transactionYear === year && transactionMonth === month;
+  });
+
+  const lastFiveTransactions = currentMonthTransactions.slice(0, 5);
 
   return (
     <main className="mainArray">

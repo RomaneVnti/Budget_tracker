@@ -12,6 +12,7 @@ export default function Transactions() {
         <HeaderDashBoard/>
         <ButtonAddTransaction/>
         <MainTransactions/>
+        
         <Footer/>
     </div>
   )

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import CreateTransactionForm from './CreateTransactionForm'; // Importez le formulaire
+import '../../style/transactions/ButtonAddTransaction.css';
 
 function AddBudgetTransaction() {
   const [showForm, setShowForm] = useState(false); // État pour afficher/masquer le formulaire
@@ -16,7 +17,7 @@ function AddBudgetTransaction() {
         <CreateTransactionForm onClose={() => setShowForm(false)} />
       ) : (
         // Affichez le bouton d'ajout s'il n'est pas visible
-        <button className='buttonAddBudget' onClick={handleClick}>
+        <button className='buttonAddTransaction' onClick={handleClick}>
           <div className="iconPlus">
             <AiOutlinePlus />
           </div>

@@ -99,15 +99,17 @@ const transactionService = {
         transaction.date = transactionData.date;
         transaction.type_transaction = transactionData.type_transaction;
         transaction.description = transactionData.description;
+        transaction.user_id = transactionData.user_id;
+        transaction.category_id = transactionData.category_id;
+
     
-        // Avant d'attribuer le category_id à la transaction, recherchez-le dans la table Category
-        const category = await Category.findOne({ where: { categoryName: transactionData.categoryName } });
-    
-        if (!category) {
-          throw new Error('Category not found');
+        // Vérifiez si transactionData contient la propriété category_id
+        if (!transactionData.category_id) {
+          throw new Error('category_id is missing in transactionData.');
         }
-    
-        transaction.category_id = category.category_id;
+
+        // Utilisez directement la valeur de category_id dans la transaction
+        transaction.category_id = transactionData.category_id;
     
         // Sauvegarde de la transaction mise à jour
         await transaction.save();
