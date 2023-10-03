@@ -51,33 +51,35 @@ const transactionService = {
     // Fonction pour créer une nouvelle transaction
     createOneTransaction: async (transactionData, userId) => {
         try {
-            // Vérifie l'existence de la catégorie
-            const category = await Category.findByPk(transactionData.category_id);
-
-            if (!category) {
-                throw new Error('La catégorie spécifiée n\'existe pas.');
-            }
-
-            // Crée la nouvelle transaction en utilisant les données fournies
-            const newTransaction = await Transaction.create({
-                user_id: userId,
-                transaction_amount: transactionData.transaction_amount,
-                description: transactionData.description,
-                date: transactionData.date,
-                type_transaction: transactionData.type_transaction,
-                category_id: category.id, // Utilise l'ID de la catégorie existante
-            });
-
-            return newTransaction;
+          //console.log('Valeur de transactionData.category_id :', transactionData.category_id);
+  
+          // Extraire category_id à partir de categoryName
+          const category = await Category.findOne({ where: { category_id: transactionData.category_id } });
+      
+          if (!category) {
+            throw new Error('La catégorie spécifiée n\'existe pas.');
+          }
+      
+          // Créez la transaction avec les données mises à jour
+          const newTransaction = await Transaction.create({
+            user_id: userId,
+            transaction_amount: transactionData.transaction_amount,
+            description: transactionData.description,
+            date: transactionData.date,
+            type_transaction: transactionData.type_transaction,
+            category_id: category.category_id, // Utilisez category_id extrait
+          });
+      
+          return newTransaction;
         } catch (err) {
-            console.error('Error in createOneTransaction:', err);
+          //console.error('Error in createOneTransaction:', err);
+      
+          if (err.message === 'La catégorie spécifiée n\'existe pas.' || err.message === 'La propriété categoryName est manquante dans transactionData.') {
+            throw { status: 400, message: err.message };
+          } else {
+            throw { status: 500, message: 'Erreur interne du serveur.' };
 
-            // Gère les erreurs avec des codes d'erreur appropriés
-            if (err.message === 'La catégorie spécifiée n\'existe pas.' || !transactionData.category_id) {
-                throw { status: 400, message: err.message }; 
-            } else {
-                throw { status: 500, message: 'Erreur interne du serveur.' }; // Erreur serveur (Internal Server Error)
-            }
+          }
         }
     },
 
