@@ -39,7 +39,7 @@ export default function MainHomePage() {
           </div>
           <div className="container-button">
             <div className="small-button-blue" onClick={toggleLoginForm}>
-              {/* Utilisez la fonction toggleLoginForm pour ouvrir le formulaire */}
+              {/* fonction toggleLoginForm pour ouvrir le formulaire */}
               <div className="button-blue">
                 <p className="get">Se connecter</p>
               </div>

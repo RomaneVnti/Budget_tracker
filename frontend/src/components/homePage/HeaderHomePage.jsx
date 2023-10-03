@@ -29,7 +29,7 @@ export default function HeaderHomePage() {
   }, []);
 
   const handleClick = () => {
-    toggleLoginForm(); // Utilisez la fonction toggleLoginForm pour ouvrir le formulaire
+    toggleLoginForm(); // fonction toggleLoginForm pour ouvrir le formulaire
   };
 
   return (
@@ -43,7 +43,7 @@ export default function HeaderHomePage() {
           <div className="links">
             <a className="about-link" href="/a-propos">À propos</a>
             <div className="small-button-false" onClick={handleClick}>
-              {/* Utilisez la fonction handleClick pour ouvrir le formulaire */}
+              {/* fonction handleClick pour ouvrir le formulaire */}
               <div className="button clip-contents">
                 <p className="get-it">Se connecter</p>
               </div>
@@ -55,7 +55,7 @@ export default function HeaderHomePage() {
             <AiOutlineMenu />
           </div>
 
-          {/* Utilisez le composant DropdownMenu ici */}
+          {/*  DropdownMenu  */}
           <DropdownMenu isOpen={menuOpen} />
         </div>
       </nav>
