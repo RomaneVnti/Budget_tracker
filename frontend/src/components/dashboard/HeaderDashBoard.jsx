@@ -13,12 +13,13 @@ export default function HeaderDashBoard() {
   const [userData, setUserData] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false); // Ajout du state pour le menu
 
+  // Fonction pour basculer l'état du menu ouvert/fermé
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
-
   useEffect(() => {
+    // Récupération des informations de l'utilisateur lorsqu'il est connecté
     if (user && user.id) {
       axios
         .get(`http://localhost:8000/users/${user.id}`)
@@ -32,9 +33,10 @@ export default function HeaderDashBoard() {
   }, [user]);
 
   const handleLogout = () => {
+    // Déconnexion de l'utilisateur
     sessionStorage.removeItem('auth_token');
     setUser(null);
-    window.location.href = '/homePage';
+    window.location.href = '/homePage'; // Rediriger vers la page d'accueil après la déconnexion
   };
 
   return (
@@ -46,11 +48,10 @@ export default function HeaderDashBoard() {
           </div>
           <div className="links">
             <div className="navigationLinks">
-            <Link to="/dashboard" className="about-link">Accueil</Link>
-            <Link to="/transactions" className="about-link">Transactions</Link>
-            <Link to="/statistique" className="about-link">Statistiques</Link>
-            <Link to="/paramètres" className="about-link">Paramètres</Link>
-
+              <Link to="/dashboard" className="about-link">Accueil</Link>
+              <Link to="/transactions" className="about-link">Transactions</Link>
+              <Link to="/statistique" className="about-link">Statistiques</Link>
+              <Link to="/paramètres" className="about-link">Paramètres</Link>
             </div>
             <div className="small-button-false" onClick={handleLogout}>
               <div className="button clip-contents">
@@ -62,11 +63,10 @@ export default function HeaderDashBoard() {
             <AiOutlineMenu />
           </div>
 
-          {/* Utilisez le composant DropdownMenu ici */}
+         
           <DropdownMenuDashboard isOpen={menuOpen} />
           
-          {user ? null : <HomePage />} {/* Affichez le composant Login si l'utilisateur n'est pas connecté */}
-
+          {user ? null : <HomePage />} 
         </div>
       </nav>
     </header>

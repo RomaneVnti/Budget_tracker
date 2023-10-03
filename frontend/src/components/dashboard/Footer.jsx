@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../style/dashboard/Footer.css'; // Assurez-vous d'ajuster le chemin d'importation en fonction de l'emplacement de votre fichier CSS
+import '../../style/dashboard/Footer.css'; 
 
 export default function Footer() {
   return (

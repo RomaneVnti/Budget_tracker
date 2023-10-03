@@ -1,6 +1,5 @@
-// DropdownMenuDashboard.jsx
 import React from 'react';
-import { Link, Navigate } from 'react-router-dom'; // Importez Link et Navigate depuis react-router-dom
+import { Link } from 'react-router-dom';
 import '../../style/homePage/DropDownMenu.css';
 
 export default function DropdownMenuDashboard({ isOpen }) {

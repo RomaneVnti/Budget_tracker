@@ -5,7 +5,7 @@ import '../../style/dashboard/HeaderDashboard.css';
 import BudgetForm from './BudgetForm'; // Importez le composant du formulaire
 import AddBudgetButton from './ButtonBudget';
 
-// Définissez la fonction capitalizeFirstLetter dans le même fichier
+// fonction capitalizeFirstLetter dans le même fichier
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -17,10 +17,12 @@ export default function MainDasboardTitle() {
   const [remainingBudget, setRemainingBudget] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
 
+  // Récupérer les données du budget mensuel et des dépenses réelles
   useEffect(() => {
     if (user) {
       const userId = user.id;
 
+      // Récupération du total du budget mensuel
       axios
         .get(`http://localhost:8000/budget/totalMonthlyBudget/${userId}`)
         .then((response) => {
@@ -30,6 +32,7 @@ export default function MainDasboardTitle() {
           console.error('Erreur lors de la récupération du total du budget mensuel:', error);
         });
 
+      // Récupération du total des dépenses réelles
       axios
         .get(`http://localhost:8000/transaction/totalExpenseAmount/${userId}`)
         .then((response) => {
@@ -41,6 +44,7 @@ export default function MainDasboardTitle() {
     }
   }, [user]);
 
+  // Calculer le budget restant
   useEffect(() => {
     if (totalMonthlyBudget !== null && totalExpenseAmount !== null) {
       const remaining = totalMonthlyBudget - totalExpenseAmount;
@@ -48,20 +52,20 @@ export default function MainDasboardTitle() {
     }
   }, [totalMonthlyBudget, totalExpenseAmount]);
 
+  // Fonction pour mettre à jour le montant total du budget
   const updateTotalMonthlyBudget = (newBudgetAmount) => {
-    // Mettez à jour le montant total du budget ici
     setTotalMonthlyBudget(newBudgetAmount);
-
   };
 
+  // Fonction pour basculer la visibilité du formulaire de création de budget
   const toggleFormVisibility = () => {
-  setIsFormVisible(!isFormVisible); // Inverse la visibilité du formulaire
-};
+    setIsFormVisible(!isFormVisible);
+  };
 
-const handleBudgetFormClose = () => {
-  setIsFormVisible(false); // Mettez à jour l'état ici pour fermer le formulaire
-};
-
+  // Fonction pour gérer la fermeture du formulaire de budget
+  const handleBudgetFormClose = () => {
+    setIsFormVisible(false);
+  };
 
   return (
     <main className='main'>
@@ -101,18 +105,16 @@ const handleBudgetFormClose = () => {
               Budget restant
             </div>
             <div className='remainingBudget'>
-            {remainingBudget !== null ? remainingBudget.toFixed(2) : 'Calcul en cours...'}
+              {remainingBudget !== null ? remainingBudget.toFixed(2) : 'Calcul en cours...'}
             </div>
           </div>
-          
         </div>
 
         <div className='buttonCreateBudget'>
           <AddBudgetButton onClick={toggleFormVisibility} />
         </div>
 
-        {isFormVisible && <BudgetForm updateTotalMonthlyBudget={updateTotalMonthlyBudget} onFormClose={handleBudgetFormClose}  />}
-        
+        {isFormVisible && <BudgetForm updateTotalMonthlyBudget={updateTotalMonthlyBudget} onFormClose={handleBudgetFormClose} />}
       </div>
     </main>
   );
