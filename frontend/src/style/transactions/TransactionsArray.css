@@ -128,18 +128,15 @@ table.empty {
 @media screen and (min-width: 962px) {
   .expenseTableContainer,
   .incomeTableContainer {
-    max-width: 48%; /* Définissez la largeur maximale à 48% pour chaque tableau */
-    margin-top: 0px;
-  }
-
-  .incomeTableContainer {
-    margin-top: -50px;
-    margin-right:9px
+    max-width: 48%;
+    margin-top: 0;
+    margin-right: 10px;
   }
 
   .mainArrayTransaction {
+    display: flex;
     flex-direction: row;
-    justify-content: space-between; /* Pour espacer les tableaux */
-    margin-top: 150px;
+    align-items: flex-start; /* Ajustez pour aligner les éléments en haut */
+    margin-top: 10em;
   }
 }
