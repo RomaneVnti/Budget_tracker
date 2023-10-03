@@ -9,10 +9,12 @@ import Select, { components } from "react-select";
 export default function BudgetForm(props) {
   const { user } = useAuth();
 
+  const currentDate = new Date(); // Obtenez la date actuelle
+  const currentMonth = currentDate.getMonth() + 1; // Obtenez le mois actuel en ajoutant 1
+  const lastDayOfMonth = new Date(currentDate.getFullYear(), currentMonth, 0);
+  
   const initialStartDate = new Date().toISOString().slice(0, 10);
-  const currentDate = new Date();
-  const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-  const initialEndDate = lastDayOfMonth.toISOString().slice(0, 10);
+  const initialEndDate = lastDayOfMonth.toISOString().slice(0, 10); // Définissez initialEndDate ici
 
   const [budgetAmount, setBudgetAmount] = useState('');
   const [budgetPeriodStart, setBudgetPeriodStart] = useState(initialStartDate);
@@ -30,8 +32,8 @@ export default function BudgetForm(props) {
 
     const budgetData = {
       budget_amount: parseFloat(budgetAmount),
-      budget_period_start: budgetPeriodStart,
-      budget_period_end: budgetPeriodEnd,
+      budget_period_start: `${currentDate.getFullYear()}-${(currentMonth).toString().padStart(2, '0')}-01`, 
+      budget_period_end: `${currentDate.getFullYear()}-${(currentMonth).toString().padStart(2, '0')}-${lastDayOfMonth.getDate()}`, // Utilisez le dernier jour du mois précédent
       category_id: selectedCategory ? selectedCategory.value : null,
       user_id: user ? user.id : '',
     };

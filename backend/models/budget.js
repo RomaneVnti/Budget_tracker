@@ -16,11 +16,11 @@ const Budget = db.define('budget', {
         allowNull: false,
     },
     budget_period_start: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
     },
     budget_period_end: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
     },
     category_id: {
