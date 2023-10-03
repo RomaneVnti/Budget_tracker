@@ -1,82 +1,101 @@
-// Importation des modules et services nécessaires
 import userService from '../services/userService.js';
 import UserValidation from '../validation/userValidation.js';
 
-// Définition de l'objet userCtrl qui regroupe les fonctions de gestion des utilisateurs
+// Fonction utilitaire pour gérer les erreurs de manière uniforme
+const handleError = (res, error, message) => {
+    console.error(message, error);
+    res.status(500).json({ error: 'Erreur du serveur' });
+};
+
 const userCtrl = {
-    // Récupérer tous les utilisateurs
-    getAllUsers: (req, res) => {
-        userService.getAllUsers()
-            .then(users => res.status(200).json(users))  // Envoi des utilisateurs au format JSON en cas de succès
-            .catch(error => res.status(500).json({ error: 'Server error' }));  // Gestion des erreurs
-    },
-
-    // Récupérer un utilisateur par son ID
-    getOneUser: (req, res) => {
-        const { id } = req.params;
-        userService.getOneUser(id)
-            .then(user => {
-                if (!user) {
-                    return res.status(404).json({ message: 'User not found' });  // Si l'utilisateur n'est pas trouvé
-                }
-                return res.status(200).json(user);  // Envoi de l'utilisateur au format JSON en cas de succès
-            })
-            .catch(error => res.status(500).json({ error: 'Server error' }));  // Gestion des erreurs
-    },
-
-    // Créer un nouvel utilisateur
-    createUser: (req, res) => {
-        const { body } = req;
-        const { error } = UserValidation(body);  // Validation des données de l'utilisateur
-
-        if (error) {
-            return res.status(400).json({ error: error.details[0].message });  // Si la validation échoue
+    getAllUsers: async (req, res) => {
+        try {
+            // Récupère tous les utilisateurs en utilisant le service userService
+            const users = await userService.getAllUsers();
+            res.status(200).json(users);
+        } catch (error) {
+            handleError(res, error, "Erreur lors de la récupération de tous les utilisateurs :");
         }
-
-        userService.createUser(body)
-            .then(() => res.status(201).json({ message: 'User created successfully' }))  // Envoi d'un message en cas de succès
-            .catch(error => res.status(500).json({ error: 'Server error' }));  // Gestion des erreurs
     },
 
-    // Mettre à jour les informations d'un utilisateur
-    updateUser: (req, res) => {
+    getOneUser: async (req, res) => {
+        const { id } = req.params;
+        try {
+            // Récupère un utilisateur par son ID en utilisant le service userService
+            const user = await userService.getOneUser(id);
+            if (!user) {
+                return res.status(404).json({ message: 'Utilisateur introuvable' });
+            }
+            res.status(200).json(user);
+        } catch (error) {
+            // Gère les erreurs en utilisant la fonction handleError
+            handleError(res, error, "Erreur lors de la récupération de l'utilisateur par ID :");
+        }
+    },
+
+    createUser: async (req, res) => {
+        const { body } = req;
+        try {
+            // Valide les données de l'utilisateur en utilisant UserValidation
+            const { error } = UserValidation(body);
+
+            if (error) {
+                return res.status(400).json({ error: error.details[0].message });
+            }
+
+            // Crée un nouvel utilisateur en utilisant le service userService
+            await userService.createUser(body);
+            res.status(201).json({ message: 'Utilisateur créé avec succès' });
+        } catch (error) {
+            // Gère les erreurs en utilisant la fonction handleError
+            handleError(res, error, "Erreur lors de la création de l'utilisateur :");
+        }
+    },
+
+    updateUser: async (req, res) => {
         const { body } = req;
         const { id } = req.params;
+        try {
+            // Récupère un utilisateur par son ID en utilisant le service userService
+            const user = await userService.getOneUser(id);
 
-        userService.getOneUser(id)
-            .then(user => {
-                if (!user) {
-                    return res.status(404).json({ message: 'User not found' });  // Si l'utilisateur n'est pas trouvé
-                }
+            if (!user) {
+                return res.status(404).json({ message: 'Utilisateur introuvable' });
+            }
 
-                const { error } = UserValidation(body);  // Validation des données de l'utilisateur
+            // Valide les données de l'utilisateur en utilisant UserValidation
+            const { error } = UserValidation(body);
 
-                if (error) {
-                    return res.status(400).json({ error: error.details[0].message });  // Si la validation échoue
-                }
+            if (error) {
+                return res.status(400).json({ error: error.details[0].message });
+            }
 
-                userService.updateUser(id, body)
-                    .then(() => res.status(200).json({ message: 'User updated successfully' }))  // Envoi d'un message en cas de succès
-                    .catch(error => res.status(500).json({ error: 'Server error' }));  // Gestion des erreurs
-            })
-            .catch(error => res.status(500).json({ error: 'Server error' }));  // Gestion des erreurs
+            // Met à jour les informations de l'utilisateur en utilisant le service userService
+            await userService.updateUser(id, body);
+            res.status(200).json({ message: 'Informations de l\'utilisateur mises à jour avec succès' });
+        } catch (error) {
+            // Gère les erreurs en utilisant la fonction handleError
+            handleError(res, error, "Erreur lors de la mise à jour de l'utilisateur :");
+        }
     },
 
-    // Supprimer un utilisateur par son ID
-    deleteUser: (req, res) => {
+    deleteUser: async (req, res) => {
         const { id } = req.params;
+        try {
+            // Supprime un utilisateur par son ID en utilisant le service userService
+            const result = await userService.deleteUser(id);
 
-        userService.deleteUser(id)
-            .then(result => {
-                if (result === 0) {
-                    return res.status(404).json({ message: 'User not found' });  // Si l'utilisateur n'est pas trouvé
-                }
-                res.status(200).json({ message: 'User deleted successfully' });  // Envoi d'un message en cas de succès
-            })
-            .catch(error => res.status(500).json({ error: 'Server error' }));  // Gestion des erreurs
+            if (result === 0) {
+                // Si l'utilisateur n'est pas trouvé, renvoie une réponse JSON avec un statut 404 (non trouvé)
+                return res.status(404).json({ message: 'Utilisateur introuvable' });
+            }
+
+            res.status(200).json({ message: 'Utilisateur supprimé avec succès' });
+        } catch (error) {
+            // Gère les erreurs en utilisant la fonction handleError
+            handleError(res, error, "Erreur lors de la suppression de l'utilisateur :");
+        }
     }
-
-    
 };
 
 export default userCtrl;
