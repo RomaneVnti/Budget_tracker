@@ -1,154 +1,145 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap");
-
-/* MainDashboardArray.css */
-
 /* Style général pour le composant */
+.mainArrayTransaction{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:center;
+}
+
+.expenseTableContainer,
+.incomeTableContainer {
+  overflow-x: auto; /* Ajoute une barre de défilement horizontale en cas de débordement */
+  max-width: 1024px; /* Largeur maximale pour le tableau à partir de 1024px */
+  width: 90%;
+  border-radius: 13px; 
+  padding-top: 20px;
+  margin-left: 10px;
+  position: relative; /* Position relative pour libérer de l'espace en haut */
+}
+
+.expenseTableContainer{
+  background-color: #FFF2DE;
+  margin-top: 150px; /* Ajoute de la marge supérieure pour abaisser les tableaux */
+
+}
+
+.incomeTableContainer{
+  background-color: #69921326;
+
+}
+
 .expenseTableContainer {
-    margin: 12px;
-    margin-top: 125px;
-    overflow-x: auto; /* Ajoute une barre de défilement horizontale en cas de débordement */
-    max-width: 1024px; /* Largeur maximale pour le tableau à partir de 1024px */
-    margin: 146px auto 0 auto; /* Ajoute 50px d'espace en haut, centre horizontalement */
-    width: 90%;
-    border-radius: 13px; 
-    background-color: #FFF2DE;
+  float: left; /* Positionnez le tableau des dépenses à gauche */
+  margin-right: 10px; /* Ajoutez un espace entre les deux tableaux */
+}
+
+.incomeTableContainer {
+  float: left; /* Positionnez le tableau des recettes à gauche */
+  margin-top: 55px;
+
+}
+
+/* Style pour le titre "Vos dernières transactions" */
+.expenseTableContainer h2,
+.incomeTableContainer h2 {
+  font-size: 1.5rem;
+  margin-bottom: 35px;
+  margin-top: 30px;   
+  text-align: center;
+  font-family: Lato, sans-serif;
+  color: #2B2E4A;
+}
+
+/* Style pour la table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  font-size: 1rem; /* Taille de police de base pour les appareils mobiles */
+}
+
+/* Style pour les cellules de l'en-tête */
+table th {
+  text-align: left;
+  padding: 10px;
+  color: #2B2E4A;
+  font-family: Lato, sans-serif;
+  opacity: 64%;
+  text-align: center;
+  max-width: 100px; /* Définissez une largeur maximale pour les cellules */
+  white-space: nowrap; /* Empêche le texte de se retourner à la ligne */
+  overflow: hidden; /* Masque tout texte qui dépasse la largeur maximale */
+  text-overflow: ellipsis;
+}
+
+/* Style pour les cellules de données */
+table td {
+  padding: 10px;
+  font-family: Lato, sans-serif;
+  color: #2B2E4A;
+  font-weight: 600;
+  text-align: center;
+  max-width: 100px; /* Définissez une largeur maximale pour les cellules */
+  white-space: nowrap; /* Empêche le texte de se retourner à la ligne */
+  overflow: hidden; /* Masque tout texte qui dépasse la largeur maximale */
+  text-overflow: ellipsis;
+  font-size: 0.9em;
+}
+
+table tbody tr {
+  border-bottom: 1px dashed #ccc; /* Ligne en pointillé de couleur grise */
+}
+
+/* Style pour le montant (par exemple, pour le rendre en gras) */
+table td.amount {
+  font-weight: bold;
+}
+
+/* Style pour le tableau complet lorsqu'il n'y a pas de données */
+table.empty {
+  text-align: center;
+  margin-top: 20px;
+  font-style: italic;
+}
+
+.text-green {
+  color: #B6C597;
+}
+
+.text-red {
+  color: rgb(239, 99, 99);
+}
+
+.icon-buttonUpdate {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.icon-buttonUpdate:focus {
+  outline: none;
+}
+
+.icon-buttonUpdate svg {
+  font-size: 1.5rem; /* Ajustez la taille de l'icône selon vos préférences */
+}
+
+@media screen and (min-width: 962px) {
+  .expenseTableContainer,
+  .incomeTableContainer {
+    max-width: 48%; /* Définissez la largeur maximale à 48% pour chaque tableau */
+    margin-top: 0px;
   }
 
-  
-  /* Style pour le titre "Vos dernières transactions" */
-  .expenseTableContainer h2 {
-    font-size: 1.5rem;
-    margin-bottom: 35px;
-    margin-top: 30px;   
-    text-align: center;
-    font-family: Lato, sans-serif;
-    color: #2B2E4A;
-  }
-  
-  /* Style pour la table */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 30px;
-    font-size: 1rem; /* Taille de police de base pour les appareils mobiles */
-  }
-  
-  /* Style pour les cellules de l'en-tête */
-  table th {
-    text-align: left;
-    padding: 10px;
-    color: #2B2E4A;
-    font-family: Lato,sans-serif;
-    opacity: 64%;
-    text-align: center;
-    max-width: 100px; /* Définissez une largeur maximale pour les cellules */
-    white-space: nowrap; /* Empêche le texte de se retourner à la ligne */
-    overflow: hidden; /* Masque tout texte qui dépasse la largeur maximale */
-    text-overflow: ellipsis;
-  }
-  
-  /* Style pour les cellules de données */
-  table td {
-    padding: 10px;
-    font-family: Lato, sans-serif;
-    color: #2B2E4A;
-    font-weight: 600;
-    text-align: center;
-    max-width: 100px; /* Définissez une largeur maximale pour les cellules */
-    white-space: nowrap; /* Empêche le texte de se retourner à la ligne */
-    overflow: hidden; /* Masque tout texte qui dépasse la largeur maximale */
-    text-overflow: ellipsis;
-    font-size: 0.9em;
-    
-  }
-  
-  table tbody tr {
-    border-bottom: 1px dashed #ccc; /* Ligne en pointillé de couleur grise */
-  }
-  
-  /* Style pour le montant (par exemple, pour le rendre en gras) */
-  table td.amount {
-    font-weight: bold;
-  }
-  
-  
-  /* Style pour le tableau complet lorsqu'il n'y a pas de données */
-  table.empty {
-    text-align: center;
-    margin-top: 20px;
-    font-style: italic;
+  .incomeTableContainer {
+    margin-top: -50px;
+    margin-right:9px
   }
 
-  .text-green {
-    color: #B6C597;
+  .mainArrayTransaction {
+    flex-direction: row;
+    justify-content: space-between; /* Pour espacer les tableaux */
+    margin-top: 150px;
   }
-  
-  .text-red {
-    color: rgb(239, 99, 99);
-  }
-
-  .icon-buttonUpdate{
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-  }
-  
-  .icon-buttonUpdate:focus {
-    outline: none;
-  }
-
-  .icon-buttonUpdate svg {
-    font-size: 1.5rem; /* Ajustez la taille de l'icône selon vos préférences */
-  }
-
-  .incomeTableContainer{
-    margin: 12px;
-    margin-top: 125px;
-    overflow-x: auto; /* Ajoute une barre de défilement horizontale en cas de débordement */
-    max-width: 1024px; /* Largeur maximale pour le tableau à partir de 1024px */
-    margin: 34px auto 0 auto; /* Ajoute 50px d'espace en haut, centre horizontalement */
-    width: 90%;
-    border-radius: 13px; 
-    background-color: #FFF2DE; 
-   }
-
-   .incomeTableContainer h2 {
-    font-size: 1.5rem;
-    margin-bottom: 35px;
-    margin-top: 30px;   
-    text-align: center;
-    font-family: Lato, sans-serif;
-    color: #2B2E4A;
-  }
-
-  @media screen and (min-width: 962px) {
-    table {
-      font-size: 1.2rem; /* Ajustez la taille de la police pour les écrans plus larges si nécessaire */
-    }
-  
-    /* Ajoutez ces styles pour définir la largeur à 50% et l'aligner à gauche */
-    .expenseTableContainer {
-      max-width: 48%; /* Définissez la largeur à 50% */
-      margin-left: 10px; /* Alignez le tableau à gauche */
-
-    }
-
-    .incomeTableContainer{
-      max-width: 49%;
-      margin-right: 10px;
-      bottom: 613px;
-      position: relative;
-    }
-
-
-  
-    /* Vous pouvez ajouter plus de styles pour la mise en page des écrans plus larges si nécessaire */
-  }
-
-  /* Style pour la table lorsque la largeur de l'écran est plus grande (par exemple, pour les tablettes et les ordinateurs de bureau) */
-  @media screen and (min-width: 601px) {
-    table {
-      font-size: 1.2rem; /* Ajustez la taille de la police pour les écrans plus larges si nécessaire */
-    }
-  }
+}
