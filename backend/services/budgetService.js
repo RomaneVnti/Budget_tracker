@@ -1,7 +1,6 @@
-// Importations des modèles Budget et Category depuis '../models'
-import Budget from '../models/budget.js';
-import Category from '../models/category.js';
-import { Op } from 'sequelize';
+import Budget from '../models/budget.js'; 
+import Category from '../models/category.js'; 
+import { Op } from 'sequelize'; 
 
 // Définition du service de gestion de budgets
 const budgetService = {
@@ -30,14 +29,14 @@ const budgetService = {
     // Fonction pour obtenir tous les budgets d'un utilisateur
     getAllBudgetsForUser: async (userId) => {
         try {
-            console.log("Fetching budgets for user:", userId);
+            //console.log("Fetching budgets for user:", userId);
             const budgets = await Budget.findAll({
                 where: { user_id: userId }
             });
-            console.log("Budgets for user:", budgets);
+            //console.log("Budgets for user:", budgets);
             return budgets;
         } catch (error) {
-            console.error("Error fetching budgets:", error);
+            //console.error("Error fetching budgets:", error); 
             throw error;
         }
     },
@@ -62,7 +61,7 @@ const budgetService = {
       where: {
         category_id: categoryId,
         user_id: userId,
-        // Assurez-vous de spécifier la période de budget pour le mois en cours
+        // spécifier la période de budget pour le mois en cours
         [Op.and]: [
           {
             budget_period_start: {
@@ -79,7 +78,7 @@ const budgetService = {
     });
 
     if (!currentMonthBudget) {
-      throw new Error('Budget for the current month not found');
+      throw new Error('Budget du mois en cours introuvable');
     }
 
     // Mise à jour des propriétés du budget avec les nouvelles données
@@ -95,7 +94,7 @@ const budgetService = {
 
     getBudgetByCategoryUserAndMonth: async (categoryId, userId, budgetStartDate) => {
       try {
-        console.log('Début de la recherche du budget...');
+        //console.log('Début de la recherche du budget...'); 
         const budget = await Budget.findOne({
           where: {
             category_id: categoryId,
@@ -105,14 +104,14 @@ const budgetService = {
         });
     
         if (budget) {
-          console.log('Budget trouvé :', budget);
+          //console.log('Budget trouvé :', budget); 
         } else {
-          console.log('Aucun budget trouvé.');
+          //console.log('Aucun budget trouvé.'); 
         }
     
         return budget;
       } catch (error) {
-        console.error('Erreur lors de la recherche du budget :', error);
+        //console.error('Erreur lors de la recherche du budget :', error); 
         throw error;
       }
     },
@@ -134,7 +133,7 @@ const budgetService = {
             // Obtenez la catégorie associée au budget
             const category = await Category.findByPk(budget.category_id);
             if (category) {
-              // Si la catégorie n'existe pas dans lastBudgetsByCategory, ajoutez-la
+              // Si la catégorie n'existe pas dans lastBudgetsByCategory, on l'ajoute
               if (!lastBudgetsByCategory[category.categoryName]) {
                 lastBudgetsByCategory[category.categoryName] = budget;
               } else {
@@ -145,7 +144,7 @@ const budgetService = {
               }
             }
           } catch (error) {
-            console.error("Error while fetching category:", error);
+            //console.error("Error while fetching category:", error);
           }
         }
     
@@ -171,7 +170,7 @@ const budgetService = {
         // Retour du budget total mensuel et des derniers budgets de chaque catégorie
         return { totalMonthlyBudget, categoryLastBudgets: lastBudgetsByCategory };
       } catch (error) {
-        console.error("Error in getTotalMonthlyBudgetForUser:", error);
+        //console.error("Error in getTotalMonthlyBudgetForUser:", error); 
         throw error;
       }
     },
@@ -179,18 +178,13 @@ const budgetService = {
       getAllCategories: async () => {
         try {
           const categories = await Category.findAll();
-          console.log('Categories data from getAllCategories:', categories); // Log des données des catégories
+          //console.log('Categories data from getAllCategories:', categories); 
           return categories;
         } catch (error) {
-          console.error('Error in getAllCategories:', error); // Log des erreurs
+          //console.error('Error in getAllCategories:', error); 
           throw error;
         }
       }
-      
-      
-      
-    };
+};
 
-
-// Exportation du service de gestion de budgets
 export default budgetService;

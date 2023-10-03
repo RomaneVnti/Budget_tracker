@@ -1,46 +1,35 @@
-// authService.js
-import User from '../models/user.js';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import jwtSecret from '../config.js'; // Importez jwtSecret depuis le fichier de configuration
+import User from '../models/user.js'; 
+import bcrypt from 'bcrypt'; 
+import jwt from 'jsonwebtoken'; 
+import jwtSecret from '../config.js'; 
 
-
-
-// Service d'authentification
 const authService = {
   // Méthode pour authentifier l'utilisateur
   authenticateUser: async (email, password) => {
     try {
-      console.log("Tentative de connexion...");
-
-      // Recherche de l'utilisateur par email
+      // Recherche de l'utilisateur par son adresse e-mail
       const user = await User.findOne({ where: { email } });
 
-      // Si l'utilisateur n'existe pas, renvoyez une erreur
+      // Si l'utilisateur n'existe pas, lance une erreur d'authentification
       if (!user) {
-        console.log("Utilisateur introuvable");
         throw new Error('Login/mot de passe incorrect');
       }
 
-      console.log("Utilisateur trouvé:", user);
-
-      // Vérification du mot de passe en comparant le mot de passe haché stocké avec celui fourni
+      // Vérifie le mot de passe en le comparant avec le hachage stocké dans la base de données
       const valid = await bcrypt.compare(password, user.password);
 
-      // Si le mot de passe est invalide, renvoyez une erreur
+      // Si le mot de passe est invalide, lance une erreur d'authentification
       if (!valid) {
-        console.log("Mot de passe invalide");
         throw new Error('Login/mot de passe incorrect');
       }
 
-      console.log("Mot de passe valide");
-
-      // Génération d'un jeton JWT contenant l'ID de l'utilisateur
+      // Crée un payload JWT avec l'ID de l'utilisateur
       const payload = { sub: user.id };
-      const token = jwt.sign(payload, jwtSecret, { expiresIn: '24h', subject:`${user.user_id}` });
-      console.log("Token généré:", token);
-      console.log("Clé secrète JWT:", jwtSecret);
-      // Retournez les informations pertinentes de l'utilisateur et le jeton
+      
+      // Signe le jeton JWT avec la clé secrète et spécifie une expiration de 24 heures
+      const token = jwt.sign(payload, jwtSecret, { expiresIn: '24h', subject: `${user.user_id}` });
+
+      // Retourne les informations pertinentes de l'utilisateur et le jeton JWT
       return {
         userId: user.user_id,
         email: user.email,
@@ -48,19 +37,28 @@ const authService = {
         token: token
       };
     } catch (error) {
-      console.error("Erreur d'authentification:", error);
-      throw error; // Réutilisez la même erreur plutôt que d'en créer une nouvelle
+      throw new Error('Échec de l\'authentification');
     }
   },
 
   // Méthode pour vérifier un jeton JWT
   verifyJWT: async (token) => {
     try {
-      // Vérifiez et décryptez le jeton JWT
+      // Vérifie et décrypte le jeton JWT en utilisant la clé secrète
       const decoded = jwt.verify(token, jwtSecret);
+
+      // Recherche l'utilisateur associé à l'ID du jeton dans la base de données
       const user = await User.findOne({ where: { user_id: decoded.sub } });
+
+      // Si l'utilisateur n'est pas trouvé, lance une erreur
+      if (!user) {
+        throw new Error('Utilisateur associé au jeton introuvable');
+      }
+
+      // Retourne l'utilisateur trouvé
       return user;
     } catch (error) {
+      // Gère les erreurs liées au jeton JWT invalide
       throw new Error('Jeton JWT invalide');
     }
   }
