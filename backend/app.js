@@ -12,7 +12,7 @@ const app = express();
 app.use(cors({
     origin: 'http://localhost:3000', //Url du frontend
     methods: ['GET', 'POST', 'DELETE', 'PUT'], //méthode utlisées
-    credentials: true, //authoriser les cookies...
+    credentials: true, //authoriser les cookies
 }))
 
 app.use(express.json());
@@ -25,12 +25,12 @@ app.use(passport.initialize());
 async function startServer() {
     try {
         await Db.sync();
-        console.log('Database connected');
+        //console.log('Base de donnée connectée');
         app.listen(8000, () => {
-            console.log('Server is listening on port 8000');
+            //console.log('Server écouté sur le port 8000');
         });
     } catch (error) {
-        console.error('Error connecting to the database:', error);
+        //console.error('Erreur de connexion à la base de donnée:', error);
     }
 }
 
