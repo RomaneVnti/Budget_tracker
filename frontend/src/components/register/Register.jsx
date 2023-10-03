@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext'; 
 import '../../style/login/Login.css';
 import { IoMdClose } from 'react-icons/io';
 
 export default function Register({ onClose }) {
+  // États pour gérer les données du formulaire et les messages d'erreur/succès
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();
-  const { setUser } = useAuth();
+  const [successMessage, setSuccessMessage] = useState(''); 
+  const { setUser } = useAuth(); 
 
+  // Fonction pour valider le format de l'adresse email
   const isEmailValid = (email) => {
-    // Utilisez une expression régulière pour valider l'email
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailPattern.test(email);
   };
 
+  // Gère la soumission du formulaire d'inscription
   const handleRegister = async () => {
     if (!isEmailValid(email)) {
       setErrorMessage('Veuillez saisir une adresse email valide.');
@@ -26,27 +27,28 @@ export default function Register({ onClose }) {
     }
 
     try {
+      // Envoyez une requête POST pour créer un compte utilisateur
       const response = await axios.post('http://localhost:8000/users', {
         firstName: firstName,
         email: email,
         password: password,
       });
 
-      console.log('Réponse du backend :', response.data);
-
-      setUser(response.data.user);
-      navigate('/dashboard');
+      setUser(response.data.user); // Mettre à jour l'utilisateur dans le contexte d'authentification
+      //console.log("hey ho");
+      setSuccessMessage('Votre compte a été créé avec succès ! Vous pouvez maintenant vous connecter.');
 
     } catch (error) {
-      console.error('Erreur lors de l\'inscription :', error);
+      //console.error('Erreur lors de l\'inscription :', error);
       if (error.response && error.response.data && error.response.data.message) {
-        setErrorMessage(error.response.data.message);
+        setErrorMessage(error.response.data.message); 
       } else {
-        setErrorMessage('Une erreur est survenue lors de l\'inscription.');
+        setErrorMessage('Une erreur est survenue lors de l\'inscription.'); 
       }
     }
   };
 
+  // Gère la fermeture du formulaire
   const handleCloseRegister = () => {
     onClose();
   };
@@ -82,7 +84,8 @@ export default function Register({ onClose }) {
           </div>
         </div>
 
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        {errorMessage && <div className="error-message">{errorMessage}</div>} 
+        {successMessage && <div className="success-message">{successMessage}</div>} 
       </form>
     </div>
   );

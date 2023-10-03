@@ -57,6 +57,11 @@
     color: red;
     margin-top: 10px;
   }
+
+  .success-message {
+    color: green;
+    margin-top: 10px;
+  }
   
   /* Style pour le formulaire visible */
 .login-form-container.visible {
