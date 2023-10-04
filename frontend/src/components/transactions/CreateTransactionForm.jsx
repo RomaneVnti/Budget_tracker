@@ -1,52 +1,62 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import axios from 'axios';
-import Select from 'react-select';
-import { IoMdClose } from 'react-icons/io';
-import '../../style/transactions/CreateForm.css';
-
-import { useAuth } from '../../context/AuthContext';
+import Select from 'react-select'; 
+import { IoMdClose } from 'react-icons/io'; 
+import '../../style/transactions/CreateForm.css'; 
+import { useAuth } from '../../context/AuthContext'; 
 
 function CreateTransactionForm({ onClose }) {
-  const { user } = useAuth();
+  const { user } = useAuth(); // Récupère l'utilisateur authentifié à partir du contexte
 
-  const [categories, setCategories] = useState([]);
-  const [formErrors, setFormErrors] = useState({});
-  const [message, setMessage] = useState('');
-  const [messageClass, setMessageClass] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  // États pour stocker les données du formulaire, les erreurs et les messages de succès/erreur
+  const [categories, setCategories] = useState([]); // État pour stocker les catégories
+  const [formErrors, setFormErrors] = useState({}); // État pour les erreurs du formulaire
+  const [message, setMessage] = useState(''); // État pour le message
+  const [messageClass, setMessageClass] = useState(''); // État pour la classe du message
+  const [selectedCategory, setSelectedCategory] = useState(null); // État pour la catégorie sélectionnée
 
+  // État pour stocker les données du formulaire
   const [formData, setFormData] = useState({
-    transaction_amount: '',
+    transaction_amount: '', 
     date: '',
-    type_transaction: 'recette',
-    description: '',
-    category_id: '', // Utilisez formData.category_id pour stocker l'ID de la catégorie
-    user_id: user ? user.id : ''
+    type_transaction: 'recette', 
+    description: '', 
+    category_id: '', 
+    user_id: user ? user.id : '', 
   });
 
   useEffect(() => {
+    // Utilisez useEffect pour effectuer des opérations après le rendu initial
+
     const fetchCategories = async () => {
       try {
+        // Effectue une requête GET pour récupérer les catégories depuis l'API
         const response = await axios.get('http://localhost:8000/budget/getCategories');
+
         if (response.status === 200) {
           const categoriesData = response.data;
+
+          // Formate les données des catégories pour les options Select
           const formattedCategories = categoriesData.map((category) => ({
             value: category.category_id,
             label: category.categoryName,
           }));
+
+          // Met à jour l'état des catégories avec les options formatées
           setCategories(formattedCategories);
         } else {
-          console.error('Erreur lors du chargement des catégories');
+          setFormErrors({ categories: "Erreur lors du chargement des catégories." });
         }
       } catch (error) {
-        console.error('Erreur lors du chargement des catégories :', error);
+        setFormErrors({ categories: "Erreur lors du chargement des catégories : " + error.message });
       }
     };
 
-    fetchCategories();
+    fetchCategories(); // Appelez la fonction de chargement des catégories au chargement de la page
   }, []);
 
   const handleChange = (e) => {
+    // Gérez les changements dans les champs de formulaire et mettez à jour l'état formData
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -55,8 +65,10 @@ function CreateTransactionForm({ onClose }) {
   };
 
   const handleCategoryChange = (selectedOption) => {
+    // Gérez le changement de catégorie sélectionnée
     setSelectedCategory(selectedOption);
-    // Mettez à jour formData.category_id avec la valeur sélectionnée
+
+    // Met à jour l'état formData.category_id avec la valeur sélectionnée
     setFormData({
       ...formData,
       category_id: selectedOption ? selectedOption.value : '',
@@ -64,39 +76,46 @@ function CreateTransactionForm({ onClose }) {
   };
 
   const handleCreateTransaction = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Empêche la soumission par défaut du formulaire
 
     if (!formData.description) {
+      // Vérifie si la description est vide
       setFormErrors({ description: "Le champ Description est requis." });
-      return;
+      return; // Arrête la fonction si la description est manquante
     }
 
-    setFormErrors({});
+    setFormErrors({}); // Réinitialisez les erreurs du formulaire
 
-    formData.user_id = user ? user.id : '';
-
-    console.log('Données de la transaction à envoyer :', formData);
+    formData.user_id = user ? user.id : ''; // Définit l'ID de l'utilisateur dans les données du formulaire
 
     try {
+      // Effectue une requête POST pour créer une nouvelle transaction avec les données du formulaire
       const response = await axios.post('http://localhost:8000/transaction/create', {
         ...formData,
       });
 
       if (response.status === 201 || response.status === 200) {
-        console.log('Transaction créée avec succès !');
-        onClose();
+        //console.log('Transaction créée avec succès !');
+        onClose(); // Ferme le formulaire après la création réussie
 
+        setMessage('Transaction créée avec succès !'); 
+        setMessageClass('success'); 
 
-        setMessage('Transaction créée avec succès !');
-        setMessageClass('success');
+        // Réinitialisez le formulaire après la soumission réussie
+        setFormData({
+          transaction_amount: '',
+          date: '',
+          type_transaction: 'recette',
+          description: '',
+          category_id: '',
+          user_id: user ? user.id : '',
+        });
       } else {
-        console.error('Erreur lors de la création de la transaction :', response.data);
         setMessage('Erreur lors de la création de la transaction.');
         setMessageClass('error');
       }
     } catch (error) {
-      console.error('Erreur lors de la création de la transaction :', error);
-      setMessage('Erreur lors de la création de la transaction.');
+      setMessage('Erreur lors de la création de la transaction : ' + error.message);
       setMessageClass('error');
     }
   };
@@ -167,6 +186,7 @@ function CreateTransactionForm({ onClose }) {
         </div>
       </form>
       {formErrors.description && <p className="error-message">{formErrors.description}</p>}
+      {formErrors.categories && <p className="error-message">{formErrors.categories}</p>}
       <div className={`message ${messageClass}`}>{message}</div>
     </div>
   );

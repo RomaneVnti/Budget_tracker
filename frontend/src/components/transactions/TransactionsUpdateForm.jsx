@@ -1,32 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Select from 'react-select';
-import '../../style/transactions/UpdateForm.css';
-import { IoMdClose } from 'react-icons/io';
+import React, { useState, useEffect } from 'react'; 
+import axios from 'axios'; 
+import Select from 'react-select'; 
+import '../../style/transactions/UpdateForm.css'; 
+import { IoMdClose } from 'react-icons/io'; 
 
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext'; 
 
-export default function TransactionsUpdateForm({ transactionId, onClose, onUpdateSuccess, onDeleteSuccess, loadTransactions, currentMonthIndex }) {
-  const { user } = useAuth();
+export default function TransactionsUpdateForm({
+  transactionId, // Propriété pour l'ID de la transaction
+  onClose, // Propriété pour la fonction de fermeture de la fenêtre modale
+  onUpdateSuccess, // Propriété pour la fonction de succès de mise à jour
+  onDeleteSuccess, // Propriété pour la fonction de succès de suppression
+  loadTransactions, // Propriété pour la fonction de chargement des transactions
+  currentMonthIndex, // Propriété pour l'index du mois actuel
+}) {
+  const { user } = useAuth(); // Utilisation du hook useAuth pour obtenir l'utilisateur connecté
 
+  // État pour stocker les données du formulaire, les erreurs et les messages
   const [formData, setFormData] = useState({
-    transaction_amount: '',
-    date: '',
-    type_transaction: '',
-    description: '',
-    category_id: '', // Utilisez formData.category_id pour stocker l'ID de la catégorie
-    user_id: user ? user.id : ''
-
+    transaction_amount: '', 
+    date: '', 
+    type_transaction: '', 
+    description: '', 
+    category_id: '', 
+    user_id: user ? user.id : '',
   });
-  
-  const [categories, setCategories] = useState([]);
-  const [error, setError] = useState(null);
-  const [formErrors, setFormErrors] = useState({});
-  const [message, setMessage] = useState('');
-  const [messageClass, setMessageClass] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState(null);
 
+  const [categories, setCategories] = useState([]); // État pour stocker les catégories
+  const [error, setError] = useState(null); // État pour stocker les erreurs
+  const [formErrors, setFormErrors] = useState({}); // État pour stocker les erreurs du formulaire
+  const [message, setMessage] = useState(''); // État pour stocker les messages de succès ou d'erreur
+  const [messageClass, setMessageClass] = useState(''); // État pour stocker la classe CSS du message
+  const [selectedCategory, setSelectedCategory] = useState(null); // État pour stocker la catégorie sélectionnée
 
+  // Effet qui se déclenche au chargement initial et récupère les données de la transaction et les catégories
   useEffect(() => {
     axios
       .get(`http://localhost:8000/transaction/${transactionId}`)
@@ -37,7 +44,7 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
           date: transactionData.date,
           type_transaction: transactionData.type_transaction,
           description: transactionData.description,
-          category_id: transactionData.category_id, // Utilisez la valeur correcte de category_id
+          category_id: transactionData.category_id,
         });
       })
       .catch((error) => {
@@ -56,16 +63,17 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
           }));
           setCategories(formattedCategories);
         } else {
-          console.error('Erreur lors du chargement des catégories');
+          //console.error('Erreur lors du chargement des catégories');
         }
       } catch (error) {
-        console.error('Erreur lors du chargement des catégories :', error);
+        //console.error('Erreur lors du chargement des catégories :', error);
       }
     };
 
     fetchCategories();
   }, [transactionId]);
 
+  // Gestionnaire de changement pour les champs de formulaire
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -73,28 +81,28 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
       [name]: value,
     });
   };
+
+  // Gestionnaire de changement pour la sélection de catégorie
   const handleCategoryChange = (selectedOption) => {
     setSelectedCategory(selectedOption);
-    // Mettez à jour formData.category_id avec la valeur sélectionnée
     setFormData({
       ...formData,
       category_id: selectedOption ? selectedOption.value : '',
     });
   };
 
+  // Gestionnaire de soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation du champ "description"
     if (!formData.description) {
       setFormErrors({ description: "Le champ Description est requis." });
       return;
     }
 
-    // Réinitialisez les erreurs si le champ est rempli
-    setFormErrors({});
+    setFormErrors({});//Si la description n'est pas vide, cette ligne réinitialise l'objet d'erreurs formErrors à vide, ce qui supprime tout message d'erreur précédemment affiché
 
-    formData.user_id = user ? user.id : '';
+    formData.user_id = user ? user.id : '';//Cette ligne met à jour la propriété user_id de l'objet formData avec l'ID de l'utilisateur connecté
 
     axios
       .put(`http://localhost:8000/transaction/${transactionId}`, formData)
@@ -108,7 +116,6 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
         const month = currentMonthIndex + 1;
         loadTransactions(year, month);
 
-        // Afficher un message de succès
         setMessage('Transaction mise à jour avec succès !');
         setMessageClass('success');
       })
@@ -116,12 +123,12 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
         console.error('Erreur lors de la mise à jour de la transaction :', error);
         setError(error);
 
-        // Afficher un message d'erreur
         setMessage('Erreur lors de la mise à jour de la transaction.');
         setMessageClass('error');
       });
   };
 
+  // Gestionnaire de suppression de la transaction
   const handleDelete = () => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cette transaction définitivement ?")) {
       axios
@@ -137,10 +144,12 @@ export default function TransactionsUpdateForm({ transactionId, onClose, onUpdat
     }
   };
 
+  // Si une erreur est présente, afficher un message d'erreur
   if (error) {
     return <div>Une erreur s'est produite : {error.message}</div>;
   }
 
+  // Rendu du formulaire et des messages de succès ou d'erreur
   return (
     <div className="update-transaction-form">
       <form onSubmit={handleSubmit}>

@@ -4,8 +4,10 @@ import CreateTransactionForm from './CreateTransactionForm'; // Importez le form
 import '../../style/transactions/ButtonAddTransaction.css';
 
 function AddBudgetTransaction() {
-  const [showForm, setShowForm] = useState(false); // État pour afficher/masquer le formulaire
+  // État pour gérer l'affichage du formulaire
+  const [showForm, setShowForm] = useState(false);
 
+  // Fonction pour gérer le clic sur le bouton d'ajout de transaction
   const handleClick = () => {
     setShowForm(true); // Afficher le formulaire lors du clic
   };
@@ -13,10 +15,10 @@ function AddBudgetTransaction() {
   return (
     <div>
       {showForm ? (
-        // Affichez le formulaire s'il est visible
+        // Si showForm est vrai, affichez le formulaire de création de transaction
         <CreateTransactionForm onClose={() => setShowForm(false)} />
       ) : (
-        // Affichez le bouton d'ajout s'il n'est pas visible
+        // Si showForm est faux, affichez le bouton d'ajout de transaction
         <button className='buttonAddTransaction' onClick={handleClick}>
           <div className="iconPlus">
             <AiOutlinePlus />
