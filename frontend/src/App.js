@@ -7,6 +7,7 @@ import Register from './components/register/Register';
 import HomePage from './components/homePage/HomePage';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import Transactions from './components/transactions/Transactions.jsx';
+import Statistique from './components/statistiques/Statistique.jsx';
 
 function PrivateRoute({ path, element }) {
   const { user } = useAuth();
@@ -28,6 +29,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
         <Route path="/transactions" element={<PrivateRoute element={<Transactions />} />} />
+        <Route path="/statistique" element={<PrivateRoute element={<Statistique />} />} />
       </Routes>
     </AuthProvider>
   );

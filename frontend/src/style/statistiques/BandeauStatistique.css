@@ -1,0 +1,14 @@
+.bandeau-statistique {
+    background-color: #f3f3f3; 
+    padding: 20px 0; 
+    text-align: center;
+    color: #2B2E4A; 
+  }
+  
+  .bandeau-statistique h2 {
+    font-size: 1.5rem; 
+    margin-bottom: 10px; 
+    font-family: Lato, sans-serif; 
+    text-transform: uppercase; 
+
+  }
