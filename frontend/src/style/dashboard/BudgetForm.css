@@ -1,124 +1,110 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap");
 
-
+/* Styles pour l'icône de fermeture */
 .iconCloseBudget {
-    float: right; /* Place l'icône à droite */
-    margin-top: -30px; /* Ajustez la position verticale si nécessaire */
-    margin-right: -10px; /* Ajustez la position horizontale si nécessaire */
-    font-size: 25px;
-  }
+  font-size: 1.5em;
+  cursor: pointer;
+}
 
+.iconCloseBudget:hover {
+  color: #FFBD59;
+}
+
+/* Styles pour le formulaire de budget */
 .budgetForm {
-    background-color: #edebeb;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Ombre légère */
-    max-width: 400px; /* Largeur maximale du formulaire */
-    margin: 26px auto; /* Centrer le formulaire horizontalement */
-    z-index: 1000;
-    position: relative;
-    height: 22em;
-  }
-  
-  .budgetForm h2 {
-    font-size: 1.3em; /* Taille de la police du titre */
-    margin-bottom: 38px; /* Espace en bas du titre */
-    justify-content: center;
-    display: flex;
-    font-family: Lato, sans-serif;
-    color: #2B2E4A;
-  }
-  
-  .budgetForm label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
-    margin-left: 8px;
-  }
-  
-  .budgetForm input[type="number"]{
-    width: 45%;
-    padding: 10px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-    background-color: rgb(255, 255, 255);
-    outline: none;
-    border: 1px solid rgb(181, 181, 183);
-    border-radius: 5px;
-    overflow: hidden;
-    clip: rect(1px, 1px, 1px, 1px);
-    white-space: nowrap;
-  }
+  background-color: #edebeb;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin: 26px auto;
+  z-index: 1000;
+  position: relative;
+  height: 22em;
+}
 
-  .buttonSubmit{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-  }
+.budgetForm h2 {
+  font-size: 1.3em;
+  margin-bottom: 38px;
+  justify-content: center;
+  display: flex;
+  font-family: Lato, sans-serif;
+  color: #2B2E4A;
+}
 
-  .message{
-    display: flex;
-    justify-content: center;
-    margin-top: 1em;
-  }
-  .message.success{
-    color: #B6C597;
-    font-family: Lato, sans-serif;
-  }
+.budgetForm label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  margin-left: 8px;
+  color: #2B2E4A;
+  font-family: Lato, sans-serif;
+  font-size: 0.9em;
+}
 
-  .message.error{
-    color: #ff0000;
-    font-family: Lato, sans-serif;
-  }
+.budgetForm input[type="number"] {
+  width: 45%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  background-color: rgb(255, 255, 255);
+  outline: none;
+  border: 1px solid rgb(181, 181, 183);
+  border-radius: 5px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
 
-  .budgetForm button {
-    background-color: #2B2E4A; /* Couleur de fond du bouton */
-    color: #fff; /* Couleur du texte du bouton */
-    border: none;
-    border-radius: 30px;
-    padding: 11px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Animation au survol */
-    font-family: Lato, sans-serif;
-    font-weight: 700;
-    margin-top: 3em;
-    transition: transform 0.2s ease-in-out;
-    width: 10em;
-  }
-  
-  .budgetForm button:hover {
-    transform: scale(1.1); /* Grossissement du bouton au survol */
-  }
-  
-  /* Style pour l'icône de fermeture */
-  .iconCloseBudget {
-    font-size: 1.5em;
-    cursor: pointer;
-  }
+/* Styles pour les boutons et messages */
+.buttonSubmit,
+.message {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .iconCloseBudget:hover {
-    color: #FFBD59;
-  }
-  
-  
-  /* Style pour les messages d'erreur (si nécessaire) */
-  .budgetForm .error-message {
-    color: #ff0000;
-    font-size: 0.8em;
-    margin-top: 5px;
-  }
-  
-  .inputLogo{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
+.message.success {
+  color: #B6C597;
+  font-family: Lato, sans-serif;
+}
 
-  label{
-    color: #2B2E4A;
-    font-family: Lato,sans-serif;
-    font-size: 0.9em;
-  }
+.message.error {
+  color: #ff0000;
+  font-family: Lato, sans-serif;
+}
 
+.budgetForm button {
+  background-color: #2B2E4A;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 11px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: Lato, sans-serif;
+  font-weight: 700;
+  margin-top: 3em;
+  transition: transform 0.2s ease-in-out;
+  width: 10em;
+}
+
+.budgetForm button:hover {
+  transform: scale(1.1);
+}
+
+/* Styles pour les messages d'erreur (si nécessaire) */
+.budgetForm .error-message {
+  color: #ff0000;
+  font-size: 0.8em;
+  margin-top: 5px;
+}
+
+/* Styles pour l'ensemble d'icône et label */
+.inputLogo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
