@@ -7,7 +7,7 @@ function AddBudgetButton({ onClick }) {
       <div className="iconPlus">
         <AiOutlinePlus />
       </div>
-      <div className="texteButton">Ajouter ou modifier un budget</div>
+      <div className="texteButton">Ajouter ou modifier une dépense prévisionnelle</div>
     </button>
   );
 }

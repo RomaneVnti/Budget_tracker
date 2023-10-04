@@ -110,7 +110,7 @@ export default function BudgetForm(props) {
             <IoMdClose />
           </div>
           <div className="form-group">
-            <h2>Créer un nouveau budget</h2>
+            <h2>Créer une dépense prévisionnelle </h2>
 
             <label htmlFor="budgetAmount">Montant du budget</label>
             <div className="inputLogo">
