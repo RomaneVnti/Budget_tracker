@@ -11,7 +11,7 @@ const budgetRouter = Router();
 budgetRouter.post('/createOrUpdateBudget', authenticate, budgetCtrl.createOrUpdateBudget);
 
 // Route GET pour obtenir tous les budgets
-budgetRouter.get('/', authenticate, budgetCtrl.getAllBudgets);
+budgetRouter.get('/allBudgets/:userId', authenticate, budgetCtrl.getAllBudgets);
 
 // Route GET pour obtenir toutes les catégories de budget
 budgetRouter.get('/getCategories', authenticate, budgetCtrl.getAllCategories);
