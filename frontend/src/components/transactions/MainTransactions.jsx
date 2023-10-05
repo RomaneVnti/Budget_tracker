@@ -24,7 +24,7 @@ export default function MainTransactions() {
     <div>
       <div className="month-navigation">
         <GrFormPrevious onClick={() => navigateMonth('previous')} /> 
-        <h1>{currentMonth} {currentDate.getFullYear()}</h1>
+        <h1>Transactions {currentMonth} {currentDate.getFullYear()}</h1>
         <GrFormNext onClick={() => navigateMonth('next')} /> 
       </div>
       <TransactionArray monthIndex={currentMonthIndex} /> 

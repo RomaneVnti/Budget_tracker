@@ -27,7 +27,7 @@ export default function BudgetArray() {
 
   return (
     <main className="mainArray">
-      <h2>Vos budgets</h2>
+      <h2>Vos budgets par catégorie</h2>
       <table>
         <thead>
           <tr>
