@@ -5,7 +5,10 @@
   background-color: #EDEBEB;
   color: #2B2E4A;
   padding: 20px 0;
-  margin-top: 100px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 /* Style pour le contenu du footer */
