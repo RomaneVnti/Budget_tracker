@@ -87,7 +87,7 @@ export default function MainDasboardTitle() {
               Dépenses prévisionnelles
             </div>
             <div className='totalMonthlyBudget'>
-              {totalMonthlyBudget ?? '0'}
+            {totalMonthlyBudget !== null ? totalMonthlyBudget.toFixed(2) : '0.00'}
             </div>
           </div>
 
@@ -96,7 +96,7 @@ export default function MainDasboardTitle() {
               Dépenses réelles
             </div>
             <div className='totalExpenseAmount'>
-              {totalExpenseAmount ?? '0'}
+            {totalExpenseAmount !== null ? totalExpenseAmount.toFixed(2) : '0.00'}
             </div>
           </div>
 

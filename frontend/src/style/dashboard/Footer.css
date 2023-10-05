@@ -4,11 +4,9 @@
 .footer {
   background-color: #EDEBEB;
   color: #2B2E4A;
-  padding: 20px 0;
-  position: fixed;
+  padding: 20px 20px;
+  margin-top: 10em;
   bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 /* Style pour le contenu du footer */
