@@ -38,7 +38,7 @@ export default function BudgetArray() {
         <tbody>
           {budgets.map((budget) => (
             <tr key={budget.budget_id}>
-              <td>{budget.category_id}</td>
+              <td>{budget.category.categoryName}</td>
               <td>{budget.budget_amount}</td>
             </tr>
           ))}

@@ -1,22 +1,48 @@
 import Budget from '../models/budget.js'; 
 import Category from '../models/category.js'; 
-import { Op } from 'sequelize'; 
+import { Op, Sequelize} from 'sequelize'; 
 
 // Définition du service de gestion de budgets
 const budgetService = {
     // Fonction pour obtenir tous les budgets
-    getAllBudgetsByUserId: async (userId) => {
-      try {
-        const budgets = await Budget.findAll({
-          where: { user_id: userId },
-          attributes: ['category_id', 'budget_amount'], // Sélectionnez uniquement ces colonnes
-        });
-        return budgets;
-      } catch (err) {
-        throw err;
-      }
-    },
+    // Méthode pour obtenir tous les budgets
+getAllBudgetsByUserId: async (userId) => {
+  try {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentYear = currentDate.getFullYear();
 
+    const budgets = await Budget.findAll({
+      where: {
+        user_id: userId,
+        [Op.and]: [
+          Sequelize.where(
+            Sequelize.fn('MONTH', Sequelize.col('budget_period_start')),
+            currentMonth
+          ),
+          Sequelize.where(
+            Sequelize.fn('YEAR', Sequelize.col('budget_period_start')),
+            currentYear
+          ),
+        ],
+      },
+      attributes: ['budget_amount'], // Vous pouvez ajouter d'autres attributs si nécessaire
+      include: [
+        {
+          model: Category, // Incluez le modèle Category
+          attributes: ['categoryName'], // Sélectionnez les attributs de la catégorie que vous souhaitez inclure
+          as: 'category', // Alias pour la relation
+        },
+      ],
+    });
+
+    return budgets;
+  } catch (err) {
+    throw err;
+  }
+},
+
+ 
     // Fonction pour créer un nouveau budget
     createOneBudget: async (budgetData) => {
         try {

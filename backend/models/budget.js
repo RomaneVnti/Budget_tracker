@@ -44,5 +44,11 @@ const Budget = db.define('budget', {
     timestamps: false // Désactivation des horodatages automatiques
 });
 
+// Définition des associations (relations) entre les modèles
+Budget.belongsTo(Category, {
+    foreignKey: 'category_id', // Utilise category_id pour la relation
+    targetKey: 'category_id', // Champ dans la table Category auquel il est fait référence
+    as: 'category', // Alias pour la relation
+});
 
 export default Budget;
