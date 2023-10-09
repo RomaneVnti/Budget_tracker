@@ -150,7 +150,8 @@ const transactionService = {
         } catch (error) {
             throw error;
         }
-    }
+    },
+    
 };
 
 export default transactionService;

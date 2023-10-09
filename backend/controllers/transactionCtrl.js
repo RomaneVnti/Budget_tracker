@@ -108,7 +108,7 @@ const transactionCtrl = {
             //console.error("Erreur lors de la récupération de l'historique des transactions :", error);
             res.status(500).json({ error: "Une erreur est survenue lors de la récupération de l'historique des transactions." });
         }
-    }
+    },
 };
 
 export default transactionCtrl;

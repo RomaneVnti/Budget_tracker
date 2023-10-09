@@ -19,12 +19,12 @@ export const authenticate = async (req, res, next) => {
         let user;
 
         // Vérifier si le token JWT est présent dans l'en-tête d'authorization
-        const token = req.headers.authorization;
+        const jwtToken = req.headers.authorization;
 
-        if (token) {
+        if (jwtToken) {
             try {
                 // Vérification du token JWT en utilisant le service d'authentification
-                user = await authService.verifyJWT(token.substring("Bearer ".length));
+                user = await authService.verifyJWT(jwtToken.substring("Bearer ".length));
 
                 // Si l'utilisateur associé au token n'existe pas, renvoyez une erreur
                 if (!user) {
@@ -43,10 +43,20 @@ export const authenticate = async (req, res, next) => {
             }
         }
 
+        // Créez un cookie contenant le token JWT
+        const token = await authService.createJWT(user); // Assurez-vous d'ajouter cette fonction à authService
+
+        // Configurez le cookie avec les options appropriées (par exemple, httpOnly, secure, etc.)
+        res.cookie('jwtToken', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 3600 * 1000, // Durée de vie du cookie en millisecondes (1 heure)
+        });
+
         // Stockez les informations de l'utilisateur dans req.user pour une utilisation ultérieure
         req.user = user;
 
-        // middleware suivant
+        // Middleware suivant
         next();
     } catch (error) {
         console.error("Authentication failed:", error);

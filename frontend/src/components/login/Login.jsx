@@ -27,17 +27,17 @@ export default function Login({ onClose }) {
         password: password,
       });
 
-      // Extrait les données de la réponse, y compris l'utilisateur et le token JWT
-      const { user, token } = response.data;
+       // Extrait les données de la réponse, y compris l'utilisateur
+       const { user, token} = response.data;
 
-      // Stockez le token JWT dans le sessionStorage pour l'authentification future
-      sessionStorage.setItem('auth_token', token);
+       // Mettez à jour l'état local de l'utilisateur avec les informations de l'utilisateur connecté
+       setUser(user);
+
+       // Stockez le token JWT dans un cookie
+      document.cookie = `jwtToken=${token}`;
 
       // Configurez Axios pour inclure automatiquement l'en-tête d'autorisation dans les futures requêtes
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-      // Mettez à jour l'état local de l'utilisateur avec les informations de l'utilisateur connecté
-      setUser(user);
 
       // Naviguez vers le tableau de bord après la connexion réussie
       navigate('/dashboard');

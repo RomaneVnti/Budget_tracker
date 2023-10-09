@@ -1,7 +1,7 @@
-import User from '../models/user.js'; 
-import bcrypt from 'bcrypt'; 
-import jwt from 'jsonwebtoken'; 
-import jwtSecret from '../config.js'; 
+import User from '../models/user.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import jwtSecret from '../config.js';
 
 const authService = {
   // Méthode pour authentifier l'utilisateur
@@ -25,9 +25,9 @@ const authService = {
 
       // Crée un payload JWT avec l'ID de l'utilisateur
       const payload = { sub: user.id };
-      
+
       // Signe le jeton JWT avec la clé secrète et spécifie une expiration de 24 heures
-      const token = jwt.sign(payload, jwtSecret, { expiresIn: '24h', subject: `${user.user_id}` });
+      const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h', subject: `${user.user_id}` });
 
       // Retourne les informations pertinentes de l'utilisateur et le jeton JWT
       return {
@@ -60,6 +60,21 @@ const authService = {
     } catch (error) {
       // Gère les erreurs liées au jeton JWT invalide
       throw new Error('Jeton JWT invalide');
+    }
+  },
+
+  // Fonction pour créer un jeton JWT
+  createJWT: (user) => {
+    try {
+      // Créez un payload JWT avec l'ID de l'utilisateur
+      const payload = { sub: user.id };
+
+      // Signez le jeton JWT avec la clé secrète et spécifiez une expiration
+      const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h', subject: `${user.user_id}` });
+
+      return token;
+    } catch (error) {
+      throw new Error('Impossible de créer un jeton JWT');
     }
   }
 };

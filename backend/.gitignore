@@ -1,3 +1,4 @@
 /node_modules   # Ignore le dossier node_modules et son contenu
 .env            # Ignore le fichier .env
 .env
+config.js
