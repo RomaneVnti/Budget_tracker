@@ -63,10 +63,10 @@ export default function TransactionsUpdateForm({
           }));
           setCategories(formattedCategories);
         } else {
-          //console.error('Erreur lors du chargement des catégories');
+          console.error('Erreur lors du chargement des catégories');
         }
       } catch (error) {
-        //console.error('Erreur lors du chargement des catégories :', error);
+          console.error('Erreur lors du chargement des catégories :', error);
       }
     };
 

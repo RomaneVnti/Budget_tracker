@@ -16,6 +16,20 @@ export default function MainDasboardTitle() {
   const [totalExpenseAmount, setTotalExpenseAmount] = useState(null);
   const [remainingBudget, setRemainingBudget] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(''); // État pour stocker le mois en cours
+
+  // Obtenez la date actuelle pour le mois en cours
+  useEffect(() => {
+    const currentDate = new Date();
+    const monthNames = [
+      'Janvier', 'Février', 'Mars', 'Avril',
+      'Mai', 'Juin', 'Juillet', 'Août',
+      'Septembre', 'Octobre', 'Novembre', 'Décembre'
+    ];
+    const currentMonthIndex = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+    setCurrentMonth(`${monthNames[currentMonthIndex]} ${currentYear}`);
+  }, []);
 
   // Récupérer les données du budget mensuel et des dépenses réelles
   useEffect(() => {
@@ -77,7 +91,7 @@ export default function MainDasboardTitle() {
         <div className="Title">
           <h1>
             <div>Tableau de bord</div>
-            <div className='subtitle2'>Septembre 2023</div>
+            <div className='subtitle2'>{currentMonth}</div>
           </h1>
         </div>
 
